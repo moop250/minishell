@@ -102,7 +102,7 @@ RM = rm -f
 EXTENDED_FT = libs/extended_ft/
 EXFT_LIB = $(EXTENDED_FT:%=%libft.a)
 
-SRCS = minishell.c \
+SRCS = srcs/minishell.c \
 
 SUPP = 
 
