@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/22 14:35:17 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/22 19:54:45 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,11 @@
 // functions
 void	ms_error(char *in);
 void	init(int ac);
+
+typedef struct s_core
+{
+	char **env;
+	char **current_dir;
+}	t_core;
 
 #endif

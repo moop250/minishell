@@ -6,8 +6,13 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/17 15:21:20 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:55:11 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**tokenizer(char *input)
+{
+
+}

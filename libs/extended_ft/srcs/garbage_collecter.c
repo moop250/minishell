@@ -6,11 +6,12 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 15:30:51 by hlibine           #+#    #+#             */
-/*   Updated: 2024/02/09 15:19:19 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/22 16:08:32 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "extended_ft.h"
+#include "../../../srcs/minishell.h"
 
 t_garbcol	**getgarbage(void)
 {
@@ -74,7 +75,12 @@ void	*addgarbage(void *address)
 //graciously stolen from https://github.com/RPDJF/
 void	*galloc(size_t size)
 {
-	return (addgarbage(malloc(size)));
+	void	*out;
+
+	out = addgarbage(malloc(size));
+	if (!out)
+		ms_error("failed malloc");
+	return (out);
 }
 
 //clears all garbage malloced with galloc
