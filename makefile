@@ -62,7 +62,7 @@ define HEADER_LIB
 /  __ \                     (_) (_)              | |   (_) |                  (_)
 | /  \/ ___  _ __ ___  _ __  _| |_ _ __   __ _   | |    _| |__  _ __ __ _ _ __ _  ___  ___
 | |    / _ \| '_ ` _ \| '_ \| | | | '_ \ / _` |  | |   | | '_ \| '__/ _` | '__| |/ _ \/ __|
-| \__/\ (_) | | | | | | |_) | | | | | | | (_| |  | |___| | |_) | | | (_| | |  | |  __/\__ \
+| \__/\ (_) | | | | | | |_) | | | | | | | (_| |  | |___| | |_) | | | (_| | |  | |  __/\__ \ 
  \____/\___/|_| |_| |_| .__/|_|_|_|_| |_|\__, |  \_____/_|_.__/|_|  \__,_|_|  |_|\___||___/
                       | |                 __/ |
                       |_|                |___/
@@ -104,7 +104,8 @@ EXFT_LIB = $(EXTENDED_FT:%=%libft.a)
 
 SRCS = srcs/minishell.c \
 
-SUPP = 
+SUPP = srcs/errors.c \
+		srcs/init.c \
 
 $(NAME): $(SUPP) $(SRCS) $(EXFT_LIB)
 	@echo "$$HEADER_NAME"
@@ -117,9 +118,9 @@ $(EXFT_LIB): $(EXTENDED_FT)makefile
 # Rules
 all: $(NAME)
 
-debug:
+debug: $(SUPP) $(SRCS) $(EXFT_LIB)
 	@echo "$(ORANGE)Compiling debug $(NAME)$(RESET)"
-	@$(CC) $(SUPP) $(SRCS) $(DEVFLAGS) -o $(NAME)
+	@$(CC) $(SUPP) $(SRCS) $(EXFT_LIB) $(DEVFLAGS) -o $(NAME)
 
 clean:
 	@echo "$(ORANGE)Cleaning up...$(RESET)"
