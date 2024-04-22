@@ -6,15 +6,14 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/17 16:11:52 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/22 14:39:40 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init(int ac, char **env)
+void	init(int ac)
 {
-	if (ac != 1)
+	if (ac > 1)
 		ms_error("minishell called with argument");
-	
 }

@@ -6,13 +6,14 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/17 16:04:51 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:22:48 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av)
 {
-	
+	init(ac);
+	return (0);
 }
