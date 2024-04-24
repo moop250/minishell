@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/22 15:22:48 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/24 16:20:11 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	main(int ac, char **av)
 {
-	init(ac);
+	t_core	*core;
+
+	core = init(ac);
+	razegarbage();
 	return (0);
 }
