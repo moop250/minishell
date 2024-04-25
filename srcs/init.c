@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/25 15:17:50 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/25 15:20:20 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_core	*init(int ac)
 		ms_error("minishell called with argument");
 	core = galloc(sizeof(t_core));
 	if (!getenv("NAME"))
-		setcorenull(core);
+	/* 	setcorenull(core); */
+		;
 	else
 	{
 		core->env = galloc(sizeof(t_env));
