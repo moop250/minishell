@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/24 16:15:52 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/25 15:17:35 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_core
 {
 	struct s_env	*env;
 	char			*current_dir;
+	char			*prompt;
 }	t_core;
 
 // functions
