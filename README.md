@@ -32,9 +32,9 @@ Advanced functionalities enhance the basic implementation, such as:
 
 ## Usage
 
-To clone the repository, use:
+To clone the repository and the subdir, use:
 ```bash
-git clone https://github.com/moop250/minishell.git'
+git clone --recursive https://github.com/moop250/minishell.git
 ```
 
 Compilation & cleanup:
