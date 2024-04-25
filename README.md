@@ -28,13 +28,13 @@ Advanced functionalities enhance the basic implementation, such as:
 ![](https://img.shields.io/badge/WSL-0a97f5?style=for-the-badge&logo=linux&logoColor=white)
 ![](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white)
 
-![](https://img.shields.io/github/languages/code-size/mrmoopne/minishell_priv?color=5BCFFF)
+![](https://img.shields.io/github/languages/code-size/moop250/minishell_priv?color=5BCFFF)
 
 ## Usage
 
 To clone the repository, use:
 ```bash
-git clone https://github.com/mrmoopne/minishell.git'
+git clone https://github.com/moop250/minishell.git'
 ```
 
 Compilation & cleanup:
