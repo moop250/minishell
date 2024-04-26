@@ -40,6 +40,7 @@ git clone https://github.com/moop250/minishell.git
 Compilation & cleanup:
 
 - `make` : Compiles the minishell program.
+- `make debug` : Compiles the program wih an address sanitizer.
 - `make all` : Compiles evrything.
 - `make re` : Cleans and recompiles the minishell program.
 - `make clean` : Cleans up object files (.o).
