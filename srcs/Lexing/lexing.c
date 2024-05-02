@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/02 17:41:50 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:44:29 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	**tokenizer(const char *input, t_core *core)
 	int		pos[2];
 	int		i;
 	bool	quote;
+	char	*tmp;
 
 	i = -1;
 	quote == false;
@@ -73,6 +74,8 @@ char	**tokenizer(const char *input, t_core *core)
 			pos[1] = quote_seperator(input, pos[0]);
 		else
 			 pos[1] = seperator(input, &quote, pos[0]);
-		addtokenend(core, ft_substr(input, pos[0], pos[1] - pos[0]));
+		tmp = ft_substr(input, pos[0], pos[1] - pos[0]);
+		addtokenend(core, tmp);
+		gfree(tmp);
 	}
 }
