@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/30 11:23:22 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:03:02 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ t_core	*init(int ac, char **env)
 	core->env->paths = ft_split(getenv("PATH"), ':');
 	core->ms_stdin = dup(STDIN_FILENO);
 	core->ms_stdout = dup(STDOUT_FILENO);
+	core->token = galloc(sizeof(t_token));
+	(*core->token) = NULL;
 	return (core);
 }

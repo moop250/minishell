@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:21 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/03 16:16:45 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:55:34 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	ms_addtoken_back(t_core *core, t_token *new)
 	t_token	**token;
 	t_token	*tmp;
 
-	token = &core->token;
-	if (!*token)
+	token = core->token;
+	if (!*core->token)
 		*token = new;
 	else
 	{
@@ -63,7 +63,7 @@ static void	ms_tokendelone(t_token *token)
 
 void	ms_tokensclear(t_token **token)
 {
-	t_list	*temp;
+	t_token	*temp;
 
 	if (!token)
 		return ;

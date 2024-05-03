@@ -6,15 +6,15 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/03 16:09:58 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:23:59 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	isspace(char c)
+bool	ms_isspace(char c)
 {
-	if (c == ' ' || c == "\n" || c == "\t")
+	if (c == ' ' || &c == "\n" || &c == "\t")
 		return (true);
 	return (false);
 }
@@ -26,7 +26,7 @@ static int	quote_seperator(const char *input, const int start)
 	pos = start + 1;
 	while (input[pos] && input[pos] != input[start])
 		++pos;
-	return (pos);
+	return (pos + 1);
 }
 
 static int	seperator(const char *str, int pos)
@@ -40,18 +40,16 @@ static int	seperator(const char *str, int pos)
 		tmp = str[pos];
 		while (str[++pos] == tmp)
 			++count;
-		if (((tmp == '<' || tmp == '>') && count < 2)
-			|| (tmp == '|' && count < 1));
+		if (((tmp == '<' || tmp == '>') && count > 2) || (tmp == '|' && count > 1))
 			ms_error(ft_strjoin("ivalid redirection or pipe at ",
 				ft_itoa(pos)));
 	}
 	else
 	{
-		while (str[pos] && !isspace(str[pos]) && str[pos] != '>'
+		while (str[pos] && !ms_isspace(str[pos]) && str[pos] != '>'
 			&& str[pos] != '<'&& str[pos] != '|' && str[pos] != '\"'
 			&& str[pos] != '\'')
 			++pos;
-		pos -= 1;
 	}
 	return (pos);
 }
@@ -60,14 +58,12 @@ char	**tokenizer(const char *input, t_core *core)
 {
 	int		pos[2];
 	int		i;
-	bool	quote;
 	char	*tmp;
 
-	i = -1;
-	quote == false;
-	while (input[++i])
+	i = 0;
+	while (input[i])
 	{
-		while (isspace(input[i]) == true)
+		while (ms_isspace(input[i]) == true)
 			i++;
 		pos[0] = i;
 		if (input[i] == '\"' || input[i] == '\'')
@@ -76,5 +72,6 @@ char	**tokenizer(const char *input, t_core *core)
 			 pos[1] = seperator(input, pos[0]);
 		ms_addtoken_back(core,
 			ms_newtoken(ft_substr(input, pos[0], pos[1] - pos[0])));
+		i = pos[1];
 	}
 }

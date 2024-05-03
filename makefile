@@ -82,8 +82,8 @@ RESET = \033[0m
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-DEVFLAGS = -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -lreadline
+DEVFLAGS = -lreadline -g3 -fsanitize=address
 RM = rm -f
 
 EXTENDED_FT = libs/extended_ft/
@@ -95,6 +95,7 @@ SUPP = srcs/errors.c \
 		srcs/init.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \
+		srcs/minishell_loop/main_loop.c \
 
 $(NAME): $(EXFT_LIB)
 	@echo "$$HEADER_NAME"
