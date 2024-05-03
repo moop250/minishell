@@ -93,6 +93,8 @@ SRCS = srcs/minishell.c \
 
 SUPP = srcs/errors.c \
 		srcs/init.c \
+		srcs/lexing/lexing.c \
+		srcs/lexing/token_funcs.c \
 
 $(NAME): $(EXFT_LIB)
 	@echo "$$HEADER_NAME"

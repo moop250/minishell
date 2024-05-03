@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/02 17:44:29 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/03 16:09:58 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	isspace(char c)
 	return (false);
 }
 
-int	quote_seperator(const char *input, const int start)
+static int	quote_seperator(const char *input, const int start)
 {
 	int	pos;
 
@@ -29,7 +29,7 @@ int	quote_seperator(const char *input, const int start)
 	return (pos);
 }
 
-int	seperator(const char *str, int pos)
+static int	seperator(const char *str, int pos)
 {
 	char	tmp;
 	int		count;
@@ -41,7 +41,7 @@ int	seperator(const char *str, int pos)
 		while (str[++pos] == tmp)
 			++count;
 		if (((tmp == '<' || tmp == '>') && count < 2)
-			|| tmp == '|' && count < 1);
+			|| (tmp == '|' && count < 1));
 			ms_error(ft_strjoin("ivalid redirection or pipe at ",
 				ft_itoa(pos)));
 	}
@@ -73,9 +73,8 @@ char	**tokenizer(const char *input, t_core *core)
 		if (input[i] == '\"' || input[i] == '\'')
 			pos[1] = quote_seperator(input, pos[0]);
 		else
-			 pos[1] = seperator(input, &quote, pos[0]);
-		tmp = ft_substr(input, pos[0], pos[1] - pos[0]);
-		addtokenend(core, tmp);
-		gfree(tmp);
+			 pos[1] = seperator(input, pos[0]);
+		ms_addtoken_back(core,
+			ms_newtoken(ft_substr(input, pos[0], pos[1] - pos[0])));
 	}
 }
