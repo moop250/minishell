@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/03 18:23:59 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:01:40 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ static int	quote_seperator(const char *input, const int start)
 	pos = start + 1;
 	while (input[pos] && input[pos] != input[start])
 		++pos;
-	return (pos + 1);
+	if (input[pos] == input[start])
+			return (pos + 1);
+	ms_error(ft_strjoin("no ending quote at ", ft_itoa(pos)));
 }
 
 static int	seperator(const char *str, int pos)
