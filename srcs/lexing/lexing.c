@@ -6,18 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/06 16:01:40 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/06 17:25:49 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-bool	ms_isspace(char c)
-{
-	if (c == ' ' || &c == "\n" || &c == "\t")
-		return (true);
-	return (false);
-}
 
 static int	quote_seperator(const char *input, const int start)
 {
@@ -37,7 +30,7 @@ static int	seperator(const char *str, int pos)
 	int		count;
 
 	count = 1;
-	if (str[pos] == '<' || str[pos] == '>' || str[pos] == '|')
+	if (ft_strchr(REDIRECTS, str[pos]))
 	{
 		tmp = str[pos];
 		while (str[++pos] == tmp)
@@ -48,9 +41,7 @@ static int	seperator(const char *str, int pos)
 	}
 	else
 	{
-		while (str[pos] && !ms_isspace(str[pos]) && str[pos] != '>'
-			&& str[pos] != '<'&& str[pos] != '|' && str[pos] != '\"'
-			&& str[pos] != '\'')
+		while (str[pos] && !ft_strchr(WHITESPACE, str[pos]) && !ft_strchr(REDIRECTS, str[pos]))
 			++pos;
 	}
 	return (pos);
@@ -65,10 +56,10 @@ char	**tokenizer(const char *input, t_core *core)
 	i = 0;
 	while (input[i])
 	{
-		while (ms_isspace(input[i]) == true)
+		while (ft_strchr(WHITESPACE, input[i]))
 			i++;
 		pos[0] = i;
-		if (input[i] == '\"' || input[i] == '\'')
+		if (ft_strchr(QUOTES, input[i]))
 			pos[1] = quote_seperator(input, pos[0]);
 		else
 			 pos[1] = seperator(input, pos[0]);

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/03 17:46:21 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/06 17:17:49 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/extended_ft/srcs/extended_ft.h"
+
+// Default Variables
+# define QUOTES "\"\'"
+# define REDIRECTS "<>|"
+# define WHITESPACE " \n\t"
 
 // enums
 typedef enum e_token_type
@@ -48,11 +53,18 @@ typedef struct s_env
 	char	**paths;
 }	t_env;
 
+typedef struct s_prompt
+{
+	char	*color;
+	char	*prompt;
+}			t_prompt;
+
 typedef struct s_core
 {
 	t_env			*env;
 	char			*current_dir;
-	char			*prompt;
+	t_prompt		*prompt;
+	char			*line;
 	t_token			**token;
 	int				ms_stdin;
 	int				ms_stdout;

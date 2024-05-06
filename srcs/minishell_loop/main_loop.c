@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/03 18:12:51 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:39:57 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	minishell_loop(t_core *core)
 
 	while (true)
 	{
-		core->prompt = readline("minishell: $ ");
-		if (!core->prompt)
+		core->line = readline(core->prompt->prompt);
+		if (!core->line)
 			ms_error("readline error");
-		tokenizer(core->prompt, core);
+		tokenizer(core->line, core);
 		tmp = (*core->token);
 		while (tmp)
 		{
@@ -30,7 +30,7 @@ void	minishell_loop(t_core *core)
 		}
 		printf("\n");
 		ms_tokensclear(core->token);
-		free(core->prompt);
+		free(core->line);
 		break;
 	}
 }
