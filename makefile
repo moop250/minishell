@@ -91,7 +91,7 @@ EXFT_LIB = $(EXTENDED_FT:%=%libft.a)
 
 SRCS = srcs/minishell.c \
 
-SUPP = srcs/errors.c \
+SUPP = srcs/error_handling/errors.c \
 		srcs/init.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \

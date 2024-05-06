@@ -6,11 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:06:33 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/30 08:14:28 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:23:44 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ms_printerror(char *in)
 {
