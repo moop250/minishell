@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/06 17:17:49 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/08 12:48:44 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_core	*init(int ac, char **env);
 t_token	*ms_tokenlast(t_token *token);
 void	ms_addtoken_back(t_core *core, t_token *new);
 void	ms_tokensclear(t_token **token);
-char	**tokenizer(const char *input, t_core *core);
+void	tokenizer(const char *input, t_core *core);
 void	minishell_loop(t_core *core);
 
 #endif
