@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/08 12:48:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/13 17:00:56 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,21 @@ typedef struct s_token
 	char			*content;
 }	t_token;
 
+typedef struct s_envparam
+{
+	bool		base;
+	char		*name;
+	char		*value;
+	t_envparam	next;
+	t_envparam	prev;
+}				t_envparam;
+
 typedef struct s_env
 {
-	char	*user_name;
-	char	*hostname;
-	char	**paths;
+	t_envparam	rawenvs;
+	char		*user;
+	char		*hostname;
+	char		**paths;
 }	t_env;
 
 typedef struct s_prompt
@@ -74,11 +84,11 @@ typedef struct s_core
 void	ms_error(char *in);
 void	ms_printerror(char *in);
 t_token	*ms_newtoken(char *content);
-t_core	*init(int ac, char **env);
+t_core	*init(int ac, char **av, char **env);
 t_token	*ms_tokenlast(t_token *token);
 void	ms_addtoken_back(t_core *core, t_token *new);
 void	ms_tokensclear(t_token **token);
-void	tokenizer(const char *input, t_core *core);
+int		tokenizer(const char *input, t_core *core);
 void	minishell_loop(t_core *core);
 
 #endif
