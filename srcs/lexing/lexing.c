@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/13 15:31:51 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/14 13:30:46 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int tokenizer(const char *input, t_core *core)
 		if (pos[1] == -1)
 		{
 			ms_tokensclear(core->token);
-			return -1;
+			return (-1);
 		}
 		ms_addtoken_back(core,
 			ms_newtoken(ft_substr(input, pos[0], pos[1] - pos[0])));

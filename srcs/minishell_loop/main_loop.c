@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/13 14:36:10 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:01:22 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	minishell_loop(t_core *core)
 		core->line = readline(core->prompt->prompt);
 		if (!core->line)
 			ms_error("readline error");
-		if (!tokenizer(core->line, core));
+		if (!tokenizer(core->line, core))
 			continue ;
 		tmp = (*core->token);
 		while (tmp)
