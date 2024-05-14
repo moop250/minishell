@@ -6,7 +6,7 @@
 #    By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/18 15:13:08 by hlibine           #+#    #+#              #
-#    Updated: 2024/04/25 17:25:13 by hlibine          ###   ########.fr        #
+#    Updated: 2024/05/14 15:09:26 by hlibine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ FILES = srcs/ft_atoi \
 			srcs/ft_putstr_fd \
 			srcs/ft_split \
 			srcs/ft_strchr \
+			srcs/ft_strcmp \
 			srcs/ft_strdup \
 			srcs/ft_striteri \
 			srcs/ft_strjoin \
