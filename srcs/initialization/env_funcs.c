@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/13 17:25:38 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/14 17:27:53 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	addenvend(t_core *core, char *in, int sep, bool env)
 	char		*name;
 	char		*value;
 
-	name = ft_substr(in, 0, sep - 1);
+	name = ft_substr(in, 0, sep);
 	value = ft_substr(in, sep + 1, ft_strlen(in) - sep);
 	new = ms_newenv(name, value, env);
 	token = core->env->rawenvs;
@@ -58,4 +58,24 @@ void	addenvend(t_core *core, char *in, int sep, bool env)
 		new->prev = tmp;
 		tmp->next = new;
 	}
+}
+
+t_envparam	*findenv(t_core *core, const char *name)
+{
+	t_envparam	*out;
+
+	out = *core->env->rawenvs;
+	while (out)
+	{
+		if (ft_strcmp(name, out->name) == 0)
+			return (out);
+		out = out->next;
+	}
+	return (NULL);
+}
+
+void	modifenv(t_envparam *env, const char *str)
+{
+	gfree(env->value);
+	env->value = ft_strdup(str);
 }
