@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/14 17:28:50 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/15 14:25:06 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,7 @@ t_core	*init(int ac, char **av, char **env)
 	modifenv(findenv(core, "SHLVL"),
 		ft_itoa(ft_atoi(findenv(core, "SHLVL")->value) + 1));
 	init_prompt(core);
+	core->ms_stdin = dup(STDIN_FILENO);
+	core->ms_stdout = dup(STDOUT_FILENO);
 	return (core);
 }

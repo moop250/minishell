@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 16:06:33 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/15 14:35:34 by hlibine          ###   ########.fr       */
+/*   Created: 2023/10/30 17:11:10 by hlibine           #+#    #+#             */
+/*   Updated: 2024/05/15 14:06:03 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <stdarg.h>
+# include "../extended_ft.h"
 
-void	ms_printerror(char *in)
-{
-	ft_printf_fd(2, "\033[1;31mminishell error: %s\033[0m\n", in);
-}
+void	ft_printf_putnbr(int n, char *str, int *p, int fd);
+void	ft_printf_ptohex(void *p, int *o, int fd);
+void	ft_printf_putchar(char c, int *p, int fd);
+void	ft_printf_putstr(char *str, int *p, int fd);
+void	ft_printf_putnbrun(unsigned long int n, char *str, int *p, int fd);
 
-void	ms_error(char *in)
-{
-	ms_printerror(in);
-	razegarbage();
-	exit(EXIT_FAILURE);
-}
+#endif

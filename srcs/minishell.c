@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/13 16:03:29 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/15 14:26:44 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int ac, char **av, char **env)
 
 	core = init(ac, av, env);
 	minishell_loop(core);
+	close(core->ms_stdin);
+	close(core->ms_stdout);
 	razegarbage();
 	return (0);
 }

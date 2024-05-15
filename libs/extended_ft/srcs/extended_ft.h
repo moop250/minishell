@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:13:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/14 15:10:25 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/15 13:53:22 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ void		razegarbage(void);
 void		gfree(void *address);
 char		*get_next_line(int fd);
 int			ft_strcmp(const char *str1, const char *str2);
+int			ft_printf_fd(int fd, const char *format, ...);
 
 #endif
