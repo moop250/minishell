@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/15 14:25:06 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:44:53 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ char	*ms_gethostname(t_core *core)
 {
 	t_envparam	*hostname;
 
-	hostname = findenv(core, "NAME");
+	hostname = findenv("NAME");
 	if (!hostname)
-		hostname = findenv(core, "HOSTNAME");
+		hostname = findenv("HOSTNAME");
 	if (!hostname)
-		hostname = findenv(core, "LOGNAME");
+		hostname = findenv("LOGNAME");
 	if (!hostname)
 		return (NULL);
 	return (ft_strdup(hostname->value));
@@ -59,12 +59,12 @@ static void	init_envs(t_core *core, char **env)
 
 t_core	*init(int ac, char **av, char **env)
 {
-	t_core	*core;
+	static t_core	*core;
 
+	if (core)
+		return (core);
 	if (ac > 1)
 		ms_error("minishell called with argument");
-	if (!env)
-		ms_error("no env");
 	core = galloc(sizeof(t_core));
 	core->env = galloc(sizeof(t_env));
 	core->env->rawenvs = galloc(sizeof(t_envparam));
@@ -72,15 +72,26 @@ t_core	*init(int ac, char **av, char **env)
 	core->token = galloc(sizeof(t_token));
 	(*core->token) = NULL;
 	core->prompt = galloc(sizeof(t_prompt));
+	if (!env)
+		ms_error("no env");
 	init_envs(core, env);
-	core->env->user = findenv(core,"USER")->value;
-	core->env->paths = ft_split(findenv(core, "PATH")->value, ':');
+	core->env->user = findenv("USER")->value;
+	core->env->paths = ft_split(findenv("PATH")->value, ':');
 	core->env->hostname = ms_gethostname(core);
 	core->prompt->color = ft_strdup(DEF_COLOR);
-	modifenv(findenv(core, "SHLVL"),
-		ft_itoa(ft_atoi(findenv(core, "SHLVL")->value) + 1));
+	modifenv(findenv("SHLVL"),
+		ft_itoa(ft_atoi(findenv("SHLVL")->value) + 1));
 	init_prompt(core);
 	core->ms_stdin = dup(STDIN_FILENO);
 	core->ms_stdout = dup(STDOUT_FILENO);
+	return (core);
+}
+
+t_core	*get_core(void)
+{
+	static t_core *core;
+
+	if (!core)
+		core = init(0, 0, 0);
 	return (core);
 }

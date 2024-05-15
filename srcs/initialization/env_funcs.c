@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/14 17:27:53 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:27:31 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,12 @@ void	addenvend(t_core *core, char *in, int sep, bool env)
 	}
 }
 
-t_envparam	*findenv(t_core *core, const char *name)
+t_envparam	*findenv(const char *name)
 {
+	t_core	*core;
 	t_envparam	*out;
 
+	core = get_core();
 	out = *core->env->rawenvs;
 	while (out)
 	{
