@@ -94,6 +94,7 @@ SRCS = srcs/minishell.c \
 SUPP = srcs/error_handling/errors.c \
 		srcs/initialization/init.c \
 		srcs/initialization/env_funcs.c \
+		srcs/initialization/init_utils.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \
 		srcs/minishell_loop/main_loop.c \

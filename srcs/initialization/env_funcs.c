@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/15 16:27:31 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/17 13:23:45 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,20 @@ t_envparam	*ms_lastenv(t_envparam *token)
 	return (token);
 }
 
-void	addenvend(t_core *core, char *in, int sep, bool env)
+void	addenvend(t_core *core, char *in, bool env)
 {
 	t_envparam	**token;
 	t_envparam	*tmp;
 	t_envparam	*new;
 	char		*name;
 	char		*value;
+	int			i;
 
-	name = ft_substr(in, 0, sep);
-	value = ft_substr(in, sep + 1, ft_strlen(in) - sep);
+	i = -1;
+	while (in[++i] && in[i] != '=')
+		;
+	name = ft_substr(in, 0, i);
+	value = ft_substr(in, i + 1, ft_strlen(in) - i);
 	new = ms_newenv(name, value, env);
 	token = core->env->rawenvs;
 	if (!*core->env->rawenvs)

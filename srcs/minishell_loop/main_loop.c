@@ -6,11 +6,27 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/15 16:47:17 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:24:32 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char *make_prompt(t_core *core)
+{
+	char *prompt;
+
+	prompt = core->prompt;
+	// if (prompt)
+	// 	gfree(prompt);
+	if (core->env->hasenv == false)
+		prompt = ft_strjoin(&core->argv[0][2], "$ ");
+	else
+	{
+		prompt = ft_strdup("test: ");
+	}
+	return (prompt);
+}
 
 t_core	*minishell_loop(int ac, char **av, char **env)
 {
@@ -20,16 +36,14 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	while (true)
 	{
 		core = init(ac, av, env);
-		core->line = readline(core->prompt->prompt);
+		core->line = readline(make_prompt(core));
+		addgarbage(&core->line);
 		if (!core->line)
 			ms_error("readline error");
 		//temp exit
 		if(ft_strcmp(core->line, "exit") == 0)
-		{
-			free (core->line);
 			break ;
-		}
-		if (!tokenizer(core->line, core))
+		if (!tokenizer(ft_strtrim(core->line, WHITESPACE), core))
 			continue ;
 		tmp = (*core->token);
 		while (tmp)
@@ -38,8 +52,8 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 			tmp = tmp->next;
 		}
 		printf("\n");
-		ms_tokensclear(core->token);
-		free(core->line);
+		ms_tokensclear(core->token);;
 	}
+	gfree(core->line);
 	return (core);
 }

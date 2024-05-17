@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/14 13:30:46 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:24:47 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,16 @@ static int	seperator(const char *str, int pos)
 	return (pos);
 }
 
-int tokenizer(const char *input, t_core *core)
+int	tokenizer(const char *input, t_core *core)
 {
 	int		pos[2];
 	int		i;
 
 	i = 0;
+	gfree(core->line);
 	while (input[i])
 	{
-		while (ft_strchr(WHITESPACE, input[i]))
+		while (input[i] && ft_strchr(WHITESPACE, input[i]))
 			i++;
 		pos[0] = i;
 		if (ft_strchr(QUOTES, input[i]))

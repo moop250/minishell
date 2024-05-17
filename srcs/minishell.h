@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/15 16:28:36 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/17 14:18:19 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define QUOTES "\"\'"
 # define REDIRECTS "<>|"
 # define WHITESPACE " \n\t"
+
+# define NOENVPATH "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
 // enums
 typedef enum e_token_type
@@ -60,22 +62,19 @@ typedef struct s_envparam
 typedef struct s_env
 {
 	t_envparam	**rawenvs;
+	bool		hasenv;
 	char		*user;
 	char		*hostname;
 	char		**paths;
 }	t_env;
 
-typedef struct s_prompt
-{
-	char	*color;
-	char	*prompt;
-}			t_prompt;
-
 typedef struct s_core
 {
+	int				argc;
+	char			**argv;
 	t_env			*env;
 	char			*current_dir;
-	t_prompt		*prompt;
+	char			*prompt;
 	char			*line;
 	t_token			**token;
 	int				ms_stdin;
@@ -92,9 +91,12 @@ void		ms_addtoken_back(t_core *core, t_token *new);
 void		ms_tokensclear(t_token **token);
 int			tokenizer(const char *input, t_core *core);
 t_core		*minishell_loop(int ac, char **av, char **env);
-void		addenvend(t_core *core, char *in, int sep, bool env);
+void		addenvend(t_core *core, char *in, bool env);
 t_envparam	*findenv(const char *name);
 void		modifenv(t_envparam *env, const char *str);
 t_core		*get_core(void);
+void		init_envs(t_core *core, char **env);
+void		init_noenv(t_core *core);
+void		fill_core_env(t_core *core);
 
 #endif
