@@ -6,15 +6,24 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:13:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/15 17:17:48 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:23:47 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXTENDED_FT_H
 # define EXTENDED_FT_H
+
+// Includes
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
+// extended_ft settings
+# ifndef GARBAGE_COLLECTOR
+#	define GARBAGE_COLLECTOR 1
+# endif
+
+// Structs
 typedef struct s_list
 {
 	void			*content;
@@ -28,6 +37,8 @@ typedef struct s_garbcol
 	struct s_garbcol	*previous;
 }	t_garbcol;
 
+
+// Functions
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);
@@ -74,8 +85,8 @@ t_list		*ft_lstmap(t_list *lst, void *(f)(void *), void (*del)(void*));
 void		*ft_realloc(void *in, size_t oldsize, size_t newsize);
 void		ft_3dfree(void ***array);
 void		*galloc(size_t size);
-t_garbcol	*lastgarbage(t_garbcol *garb);
 void		razegarbage(void);
+t_garbcol	**getgarbage(void);
 void		*addgarbage(void *address);
 void		gfree(void *address);
 char		*get_next_line(int fd);

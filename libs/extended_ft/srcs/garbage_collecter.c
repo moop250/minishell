@@ -6,49 +6,55 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 15:30:51 by hlibine           #+#    #+#             */
-/*   Updated: 2024/02/09 15:19:19 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:23:33 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "extended_ft.h"
 
-t_garbcol	**getgarbage(void)
+static bool	free_from_ll(void *address)
 {
-	static t_garbcol	*collector;
+	t_garbcol	*todel;
 
-	return (&collector);
+	todel = *getgarbage();
+	while (todel && address)
+	{
+		if (todel->content == address)
+		{
+			if (todel->previous)
+			{
+				todel->previous->next = todel->next;
+				todel->next->previous = todel->previous;
+			}
+			else
+			{
+				todel->next->previous = 0;
+				*getgarbage() = todel->next;
+			}
+			free(todel->content);
+			free(todel);
+			return (true);
+		}
+		todel = todel->next;
+	}
+	return (false);
 }
 
 //frees a specific address malloced by galloc
 void	gfree(void *address)
 {
-	t_garbcol	**collector;
-	t_garbcol	*todel;
-
-	collector = getgarbage();
-	todel = *collector;
-	while (todel && todel->content != address)
-		todel = todel->next;
-	if (!todel)
+	if (address && !GARBAGE_COLLECTOR)
 		free(address);
-	else
-	{
-		if (todel->previous)
-			todel->previous->next = todel->next;
-		else
-			*collector = todel->next;
-		if (todel->next)
-			todel->next->previous = todel->previous;
-		free(todel->content);
-		free(todel);
-	}
+	else if (!address || !GARBAGE_COLLECTOR)
+		return ;
+	else if (!free_from_ll(address))
+		free(address);
 }
 
 void	*addgarbage(void *address)
 {
 	t_garbcol	**collector;
 	t_garbcol	*tmp;
-	t_garbcol	*last;
 
 	if (!address)
 		return (0);
@@ -56,15 +62,14 @@ void	*addgarbage(void *address)
 	tmp = (t_garbcol *)malloc(sizeof(t_garbcol));
 	if (!tmp)
 		return (0);
-	last = 0;
 	tmp->next = 0;
 	tmp->previous = 0;
 	tmp->content = address;
 	if (*collector)
 	{
-		last = lastgarbage(*collector);
-		last->next = tmp;
-		tmp->previous = last;
+		tmp->next = *collector;
+		tmp->next->previous = tmp;
+		*collector = tmp;
 	}
 	else
 		*collector = tmp;
