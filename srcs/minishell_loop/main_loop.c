@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/17 17:24:32 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/20 13:59:42 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	{
 		core = init(ac, av, env);
 		core->line = readline(make_prompt(core));
-		addgarbage(&core->line);
+		addgarbage(core->line);
 		if (!core->line)
 			ms_error("readline error");
 		//temp exit
