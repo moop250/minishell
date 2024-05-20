@@ -6,13 +6,13 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:00:30 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/17 14:40:48 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/20 14:04:14 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ms_gethostname(t_core *core)
+char	*ms_gethostname(void)
 {
 	t_envparam	*hostname;
 
@@ -55,7 +55,7 @@ void	fill_core_env(t_core *core)
 	if (core->env->hasenv == true)
 	{
 		core->env->user = findenv("USER")->value;
-		core->env->hostname = ms_gethostname(core);
+		core->env->hostname = ms_gethostname();
 		modifenv(findenv("SHLVL"),
 			ft_itoa(ft_atoi(findenv("SHLVL")->value) + 1));
 	}

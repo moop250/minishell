@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:45:50 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/15 13:58:03 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/20 14:04:02 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ void	ft_printf_putnbr(int n, char *str, int *p, int fd)
 
 void	ft_printf_ptohex(void *p, int *o, int fd)
 {
-	int	i;
-
-	i = 0;
 	ft_printf_putstr("0x", o, fd);
 	ft_printf_putnbrun((unsigned long int)p, "0123456789abcdef", o, fd);
 }
