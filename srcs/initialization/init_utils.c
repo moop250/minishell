@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:00:30 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/20 14:04:14 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/21 16:53:09 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ char	*ms_gethostname(void)
 
 void	init_noenv(t_core *core)
 {
+	char	*tmp;
 	core->env->hasenv = false;
 	addenvend(core, "SHLVL=1", true);
 	core->env->paths = ft_split(NOENVPATH, ':');
+	tmp = getcwd(NULL, PATH_MAX);
+	if (!tmp)
+		ms_error("getcwd init error");
+	addgarbage(tmp);
+	addenvend(core, "PWD", tmp);
 }
 
 void	init_envs(t_core *core, char **env)
@@ -45,13 +51,14 @@ void	init_envs(t_core *core, char **env)
 		a = -1;
 		while (env[i][++a] != '=')
 			;
-		addenvend(core, env[i], true);
+		addenvend(core, env[i], true); 
 	}
 	core->env->paths = ft_split(findenv("PATH")->value, ':');
 }
 
 void	fill_core_env(t_core *core)
 {
+	core->prompt = NULL;
 	if (core->env->hasenv == true)
 	{
 		core->env->user = findenv("USER")->value;
@@ -63,4 +70,24 @@ void	fill_core_env(t_core *core)
 	{
 		core->env->user = core->argv[0];
 	}
+}
+
+void	clear_envs(t_envparam *envs)
+{
+	t_envparam	*temp;
+
+	if (!envs)
+		return ;
+	while (envs)
+	{
+		temp = envs->next;
+			if (!envs)
+		return ;
+		gfree(envs->name);
+		gfree(envs->value);
+		gfree(envs);
+		envs = temp;
+	}
+	envs = NULL;
+	return ;
 }

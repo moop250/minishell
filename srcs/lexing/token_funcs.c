@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:21 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/03 17:55:34 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/21 17:24:32 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ t_token	*ms_tokenlast(t_token *token)
 
 void	ms_addtoken_back(t_core *core, t_token *new)
 {
-	t_token	**token;
+	t_token	*token;
 	t_token	*tmp;
 
 	token = core->token;
-	if (!*core->token)
-		*token = new;
+	if (!core->token)
+		core->token = new;
 	else
 	{
-		tmp = ms_tokenlast(*token);
+		tmp = ms_tokenlast(token);
 		new->prev = tmp;
 		tmp->next = new;
 	}
@@ -61,18 +61,18 @@ static void	ms_tokendelone(t_token *token)
 	return ;
 }
 
-void	ms_tokensclear(t_token **token)
+void	ms_tokensclear(t_token *token)
 {
 	t_token	*temp;
 
 	if (!token)
 		return ;
-	while (*token)
+	while (token)
 	{
-		temp = (*token)->next;
-		ms_tokendelone(*token);
-		*token = temp;
+		temp = token->next;
+		ms_tokendelone(token);
+		token = temp;
 	}
-	*token = NULL;
+	token = NULL;
 	return ;
 }

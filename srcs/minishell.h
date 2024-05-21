@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/17 14:18:19 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/21 17:24:35 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 # include "../libs/extended_ft/srcs/extended_ft.h"
 
 // Default Variables
@@ -61,7 +62,7 @@ typedef struct s_envparam
 
 typedef struct s_env
 {
-	t_envparam	**rawenvs;
+	t_envparam	*rawenvs;
 	bool		hasenv;
 	char		*user;
 	char		*hostname;
@@ -76,7 +77,7 @@ typedef struct s_core
 	char			*current_dir;
 	char			*prompt;
 	char			*line;
-	t_token			**token;
+	t_token			*token;
 	int				ms_stdin;
 	int				ms_stdout;
 }	t_core;
@@ -88,7 +89,7 @@ t_token		*ms_newtoken(char *content);
 t_core		*init(int ac, char **av, char **env);
 t_token		*ms_tokenlast(t_token *token);
 void		ms_addtoken_back(t_core *core, t_token *new);
-void		ms_tokensclear(t_token **token);
+void		ms_tokensclear(t_token *token);
 int			tokenizer(const char *input, t_core *core);
 t_core		*minishell_loop(int ac, char **av, char **env);
 void		addenvend(t_core *core, char *in, bool env);
@@ -98,5 +99,6 @@ t_core		*get_core(void);
 void		init_envs(t_core *core, char **env);
 void		init_noenv(t_core *core);
 void		fill_core_env(t_core *core);
+void		clear_envs(t_envparam *envs);
 
 #endif
