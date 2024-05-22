@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/21 15:38:13 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:15:47 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	main(int ac, char **av, char **env)
 	close(core->ms_stdin);
 	close(core->ms_stdout);
 	if (core->token)
-		ms_tokensclear(core->token);
-	// if (core->prompt)
-	// 	gfree(core->prompt);
+		ms_tokensclear(&core->token);
 	clear_envs(core->env->rawenvs);
 	paths = core->env->paths;
 	while (*paths)
@@ -33,6 +31,6 @@ int	main(int ac, char **av, char **env)
 	}
 	gfree(core->env->paths);
 	gfree(core->env);
-	// gfree(core);
+	gfree(core);
 	return (0);
 }

@@ -6,11 +6,11 @@
 #    By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/18 15:13:08 by hlibine           #+#    #+#              #
-#    Updated: 2024/05/20 15:18:29 by hlibine          ###   ########.fr        #
+#    Updated: 2024/05/22 13:28:50 by hlibine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -D GARBAGE_COLLECTER=1 
+CFLAGS = -D GARBAGE_COLLECTER=0
 
 NAME = libft.a
 

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/17 17:24:47 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:02:25 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	seperator(const char *str, int pos)
 	return (pos);
 }
 
-int	tokenizer(const char *input, t_core *core)
+int	tokenizer(char *input, t_core *core)
 {
 	int		pos[2];
 	int		i;
@@ -69,12 +69,13 @@ int	tokenizer(const char *input, t_core *core)
 			 pos[1] = seperator(input, pos[0]);
 		if (pos[1] == -1)
 		{
-			ms_tokensclear(core->token);
+			ms_tokensclear(&core->token);
 			return (-1);
 		}
 		ms_addtoken_back(core,
 			ms_newtoken(ft_substr(input, pos[0], pos[1] - pos[0])));
 		i = pos[1];
 	}
+	gfree(input);
 	return (1);
 }

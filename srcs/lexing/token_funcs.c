@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:21 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/21 17:24:32 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/22 12:00:53 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,18 @@ static void	ms_tokendelone(t_token *token)
 	return ;
 }
 
-void	ms_tokensclear(t_token *token)
+void	ms_tokensclear(t_token **token)
 {
 	t_token	*temp;
 
 	if (!token)
 		return ;
-	while (token)
+	while (*token)
 	{
-		temp = token->next;
-		ms_tokendelone(token);
-		token = temp;
+		temp = (*token)->next;
+		ms_tokendelone(*token);
+		*token = temp;
 	}
-	token = NULL;
+	*token = NULL;
 	return ;
 }

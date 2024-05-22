@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/21 16:51:06 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:56:44 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,12 @@ t_envparam	*findenv(const char *name)
 	return (NULL);
 }
 
-void	modifenv(t_envparam *env, const char *str)
+void	modifenv(t_envparam *env, char *str)
 {
-	gfree(env->value);
-	env->value = ft_strdup(str);
+	t_envparam	**tmp;
+
+	tmp = &env;
+	gfree((*tmp)->value);
+	(*tmp)->value = ft_strdup(str);
+	gfree(str);
 }

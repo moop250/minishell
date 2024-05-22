@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/21 17:24:35 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:02:30 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ t_token		*ms_newtoken(char *content);
 t_core		*init(int ac, char **av, char **env);
 t_token		*ms_tokenlast(t_token *token);
 void		ms_addtoken_back(t_core *core, t_token *new);
-void		ms_tokensclear(t_token *token);
-int			tokenizer(const char *input, t_core *core);
+void		ms_tokensclear(t_token **token);
+int			tokenizer(char *input, t_core *core);
 t_core		*minishell_loop(int ac, char **av, char **env);
 void		addenvend(t_core *core, char *in, bool env);
 t_envparam	*findenv(const char *name);
-void		modifenv(t_envparam *env, const char *str);
+void		modifenv(t_envparam *env, char *str);
 t_core		*get_core(void);
 void		init_envs(t_core *core, char **env);
 void		init_noenv(t_core *core);
