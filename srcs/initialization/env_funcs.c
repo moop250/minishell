@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/22 14:56:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:31:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,13 @@ t_envparam	*findenv(const char *name)
 	return (NULL);
 }
 
+//takes a MALLOC'd string
 void	modifenv(t_envparam *env, char *str)
 {
 	t_envparam	**tmp;
 
+	if (!env || !str)
+		return ;
 	tmp = &env;
 	gfree((*tmp)->value);
 	(*tmp)->value = ft_strdup(str);
