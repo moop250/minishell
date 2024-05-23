@@ -98,6 +98,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \
 		srcs/minishell_loop/main_loop.c \
+		srcs/builtins/env.c \
 
 $(NAME): $(EXFT_LIB)
 	@echo "$$HEADER_NAME"

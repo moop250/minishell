@@ -6,11 +6,24 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/21 14:53:19 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:02:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ms_getcwd(void)
+{
+	char	*result;
+	char	path[PATH_MAX];
+
+	result = NULL;
+	result = getcwd(result, sizeof(path));
+	if (!result)
+		ms_error("getcwd error");
+	addgarbage(result);
+	return (result);
+}
 
 t_core	*init(int ac, char **av, char **env)
 {

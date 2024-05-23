@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/22 16:02:30 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/23 15:59:13 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 # include "../libs/extended_ft/srcs/extended_ft.h"
 
 // Default Variables
-# define DEF_COLOR "\033[35m"
+# define DEF_PROMPT "\033[35m"
+# define CLEAR "\033[0m"
+# define ORANGE "\033[38;5;208m"
 
 # define QUOTES "\"\'"
 # define REDIRECTS "<>|"
@@ -38,8 +40,10 @@ typedef enum e_token_type
 	token_cmd,
 	token_var,
 	tokeb_pipe,
-	token_stdin,
-	token_stdout,
+	token_in,
+	token_out,
+	token_heredoc,
+	token_append,
 }			t_token_type;
 
 // structs
@@ -100,5 +104,7 @@ void		init_envs(t_core *core, char **env);
 void		init_noenv(t_core *core);
 void		fill_core_env(t_core *core);
 void		clear_envs(t_envparam *envs);
+void		ms_env(t_core *core);
+char		*ms_getcwd(void);
 
 #endif
