@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/22 14:43:47 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/23 13:37:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ static char *ms_prompt(t_core *core)
 
 	prompt = make_prompt(core);
 	tmp = readline(prompt);
+	if (!tmp)
+		ms_error("readline error");
+	addgarbage(tmp);
 	gfree(prompt);
 	return (tmp);
 }
@@ -45,9 +48,6 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	{
 		core = init(ac, av, env);
 		core->line = ms_prompt(core);
-		addgarbage(core->line);
-		if (!core->line)
-			ms_error("readline error");
 		//temp exit
 		if(ft_strcmp(core->line, "exit") == 0)
 			break ;
