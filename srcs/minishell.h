@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/23 15:59:13 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:53:35 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_core
 	char			*prompt;
 	char			*line;
 	t_token			*token;
+	int				token_count;
 	int				ms_stdin;
 	int				ms_stdout;
 }	t_core;
