@@ -6,13 +6,13 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/17 15:21:25 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/23 13:41:42 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parser(char *in)
+char	*parser(t_core core, t_token *token)
 {
 	
 }

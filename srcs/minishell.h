@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/23 16:53:35 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/28 16:08:32 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,17 @@
 
 # define NOENVPATH "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
-// enums
-typedef enum e_token_type
-{
-	token_cmd,
-	token_var,
-	tokeb_pipe,
-	token_in,
-	token_out,
-	token_heredoc,
-	token_append,
-}			t_token_type;
-
 // structs
+typedef struct s_pipeline
+{
+	char	*cmd;
+	char	**params;
+	int		pipeline_in;
+	int		pipeline_out;
+}
+
 typedef struct s_token
 {
-	t_token_type	type;
 	struct s_token	*next;
 	struct s_token	*prev;
 	char			*content;
