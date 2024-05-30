@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/27 15:37:07 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:59:18 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 		}
 		printf("\n");
 		ms_tokensclear(&core->token);
+		
 	}
 	gfree(core->line);
 	return (core);

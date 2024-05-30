@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/28 16:08:32 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/05/30 18:09:15 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,24 @@
 # define NOENVPATH "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
 // structs
+typedef struct s_pipe_out
+{
+	bool				append;
+	int					fd;
+	struct s_pipe_out	*next;
+	struct s_pipe_out	*prev;
+}						t_pipe_out;
+
 typedef struct s_pipeline
 {
-	char	*cmd;
-	char	**params;
-	int		pipeline_in;
-	int		pipeline_out;
-}
+	char				*cmd;
+	char				**params;
+	bool				heredoc;
+	int					pipeline_in;
+	struct s_pipe_out	*pipeline_out;
+	struct s_pipeline	*next;
+	struct s_pipeline	*prev;
+}						t_pipeline;
 
 typedef struct s_token
 {
@@ -78,6 +89,7 @@ typedef struct s_core
 	char			*line;
 	t_token			*token;
 	int				token_count;
+	t_pipeline		*pipeline;
 	int				ms_stdin;
 	int				ms_stdout;
 }	t_core;
@@ -102,5 +114,7 @@ void		fill_core_env(t_core *core);
 void		clear_envs(t_envparam *envs);
 void		ms_env(t_core *core);
 char		*ms_getcwd(void);
+void		ms_addpipeline_front(t_core *core);
+void		ms_pipelinesclear(t_pipeline **pipeline);
 
 #endif
