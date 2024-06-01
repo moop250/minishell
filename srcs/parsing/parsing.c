@@ -6,15 +6,26 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/31 16:09:30 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/01 15:35:50 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	inputdelimiter(t_core *core, t_pipeline *pipe)
+static void	inputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
 {
-	pipe->pipeline_in
+	t_pipe_fd	*tmp;
+	char		*input;
+
+	tmp = ms_addpipe_fd_back(pipe, pipe->pipeline_in);
+	if (input[1])
+		tmp->heredoc = true;
+	else
+	{
+		input = token->next->content;
+		tmp->heredoc = false;
+		tmp->file_name = ft_strdup(input);
+	}
 }
 
 char	*parser(t_core *core, t_token *token)
@@ -23,23 +34,23 @@ char	*parser(t_core *core, t_token *token)
 	t_pipeline	*pipe;
 
 	tmp = token;
-	while(token)
+	while(tmp)
 	{
 		pipe = ms_addpipeline_back(core);
-		while (token)
+		while (tmp)
 		{
-			if (token->content[0] = '|')
+			if (tmp->content[0] = '|')
 			{
-				token = token->next;
+				tmp = tmp->next;
 				break;
 			}
-			else if (token->content[0] = '<')
-				inputdelimiter(core, pipe);
-			else if (token->content[0] = '>')
+			else if (tmp->content[0] = '<')
+				inputdelimiter(core, pipe, tmp);
+			else if (tmp->content[0] = '>')
 				outputdelimiter();
 			else
 				cmdwrk();
-			token = token->next;
+			tmp = tmp->next;
 		}
 	}
 }
