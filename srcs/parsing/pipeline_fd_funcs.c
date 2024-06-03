@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:05:06 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/03 15:23:43 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/03 16:00:07 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	ms_pipe_fddelone(t_pipe_fd *pipe_fd)
 
 	if (!pipe_fd)
 		return ;
+	gfree(pipe_fd->file_name);
 	close(pipe_fd->fd);
 	gfree(pipe_fd);
 	return ;

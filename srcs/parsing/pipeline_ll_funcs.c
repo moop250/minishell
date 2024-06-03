@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/31 16:07:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/03 16:39:50 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	ms_pipelinedelone(t_pipeline *pipeline)
 
 	if (!pipeline)
 		return ;
-	gfree(pipeline->cmd);
+	if (pipeline->cmd)
+		gfree(pipeline->cmd);
 	i = -1;
 	while (pipeline->params[++i])
 		gfree(pipeline->params[i]);
