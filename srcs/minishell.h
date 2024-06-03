@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/01 15:35:26 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:04:08 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ void		ms_env(t_core *core);
 char		*ms_getcwd(void);
 t_pipeline	*ms_addpipeline_back(t_core *core);
 void		ms_pipelinesclear(t_pipeline **pipeline);
-t_pipe_fd	*ms_addpipe_fd_back(t_pipeline *pipe, t_pipe_fd *pipe_fd);
+t_pipe_fd	*ms_addpipe_fd_back(t_pipe_fd *pipe_fd);
 
 #endif

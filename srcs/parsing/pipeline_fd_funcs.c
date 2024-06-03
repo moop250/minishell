@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:05:06 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/01 15:34:24 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:23:43 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static t_pipe_fd	*newpipe(void)
 	node = galloc(sizeof(t_pipe_fd));
 	if (!node)
 		return (NULL);
-	node->append = NULL;
-	node->heredoc = NULL;
+	node->append = false;
+	node->heredoc = false;
 	node->fd = NULL;
 	node->next = NULL;
 	node->prev = NULL;
@@ -38,15 +38,14 @@ t_pipe_fd	*ms_pipe_fdlast(t_pipe_fd *pipe_fd)
 	return (pipe_fd);
 }
 
-t_pipe_fd	*ms_addpipe_fd_back(t_pipeline *pipe, t_pipe_fd *pipe_fd)
+t_pipe_fd	*ms_addpipe_fd_back(t_pipe_fd *pipe_fd)
 {
-	t_pipe_fd	*pipe_fd;
 	t_pipe_fd	*tmp;
 	t_pipe_fd	*new;
 
 	new = newpipe();
-	if (!pipe->pipeline_in)
-		pipe->pipeline_in = new;
+	if (!pipe_fd)
+		pipe_fd = new;
 	else
 	{
 		tmp = ms_pipe_fdlast(pipe_fd);

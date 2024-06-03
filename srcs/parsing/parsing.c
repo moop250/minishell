@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/01 15:35:50 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:25:45 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,25 @@
 static void	inputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
 {
 	t_pipe_fd	*tmp;
-	char		*input;
 
-	tmp = ms_addpipe_fd_back(pipe, pipe->pipeline_in);
-	if (input[1])
+	tmp = ms_addpipe_fd_back(pipe->pipeline_in);
+	if (token->content[1])
 		tmp->heredoc = true;
 	else
 	{
-		input = token->next->content;
-		tmp->heredoc = false;
-		tmp->file_name = ft_strdup(input);
+		tmp->file_name = ft_strdup(token->next->content);
+		token = token->next;
 	}
+}
+
+static void	outputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
+{
+	t_pipe_fd	*tmp;
+
+	tmp = ms_addpipe_fd_back(pipe->pipeline_out);
+	if (token->content[1])
+		tmp->heredoc = true;
+	tmp->file_name = ft_strdup(token->next->content);
 }
 
 char	*parser(t_core *core, t_token *token)
@@ -47,7 +55,10 @@ char	*parser(t_core *core, t_token *token)
 			else if (tmp->content[0] = '<')
 				inputdelimiter(core, pipe, tmp);
 			else if (tmp->content[0] = '>')
-				outputdelimiter();
+			{
+				outputdelimiter(core, pipe, tmp);
+				tmp = tmp->next;
+			}
 			else
 				cmdwrk();
 			tmp = tmp->next;
