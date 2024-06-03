@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/23 17:20:22 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:09:35 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	seperator(const char *str, int pos)
 		if (((tmp == '<' || tmp == '>') && count > 2) || (tmp == '|' && count > 1))
 		{
 			ms_printerror(ft_strjoin("ivalid redirection or pipe at ",
-				ft_itoa(pos)));
+					ft_itoa(pos)));
 			return (-1);
 		}
 	}
@@ -65,7 +65,7 @@ static int	tokenizer_loop(t_core *core, char *input)
 		if (ft_strchr(QUOTES, input[i]))
 			pos[1] = quote_seperator(input, pos[0]);
 		else
-			 pos[1] = seperator(input, pos[0]);
+			pos[1] = seperator(input, pos[0]);
 		if (pos[1] == -1)
 		{
 			ms_tokensclear(&core->token);
