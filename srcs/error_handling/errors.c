@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:06:33 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/20 16:55:36 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/04 12:08:53 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,4 @@ void	ms_error(char *in)
 	razegarbage();
 	exit(errno);
 }
+

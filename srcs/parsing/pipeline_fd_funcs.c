@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:05:06 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/03 16:00:07 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/04 11:42:56 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static t_pipe_fd	*newpipe(void)
 		return (NULL);
 	node->append = false;
 	node->heredoc = false;
-	node->fd = NULL;
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
@@ -82,3 +81,4 @@ void	ms_pipefd_clear(t_pipe_fd **pipe_fd)
 	*pipe_fd = NULL;
 	return ;
 }
+

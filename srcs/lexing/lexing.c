@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/03 18:09:35 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/04 11:44:35 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	quote_seperator(const char *input, const int start)
 	while (input[pos] && input[pos] != input[start])
 		++pos;
 	if (input[pos] == input[start])
-			return (pos + 1);
+		return (pos + 1);
 	ms_printerror(ft_strjoin("no ending quote at ", ft_itoa(pos)));
 	return (-1);
 }
@@ -36,7 +36,8 @@ static int	seperator(const char *str, int pos)
 		tmp = str[pos];
 		while (str[++pos] == tmp)
 			++count;
-		if (((tmp == '<' || tmp == '>') && count > 2) || (tmp == '|' && count > 1))
+		if (((tmp == '<' || tmp == '>') && count > 2)
+			|| (tmp == '|' && count > 1))
 		{
 			ms_printerror(ft_strjoin("ivalid redirection or pipe at ",
 					ft_itoa(pos)));
@@ -45,7 +46,8 @@ static int	seperator(const char *str, int pos)
 	}
 	else
 	{
-		while (str[pos] && !ft_strchr(WHITESPACE, str[pos]) && !ft_strchr(REDIRECTS, str[pos]))
+		while (str[pos] && !ft_strchr(WHITESPACE, str[pos])
+			&& !ft_strchr(REDIRECTS, str[pos]))
 			++pos;
 	}
 	return (pos);
@@ -91,3 +93,4 @@ int	tokenizer(char *input, t_core *core)
 	gfree(input);
 	return (1);
 }
+

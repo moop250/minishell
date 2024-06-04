@@ -6,11 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/03 17:44:58 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/04 12:08:53 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	inputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
 {
@@ -53,25 +53,25 @@ static void	cmdwrk(t_core *core, t_pipeline *pipe, t_token *token)
 	}
 }
 
-char	*parser(t_core *core, t_token *token)
+void	parser(t_core *core, t_token *token)
 {
 	t_token		*tmp;
 	t_pipeline	*pipe;
 
 	tmp = token;
-	while(tmp)
+	while (tmp)
 	{
 		pipe = ms_addpipeline_back(core);
 		while (tmp)
 		{
-			if (tmp->content[0] = '|')
+			if (tmp->content[0] == '|')
 			{
 				tmp = tmp->next;
-				break;
+				break ;
 			}
-			else if (tmp->content[0] = '<')
+			else if (tmp->content[0] == '<')
 				inputdelimiter(core, pipe, tmp);
-			else if (tmp->content[0] = '>')
+			else if (tmp->content[0] == '>')
 			{
 				outputdelimiter(core, pipe, tmp);
 				tmp = tmp->next;
@@ -82,3 +82,4 @@ char	*parser(t_core *core, t_token *token)
 		}
 	}
 }
+
