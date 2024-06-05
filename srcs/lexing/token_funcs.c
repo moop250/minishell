@@ -6,11 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:21 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/04 11:45:31 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/05 14:40:10 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "lexing.h"
 
 t_token	*ms_newtoken(char *content)
 {

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/03 15:04:08 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/05 14:39:18 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,7 @@ typedef struct s_core
 // functions
 void		ms_error(char *in);
 void		ms_printerror(char *in);
-t_token		*ms_newtoken(char *content);
 t_core		*init(int ac, char **av, char **env);
-t_token		*ms_tokenlast(t_token *token);
-void		ms_addtoken_back(t_core *core, t_token *new);
-void		ms_tokensclear(t_token **token);
 int			tokenizer(char *input, t_core *core);
 t_core		*minishell_loop(int ac, char **av, char **env);
 void		addenvend(t_core *core, char *in, bool env);
@@ -116,8 +112,5 @@ void		fill_core_env(t_core *core);
 void		clear_envs(t_envparam *envs);
 void		ms_env(t_core *core);
 char		*ms_getcwd(void);
-t_pipeline	*ms_addpipeline_back(t_core *core);
-void		ms_pipelinesclear(t_pipeline **pipeline);
-t_pipe_fd	*ms_addpipe_fd_back(t_pipe_fd *pipe_fd);
 
 #endif

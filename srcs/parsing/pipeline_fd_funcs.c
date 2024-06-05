@@ -6,11 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:05:06 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/04 11:42:56 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/05 14:32:26 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "parsing.h"
 
 static t_pipe_fd	*newpipe(void)
 {

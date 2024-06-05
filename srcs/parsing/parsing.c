@@ -6,11 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/04 18:26:38 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/05 14:41:30 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "parsing.h"
 
 static void	inputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
 {
@@ -103,5 +103,6 @@ void	parser(t_core *core, t_token *token)
 			tmp = tmp->next;
 		}
 	}
+	ms_tokensclear(&token);
 }
 

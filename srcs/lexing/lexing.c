@@ -6,11 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/04 11:44:35 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/05 14:39:53 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "lexing.h"
 
 static int	quote_seperator(const char *input, const int start)
 {
