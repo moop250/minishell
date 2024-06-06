@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:24:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/05 14:40:42 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/06 17:19:37 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "../minishell.h"
 # include "../lexing/lexing.h"
+
+# define SEPERATOR "-=;'~ \n\t"
 
 t_pipeline	*ms_addpipeline_back(t_core *core);
 void		ms_pipelinesclear(t_pipeline **pipeline);
