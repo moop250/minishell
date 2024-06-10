@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/05 14:41:30 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/10 17:55:41 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ static void	quotewrk(t_core *core, t_pipeline *pipe, t_token *token)
 	{
 		while (pipe->params)
 			++i;
-		pipe->params = ft_realloc(pipe->params, i, i + 1);
+		pipe->params = ft_realloc(pipe->params, i, (i + 1) * sizeof(char *));
 		if (str[0] == '\'')
 			pipe->params[++i] = ft_substr(str, 1, ft_strlen(str) - 2);
 		else
-			pipe->params[++i] =; // function that handles $PARAMS
+			pipe->params[++i] = parse_quotes(str);
 	}
 }
 

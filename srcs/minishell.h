@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/05 14:39:18 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/10 17:51:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ void		fill_core_env(t_core *core);
 void		clear_envs(t_envparam *envs);
 void		ms_env(t_core *core);
 char		*ms_getcwd(void);
+char		*parse_quotes(char *in);
 
 #endif
