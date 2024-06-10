@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/10 17:49:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/10 18:08:08 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 static char	*ms_seperate_env(const char *in)
 {
 	char	*out;
+	char	*tmp;
 	size_t	i;
  	
 	i = 1;
 	while (!ft_strchr(SEPERATOR, in[i]))
 		++i;
-	out = ft_substr(in, 0, i);
+	tmp = ft_substr(in, 0, i - 1);
+	out = findenv(tmp)->value;
+	gfree(tmp);
 	return (out);
 }
 
