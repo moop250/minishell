@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/10 17:51:27 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/11 10:56:28 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_pipeline
 {
 	char				*cmd;
 	char				**params;
+	int					param_count;
 	bool				heredoc;
 	struct s_pipe_fd	*pipeline_in;
 	struct s_pipe_fd	*pipeline_out;

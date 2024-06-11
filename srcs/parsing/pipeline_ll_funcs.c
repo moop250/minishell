@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/05 14:32:55 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/11 10:59:32 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_pipeline	*newpipe(void)
 	node->pipeline_out = NULL;
 	node->next = NULL;
 	node->prev = NULL;
+	node->param_count = 0;
 	return (node);
 }
 
