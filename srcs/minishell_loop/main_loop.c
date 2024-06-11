@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/05 15:59:52 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/11 17:03:44 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ static char	*ms_prompt(t_core *core)
 t_core	*minishell_loop(int ac, char **av, char **env)
 {
 	t_core	*core;
-	t_token	*tmp;
+	t_pipeline	*tmp;
+	t_pipe_fd	*pipeline_fd;
+	int			i;
 
 	while (true)
 	{
@@ -59,10 +61,27 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 			break ;
 		if (!tokenizer(ft_strtrim(core->line, WHITESPACE), core))
 			continue ;
-		tmp = core->token;
+		parser(core, core->token);
+		tmp = core->pipeline;
 		while (tmp)
 		{
-			ft_printf_fd(core->ms_stdout, "--->%s", tmp->content);
+			i = -1;
+			pipeline_fd = tmp->pipeline_in;
+			while (pipeline_fd)
+			{
+				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->heredoc);
+				pipeline_fd = pipeline_fd->next;
+			}
+			ft_printf_fd(core->ms_stdout, "cmd: %s", tmp->cmd);
+			if (tmp->params)
+				while (tmp->params[++i])
+					ft_printf_fd(core->ms_stdout, "param: %s\n", tmp->params[i]);
+			pipeline_fd = tmp->pipeline_out;
+			while (pipeline_fd)
+			{
+				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->heredoc);
+				pipeline_fd = pipeline_fd->next;
+			}
 			tmp = tmp->next;
 		}
 		printf("\n");

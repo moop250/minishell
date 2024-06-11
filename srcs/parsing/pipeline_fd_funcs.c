@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:05:06 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/05 14:32:26 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/11 17:08:10 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ t_pipe_fd	*ms_addpipe_fd_back(t_pipe_fd *pipe_fd)
 
 static void	ms_pipe_fddelone(t_pipe_fd *pipe_fd)
 {
-	int	i;
-
 	if (!pipe_fd)
 		return ;
 	gfree(pipe_fd->file_name);
@@ -66,7 +64,7 @@ static void	ms_pipe_fddelone(t_pipe_fd *pipe_fd)
 	return ;
 }
 
-void	ms_pipefd_clear(t_pipe_fd **pipe_fd)
+void	ms_freepipefd(t_pipe_fd **pipe_fd)
 {
 	t_pipe_fd	*temp;
 

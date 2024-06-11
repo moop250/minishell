@@ -99,6 +99,10 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/lexing/token_funcs.c \
 		srcs/minishell_loop/main_loop.c \
 		srcs/builtins/env.c \
+		srcs/parsing/parsing.c \
+		srcs/parsing/parsing_utils.c \
+		srcs/parsing/pipeline_fd_funcs.c \
+		srcs/parsing/pipeline_ll_funcs.c \
 
 $(NAME): $(EXFT_LIB)
 	@echo "$$HEADER_NAME"
