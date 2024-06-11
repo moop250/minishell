@@ -6,13 +6,13 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/11 11:08:26 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/11 14:24:12 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static void	inputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
+static void	inputdelimiter(t_pipeline *pipe, t_token *token)
 {
 	t_pipe_fd	*tmp;
 
@@ -23,7 +23,7 @@ static void	inputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
 	token = token->next;
 }
 
-static void	outputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
+static void	outputdelimiter(t_pipeline *pipe, t_token *token)
 {
 	t_pipe_fd	*tmp;
 
@@ -34,7 +34,7 @@ static void	outputdelimiter(t_core *core, t_pipeline *pipe, t_token *token)
 	token = token->next;
 }
 
-static void	quotewrk(t_core *core, t_pipeline *pipe, t_token *token)
+static void	quotewrk(t_pipeline *pipe, t_token *token)
 {
 	char	*str;
 	int		i;
@@ -57,26 +57,20 @@ static void	quotewrk(t_core *core, t_pipeline *pipe, t_token *token)
 	}
 }
 
-static void	cmdwrk(t_core *core, t_pipeline *pipe, t_token *token)
+static void	cmdwrk(t_pipeline *pipe, t_token *token)
 {
 	size_t	i;
 
-	i = -1;
 	if (token->content[0] == '\'' || token->content[0] == '"')
-		quotewrk(core, pipe, token);
+		quotewrk(pipe, token);
 	else if (!pipe->cmd)
 		pipe->cmd = ft_strdup(token->content);
 	else
 	{
-		if (!pipe->params)
-			pipe->params = galloc(sizeof(char *));
-		else
-		{
-			while (pipe->params[i])
-				++i;
-			pipe->params = ft_realloc(pipe->params, i, i + 1);
-		}
+		i = pipe->param_count;
+		pipe->params = ft_realloc(pipe->params, i, (i + 1) * sizeof(char *));
 		pipe->params[++i] = ft_strdup(token->content);
+		++pipe->param_count;
 	}
 }
 
@@ -97,12 +91,18 @@ void	parser(t_core *core, t_token *token)
 				break ;
 			}
 			else if (tmp->content[0] == '<')
-				inputdelimiter(core, pipe, tmp);
+				inputdelimiter(pipe, tmp);
 			else if (tmp->content[0] == '>')
-				outputdelimiter(core, pipe, tmp);
+				outputdelimiter(pipe, tmp);
 			else
-				cmdwrk(core, pipe, tmp);
+				cmdwrk(pipe, tmp);
 			tmp = tmp->next;
+		}
+		if (pipe->param_count > 0)
+		{
+			pipe->params = ft_realloc(pipe->params, pipe->param_count,
+				(pipe->param_count + 1) * sizeof(char *));
+			pipe->params[pipe->param_count + 1] = NULL;
 		}
 	}
 	ms_tokensclear(&token);

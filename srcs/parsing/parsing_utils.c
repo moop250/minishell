@@ -6,13 +6,12 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/10 18:08:08 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/11 14:59:37 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include <stdio.h>
-#include <time.h>
 
 static char	*ms_seperate_env(const char *in)
 {
@@ -29,9 +28,9 @@ static char	*ms_seperate_env(const char *in)
 	return (out);
 }
 
-static char	*strwrk(int pos[3], const char *in, char	*out)
+static char	*strwrk(size_t pos[3], const char *in, char	*out)
 {
-	char	*tmp;
+	char	*tmp[2];
 
 	tmp[0] = ft_substr(in, pos[1], pos[2] - pos[1]);
 	tmp[1] = ft_strjoin(out, tmp[0]);
@@ -61,7 +60,7 @@ char	*parse_quotes(char *in)
 	pos[0] = 0;
 	pos[1] = 1;
 	out = ft_strdup("");
-	while (in[++pos[0]] && in[pos[0]] != '"')
+	while (in[++pos[0] + 1])
 	{
 		if (in[pos[0]] == '$')
 		{
