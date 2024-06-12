@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/12 15:55:09 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/12 17:42:07 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	cmdwrk(t_pipeline *pipe, t_token *token)
 	{
 		i = pipe->param_count;
 		pipe->params = ft_realloc(pipe->params, i, (i + 1) * sizeof(char *));
-		pipe->params[++i] = ft_strdup(token->content);
+		pipe->params[i] = ft_strdup(token->content);
 		++pipe->param_count;
 	}
 }
@@ -105,7 +105,7 @@ void	parser(t_core *core, t_token *token)
 		{
 			pipe->params = ft_realloc(pipe->params, pipe->param_count,
 				(pipe->param_count + 1) * sizeof(char *));
-			pipe->params[pipe->param_count + 1] = NULL;
+			pipe->params[pipe->param_count] = NULL;
 		}
 	}
 	ms_tokensclear(&core->token);
