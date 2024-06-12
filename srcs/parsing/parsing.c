@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/11 15:03:25 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/12 15:55:09 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,25 @@ static void	cmdwrk(t_pipeline *pipe, t_token *token)
 
 void	parser(t_core *core, t_token *token)
 {
-	t_token		*tmp;
 	t_pipeline	*pipe;
 
-	tmp = token;
-	while (tmp)
+	while (token)
 	{
 		pipe = ms_addpipeline_back(core);
-		while (tmp)
+		while (token)
 		{
-			if (tmp->content[0] == '|')
+			if (token->content[0] == '|')
 			{
-				tmp = tmp->next;
+				token = token->next;
 				break ;
 			}
-			else if (tmp->content[0] == '<')
-				inputdelimiter(pipe, tmp);
-			else if (tmp->content[0] == '>')
-				outputdelimiter(pipe, tmp);
+			else if (token->content[0] == '<')
+				inputdelimiter(pipe, token);
+			else if (token->content[0] == '>')
+				outputdelimiter(pipe, token);
 			else
-				cmdwrk(pipe, tmp);
-			tmp = tmp->next;
+				cmdwrk(pipe, token);
+			token = token->next;
 		}
 		if (pipe->param_count > 0)
 		{
@@ -110,6 +108,6 @@ void	parser(t_core *core, t_token *token)
 			pipe->params[pipe->param_count + 1] = NULL;
 		}
 	}
-	ms_tokensclear(&token);
+	ms_tokensclear(&core->token);
 }
 
