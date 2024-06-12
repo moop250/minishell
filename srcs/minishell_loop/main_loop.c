@@ -6,11 +6,12 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/11 17:03:44 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/12 15:28:46 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "../parsing/parsing.h"
 
 char	*make_prompt(t_core *core)
 {
@@ -51,6 +52,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	t_pipeline	*tmp;
 	t_pipe_fd	*pipeline_fd;
 	int			i;
+	int			a;
 
 	while (true)
 	{
@@ -63,8 +65,10 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 			continue ;
 		parser(core, core->token);
 		tmp = core->pipeline;
+		a = -1;
 		while (tmp)
 		{
+			ft_printf_fd(core->ms_stdout, "pipleine %i\n", ++a);
 			i = -1;
 			pipeline_fd = tmp->pipeline_in;
 			while (pipeline_fd)
@@ -72,7 +76,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->heredoc);
 				pipeline_fd = pipeline_fd->next;
 			}
-			ft_printf_fd(core->ms_stdout, "cmd: %s", tmp->cmd);
+			ft_printf_fd(core->ms_stdout, "cmd: %s\n", tmp->cmd);
 			if (tmp->params)
 				while (tmp->params[++i])
 					ft_printf_fd(core->ms_stdout, "param: %s\n", tmp->params[i]);
@@ -84,6 +88,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 			}
 			tmp = tmp->next;
 		}
+		ms_pipelinesclear(&core->pipeline);
 		printf("\n");
 	}
 	gfree(core->line);
