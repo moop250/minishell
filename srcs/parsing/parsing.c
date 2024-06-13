@@ -6,11 +6,12 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/12 17:42:07 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/13 18:34:50 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include <stdio.h>
 
 static void	inputdelimiter(t_pipeline *pipe, t_token *token)
 {
@@ -57,25 +58,25 @@ static void	quotewrk(t_pipeline *pipe, t_token *token)
 	}
 }
 
-static void	cmdwrk(t_pipeline *pipe, t_token *token)
+static void	cmdwrk(t_pipeline **pipe, t_token *token)
 {
 	size_t	i;
 
 	if (token->content[0] == '\'' || token->content[0] == '"')
-		quotewrk(pipe, token);
-	else if (!pipe->cmd)
+		quotewrk((*pipe), token);
+	else if (!(*pipe)->cmd)
 	{
 		if (token->content[0] == '$')
-			pipe->cmd = findenv(++token->content)->value;
+			(*pipe)->cmd = findenv(++token->content)->value;
 		else
-			pipe->cmd = ft_strdup(token->content);
+			(*pipe)->cmd = ft_strdup(token->content);
 	}
 	else
 	{
-		i = pipe->param_count;
-		pipe->params = ft_realloc(pipe->params, i, (i + 1) * sizeof(char *));
-		pipe->params[i] = ft_strdup(token->content);
-		++pipe->param_count;
+		i = (*pipe)->param_count;
+		(*pipe)->params = ft_realloc((*pipe)->params, i, (i + 1) * sizeof(char *));
+		(*pipe)->params[i] = ft_strdup(token->content);
+		++(*pipe)->param_count;
 	}
 }
 
@@ -98,9 +99,10 @@ void	parser(t_core *core, t_token *token)
 			else if (token->content[0] == '>')
 				outputdelimiter(pipe, token);
 			else
-				cmdwrk(pipe, token);
+				cmdwrk(&pipe, token);
 			token = token->next;
 		}
+		pipe->params[0] = strdup("ur mom");
 		if (pipe->param_count > 0)
 		{
 			pipe->params = ft_realloc(pipe->params, pipe->param_count,
