@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:13:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/22 14:06:16 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/17 18:21:59 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 // extended_ft settings
 # ifndef GARBAGE_COLLECTOR
-#	define GARBAGE_COLLECTOR 0
+#  define GARBAGE_COLLECTOR 0
 # endif
 
 // Structs
@@ -36,7 +36,6 @@ typedef struct s_garbcol
 	struct s_garbcol	*next;
 	struct s_garbcol	*previous;
 }	t_garbcol;
-
 
 // Functions
 int			ft_isalnum(int c);
