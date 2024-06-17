@@ -6,26 +6,26 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/17 17:29:07 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/17 17:55:22 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include <stdio.h>
 
-static void	setdelimiter(t_pipeline *pipe, t_token *token, int status)
+static void	setdelimiter(t_pipeline **pipe, t_token *token, int status)
 {
 	t_pipe_fd	*tmp;
-	
+
 	if (status == 1)
 	{
-		tmp = ms_addpipe_fd_back(pipe->pipeline_in);
+		tmp = ms_addpipe_fd_back((*pipe)->pipeline_in);
 		if (token->content[1])
 			tmp->heredoc = true;
 	}
 	else
 	{
-		tmp = ms_addpipe_fd_back(pipe->pipeline_out);
+		tmp = ms_addpipe_fd_back((*pipe)->pipeline_out);
 		if (token->content[1])
 			tmp->append = true;
 	}
@@ -40,10 +40,12 @@ static void	quotewrk(t_pipeline **pipe, t_token *token)
 
 	str = token->content;
 	if (!(*pipe)->cmd)
+	{
 		if (str[0] == '"' && str[1] == '$')
 			(*pipe)->cmd = parse_quotes(str);
 		else
 			(*pipe)->cmd = ft_substr(str, 1, ft_strlen(str) - 2);
+	}
 	else
 	{
 		i = (*pipe)->param_count;
@@ -78,7 +80,7 @@ static void	cmdwrk(t_pipeline **pipe, t_token *token)
 	}
 }
 
-static int setparamcount(t_token *tmp)
+static int	setparamcount(t_token *tmp)
 {
 	int		count;
 
@@ -114,9 +116,9 @@ void	parser(t_core *core, t_token *token)
 				break ;
 			}
 			else if (token->content[0] == '<')
-				setdelimiter(pipe, token, 1);
+				setdelimiter(&pipe, token, 1);
 			else if (token->content[0] == '>')
-				setdelimiter(pipe, token, 2);
+				setdelimiter(&pipe, token, 2);
 			else
 				cmdwrk(&pipe, token);
 			token = token->next;
