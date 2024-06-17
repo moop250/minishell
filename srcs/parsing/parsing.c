@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/17 16:22:20 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/17 17:06:19 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,14 @@ static int setparamcount(t_token *tmp)
 void	parser(t_core *core, t_token *token)
 {
 	t_pipeline	*pipe;
+	int			tmp;
 
 	while (token)
 	{
 		pipe = ms_addpipeline_back(core);
-		pipe->params = galloc((setparamcount(token) + 1) * sizeof(char *));
+		tmp = setparamcount(token);
+		if (tmp > 0)
+			pipe->params = galloc((tmp + 1) * sizeof(char *));
 		pipe->param_count = 0;
 		while (token)
 		{
