@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/17 15:28:40 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/17 16:22:20 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,25 @@ static void	setdelimiter(t_pipeline *pipe, t_token *token, int status)
 	token = token->next;
 }
 
-static void	quotewrk(t_pipeline *pipe, t_token *token)
+static void	quotewrk(t_pipeline **pipe, t_token *token)
 {
 	char	*str;
 	int		i;
 
 	str = token->content;
-	if (!pipe->cmd)
+	if (!(*pipe)->cmd)
 		if (str[0] == '"' && str[1] == '$')
-			pipe->cmd = parse_quotes(str);
+			(*pipe)->cmd = parse_quotes(str);
 		else
-			pipe->cmd = ft_substr(str, 1, ft_strlen(str) - 2);
+			(*pipe)->cmd = ft_substr(str, 1, ft_strlen(str) - 2);
 	else
 	{
-		i = 0;
-		if (pipe->params[0])
-			while (pipe->params[i])
-				++i;
+		i = (*pipe)->param_count;
 		if (str[0] == '\'')
-			pipe->params[++i] = ft_substr(str, 1, ft_strlen(str) - 2);
+			(*pipe)->params[i] = ft_substr(str, 1, ft_strlen(str) - 2);
 		else
-			pipe->params[++i] = parse_quotes(str);
+			(*pipe)->params[i] = parse_quotes(str);
+		++(*pipe)->param_count;
 	}
 }
 
@@ -62,7 +60,7 @@ static void	cmdwrk(t_pipeline **pipe, t_token *token)
 	size_t	i;
 
 	if (token->content[0] == '\'' || token->content[0] == '"')
-		quotewrk((*pipe), token);
+		quotewrk(pipe, token);
 	else if (!(*pipe)->cmd)
 	{
 		if (token->content[0] == '$')
@@ -72,12 +70,10 @@ static void	cmdwrk(t_pipeline **pipe, t_token *token)
 	}
 	else
 	{
-		i = 0;
-		if ((*pipe)->params[0])
-			while ((*pipe)->params[i])
-				++i;
+		i = (*pipe)->param_count;
 		(*pipe)->params[i] = ft_strdup(token->content);
 		(*pipe)->params[i + 1] = NULL;
+		++(*pipe)->param_count;
 	}
 }
 
@@ -104,9 +100,8 @@ void	parser(t_core *core, t_token *token)
 	while (token)
 	{
 		pipe = ms_addpipeline_back(core);
-		pipe->param_count = setparamcount(token);
-		if (pipe->param_count)
-			pipe->params = galloc((pipe->param_count + 1) * sizeof(char *));
+		pipe->params = galloc((setparamcount(token) + 1) * sizeof(char *));
+		pipe->param_count = 0;
 		while (token)
 		{
 			if (token->content[0] == '|')

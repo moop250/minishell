@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/23 16:02:27 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/17 15:56:26 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_core	*init(int ac, char **av, char **env)
 	fill_core_env(core);
 	core->ms_stdin = dup(STDIN_FILENO);
 	core->ms_stdout = dup(STDOUT_FILENO);
+	core->pipeline = NULL;
 	return (core);
 }
 
