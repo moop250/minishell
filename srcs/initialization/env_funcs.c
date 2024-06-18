@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/04 11:50:37 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:34:13 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void	modifenv(t_envparam *env, char *str)
 	(*tmp)->value = ft_strdup(str);
 	gfree(str);
 }
-

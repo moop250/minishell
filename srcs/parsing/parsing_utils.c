@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/11 14:59:37 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:46:39 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*ms_seperate_env(const char *in)
 	char	*out;
 	char	*tmp;
 	size_t	i;
- 	
+	
 	i = 1;
 	while (!ft_strchr(SEPERATOR, in[i]))
 		++i;
@@ -61,7 +61,6 @@ char	*parse_quotes(char *in)
 	pos[1] = 1;
 	out = ft_strdup("");
 	while (in[++pos[0] + 1])
-	{
 		if (in[pos[0]] == '$')
 		{
 			pos[2] = pos[0] - 1;
@@ -70,11 +69,9 @@ char	*parse_quotes(char *in)
 				++pos[0];
 			pos[1] = pos[0];
 		}
-	}
-	tmp[0] = ft_substr(in, pos[1], pos[0] - pos[1]); 
+	tmp[0] = ft_substr(in, pos[1], pos[0] - pos[1]);
 	tmp[1] = ft_strjoin(out, tmp[0]);
 	gfree(out);
 	gfree(tmp[0]);
 	return (tmp[1]);
 }
-

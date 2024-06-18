@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/17 15:56:26 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:38:28 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_core	*init(int ac, char **av, char **env)
 
 t_core	*get_core(void)
 {
-	static t_core *core;
+	static t_core	*core;
 
 	if (!core)
 		core = init(0, 0, 0);

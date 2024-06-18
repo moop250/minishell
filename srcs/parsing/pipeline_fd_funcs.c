@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:05:06 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/11 17:08:10 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:37:47 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,3 @@ void	ms_freepipefd(t_pipe_fd **pipe_fd)
 	*pipe_fd = NULL;
 	return ;
 }
-

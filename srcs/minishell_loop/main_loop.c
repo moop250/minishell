@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/12 15:28:46 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:40:32 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ms_prompt(t_core *core)
 
 t_core	*minishell_loop(int ac, char **av, char **env)
 {
-	t_core	*core;
+	t_core		*core;
 	t_pipeline	*tmp;
 	t_pipe_fd	*pipeline_fd;
 	int			i;
@@ -83,7 +83,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 			pipeline_fd = tmp->pipeline_out;
 			while (pipeline_fd)
 			{
-				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->heredoc);
+				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->append);
 				pipeline_fd = pipeline_fd->next;
 			}
 			tmp = tmp->next;

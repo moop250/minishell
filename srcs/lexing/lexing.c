@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/05 14:39:53 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:36:33 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,3 @@ int	tokenizer(char *input, t_core *core)
 	gfree(input);
 	return (1);
 }
-

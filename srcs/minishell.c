@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/11 17:16:49 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:34:35 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ int	main(int ac, char **av, char **env)
 	gfree(core);
 	return (0);
 }
-

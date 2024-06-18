@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:00:30 by hlibine           #+#    #+#             */
-/*   Updated: 2024/05/23 16:19:08 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:38:57 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_noenv(t_core *core)
 {
 	char	*tmp;
 	char	*str;
-	
+
 	core->env->hasenv = false;
 	addenvend(core, "SHLVL=1", true);
 	core->env->paths = ft_split(NOENVPATH, ':');
@@ -53,7 +53,7 @@ void	init_envs(t_core *core, char **env)
 		a = -1;
 		while (env[i][++a] != '=')
 			;
-		addenvend(core, env[i], true); 
+		addenvend(core, env[i], true);
 	}
 	core->env->paths = ft_split(findenv("PATH")->value, ':');
 }
@@ -83,8 +83,8 @@ void	clear_envs(t_envparam *envs)
 	while (envs)
 	{
 		temp = envs->next;
-			if (!envs)
-		return ;
+		if (!envs)
+			return ;
 		gfree(envs->name);
 		gfree(envs->value);
 		gfree(envs);
@@ -93,4 +93,3 @@ void	clear_envs(t_envparam *envs)
 	envs = NULL;
 	return ;
 }
-

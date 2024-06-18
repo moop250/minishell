@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/11 16:38:36 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:37:57 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,3 @@ void	ms_pipelinesclear(t_pipeline **pipeline)
 	*pipeline = NULL;
 	return ;
 }
-

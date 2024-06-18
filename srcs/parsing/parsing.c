@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 13:37:06 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/18 14:37:16 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,3 @@ void	parser(t_core *core, t_token *token)
 	}
 	ms_tokensclear(&core->token);
 }
-
