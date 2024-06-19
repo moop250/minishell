@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 15:31:25 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/19 17:58:24 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	cmdwrk(t_pipeline **pipe, t_token *token)
 	else if (!(*pipe)->cmd)
 	{
 		if (token->content[0] == '$')
-			(*pipe)->cmd = findenv(++token->content)->value;
+			(*pipe)->cmd = ft_strdup(findenv(++token->content)->value);
 		else
 			(*pipe)->cmd = ft_strdup(token->content);
 	}

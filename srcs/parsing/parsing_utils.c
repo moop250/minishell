@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/19 14:58:20 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/19 17:53:59 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*strwrk(size_t pos[3], const char *in, char	*out)
 	pos[2] = end of curent array section
 */
 
-char	*parse_quotes(char *in)
+char	*parse_quotes(const char *in)
 {
 	char	*out;
 	size_t	pos[3];
