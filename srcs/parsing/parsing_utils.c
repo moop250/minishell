@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 15:32:27 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/19 14:58:20 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ void	setdelimiter(t_pipeline **pipe, t_token **token, int status)
 
 	if (status == 1)
 	{
-		tmp = ms_addpipe_fd_back((*pipe)->pipeline_in);
+		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_in);
 		if ((*token)->content[1])
 			tmp->heredoc = true;
 	}
 	else
 	{
-		tmp = ms_addpipe_fd_back((*pipe)->pipeline_out);
+		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_out);
 		if ((*token)->content[1])
 			tmp->append = true;
 	}
