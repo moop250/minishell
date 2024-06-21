@@ -104,7 +104,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/parsing/pipeline_fd_funcs.c \
 		srcs/parsing/pipeline_ll_funcs.c \
 
-$(NAME): $(EXFT_LIB)
+$(NAME): $(EXFT_LIB) $(SRCS) $(SUPP)
 	@echo "$$HEADER_NAME"
 	@$(CC) $(SUPP) $(SRCS) $(EXFT_LIB) $(CFLAGS) -o $(NAME)
 
