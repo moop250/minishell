@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 14:20:25 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:49:04 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	parser(t_core *core, t_token *token)
 	t_pipeline	*pipe;
 	int			tmp;
 
+	core->pipe_count = 0;
 	while (token)
 	{
 		pipe = ms_addpipeline_back(core);
@@ -85,6 +86,7 @@ void	parser(t_core *core, t_token *token)
 			if (token->content[0] == '|')
 			{
 				token = token->next;
+				core->pipe_count++;
 				break ;
 			}
 			passpipes(&pipe, &token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_ll_funcs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 13:55:19 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/21 16:48:07 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

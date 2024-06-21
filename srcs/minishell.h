@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 14:23:00 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:47:54 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_core
 	char			*prompt;
 	char			*line;
 	t_token			*token;
+	int				pipe_count;
 	int				token_count;
 	t_pipeline		*pipeline;
 	int				ms_stdin;
