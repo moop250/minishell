@@ -6,31 +6,11 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 13:37:48 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/21 14:08:30 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:22:52 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	**get_path(char **envp)
-{
-	int		i;
-	char	*path;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path = ft_strdup(envp[i] + 5);
-			if (!path)
-				return (NULL);
-			return (ft_split(path, ':'));
-		}
-		i++;
-	}
-	return (NULL);
-}
 
 char	*find_exec_path(char *cmd, char **path)
 {

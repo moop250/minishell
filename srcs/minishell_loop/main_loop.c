@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 14:08:15 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:43:38 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 		core = init(ac, av, env);
 		core->line = ms_prompt(core);
 		//temp exit
+		add_history(core->line);
 		if (ft_strcmp(core->line, "exit") == 0)
 			break ;
 		if (!tokenizer(ft_strtrim(core->line, WHITESPACE), core))
 			continue ;
 		parser(core, core->token);
-		execute(core, env);
+		if (core->token_count > 0)
+			execute(core, env);
 		ms_pipelinesclear(&core->pipeline);
 		printf("\n");
 	}

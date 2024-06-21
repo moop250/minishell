@@ -106,7 +106,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/parsing/exec_path.c \
 		srcs/execution/execute.c \
 
-$(NAME): $(EXFT_LIB)
+$(NAME): $(EXFT_LIB) $(SRCS) $(SUPP)
 	@echo "$$HEADER_NAME"
 	@$(CC) $(SUPP) $(SRCS) $(EXFT_LIB) $(CFLAGS) -o $(NAME)
 
