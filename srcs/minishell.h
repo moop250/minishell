@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 13:55:17 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:07:54 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_pipe_fd
 
 typedef struct s_pipeline
 {
-	char				*cmd;
 	char				**params;
 	int					param_count;
 	bool				heredoc;
