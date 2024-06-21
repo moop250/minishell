@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 11:01:02 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/21 13:55:17 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define QUOTES "\"\'"
 # define REDIRECTS "<>|"
 # define WHITESPACE " \n\t"
+
+# define PATH_MAX 1024
 
 # define NOENVPATH "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
@@ -117,5 +119,7 @@ void		ms_env(t_core *core);
 char		*ms_getcwd(void);
 void		parser(t_core *core, t_token *token);
 void		execute(t_core *core, char **env);
+char		**get_path(char **envp);
+char		*find_exec_path(char *cmd, char **path);
 
 #endif

@@ -103,6 +103,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/parsing/parsing_utils.c \
 		srcs/parsing/pipeline_fd_funcs.c \
 		srcs/parsing/pipeline_ll_funcs.c \
+		srcs/parsing/exec_path.c \
 		srcs/execution/execute.c \
 
 $(NAME): $(EXFT_LIB)
