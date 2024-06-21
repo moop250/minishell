@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 14:40:32 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/21 13:55:03 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->heredoc);
 				pipeline_fd = pipeline_fd->next;
 			}
-			ft_printf_fd(core->ms_stdout, "cmd: %s\n", tmp->cmd);
 			if (tmp->params)
 				while (tmp->params[++i])
 					ft_printf_fd(core->ms_stdout, "param: %s\n", tmp->params[i]);

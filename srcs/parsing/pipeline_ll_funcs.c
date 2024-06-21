@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 14:37:57 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/21 13:55:19 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static t_pipeline	*newpipe(void)
 	node = galloc(sizeof(t_pipeline));
 	if (!node)
 		return (NULL);
-	node->cmd = NULL;
 	node->params = NULL;
 	node->heredoc = NULL;
 	node->pipeline_in = NULL;
@@ -66,8 +65,6 @@ static void	ms_pipelinedelone(t_pipeline *pipeline)
 
 	if (!pipeline)
 		return ;
-	if (pipeline->cmd)
-		gfree(pipeline->cmd);
 	i = -1;
 	if (pipeline->params)
 		while (pipeline->params[++i])
