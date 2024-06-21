@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 13:54:19 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/21 14:20:13 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	setparamcount(t_token *tmp)
 {
 	int		count;
 
-	count = -1;
+	count = 0;
 	while (tmp && tmp->content[0] != '|')
 	{
 		if (tmp->content[0] == '<' || tmp->content[0] == '>')
