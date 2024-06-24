@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/24 17:38:05 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/24 17:55:19 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@
 static void	quotewrk(t_pipeline **pipe, t_token *token)
 {
 	char	*str;
+	char	*tmp;
 	int		i;
 
 	str = token->content;
 	i = (*pipe)->param_count;
-	if (str[1] == '$')
-		(*pipe)->params[i] = ft_strdup(findenvvalue(str + 2));
+	if (str[1] == '$' && str[0] == '"')
+	{
+		tmp = ft_substr(str, 2, ft_strlen(str) - 3);
+		(*pipe)->params[i] = ft_strdup(findenvvalue(tmp));
+	}
 	else if (str[0] == '\'')
 		(*pipe)->params[i] = ft_substr(str, 1, ft_strlen(str) - 2);
 	else
