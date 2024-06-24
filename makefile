@@ -105,6 +105,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/parsing/pipeline_ll_funcs.c \
 		srcs/parsing/exec_path.c \
 		srcs/execution/execute.c \
+		srcs/execution/pipe.c
 
 $(NAME): $(EXFT_LIB) $(SRCS) $(SUPP)
 	@echo "$$HEADER_NAME"

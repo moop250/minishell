@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 11:01:09 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/24 16:04:06 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:30:37 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ void	execute(t_core *core, char **env)
 		if (child_pid == 0)
 		{
 			if (execve(exec_path, core->pipeline->params, env) == -1)
-				ms_error("execve error");
+				ms_error("execve error\n");
 		}
 		else
 			waitpid(child_pid, &status, 0);
 	}
+	else
+		exec_pipes(core, env);
 }
 
 /* TODO
