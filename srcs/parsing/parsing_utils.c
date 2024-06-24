@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/19 17:53:59 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/24 18:40:29 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static char	*ms_seperate_env(const char *in)
 	i = 1;
 	while (!ft_strchr(SEPERATOR, in[i]))
 		++i;
-	tmp = ft_substr(in, 0, i - 1);
-	out = findenv(tmp)->value;
+	tmp = ft_substr(in, 1, i - 1);
+	out = findenvvalue(tmp);
 	gfree(tmp);
 	return (out);
 }
@@ -37,7 +37,7 @@ static char	*strwrk(size_t pos[3], const char *in, char	*out)
 	gfree(out);
 	gfree(tmp[0]);
 	out = tmp[1];
-	tmp[0] = ms_seperate_env(in);
+	tmp[0] = ms_seperate_env(in + pos[2]);
 	tmp[1] = ft_strjoin(out, tmp[0]);
 	gfree(out);
 	gfree(tmp[0]);
@@ -64,10 +64,10 @@ char	*parse_quotes(const char *in)
 	{
 		if (in[pos[0]] == '$')
 		{
-			pos[2] = pos[0] - 1;
+			pos[2] = pos[0];
 			out = strwrk(pos, in, out);
-			while (!ft_strchr(SEPERATOR, in[pos[0]]))
-				++pos[0];
+			while (!ft_strchr(SEPERATOR, in[++pos[0]]))
+				;
 			pos[1] = pos[0];
 		}
 	}
