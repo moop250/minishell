@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 14:43:38 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 11:55:41 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,11 @@ static char	*ms_prompt(t_core *core)
 t_core	*minishell_loop(int ac, char **av, char **env)
 {
 	t_core		*core;
-	//t_pipeline	*tmp;
-	//t_pipe_fd	*pipeline_fd;
 
 	while (true)
 	{
 		core = init(ac, av, env);
 		core->line = ms_prompt(core);
-		//temp exit
 		add_history(core->line);
 		if (ft_strcmp(core->line, "exit") == 0)
 			break ;
