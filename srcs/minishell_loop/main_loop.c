@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/24 15:38:28 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:57:51 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 		if (core->token_count > 0)
 			execute(core, env);
 		ms_pipelinesclear(&core->pipeline);
-		printf("\n");
 	}
 	gfree(core->line);
 	return (core);
