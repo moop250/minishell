@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 11:01:09 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/24 11:59:41 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:30:44 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ void	execute(t_core *core, char **env)
 	char	*exec_path;
 
 	exec_path = find_exec_path(core->pipeline->params[0], core->env->paths);
-	for (int i = 0; core->pipeline->params[i]; i++)
-		printf("params[%d]: %s\n", i, core->pipeline->params[i]);
-	printf("pipes: %d", core->pipe_count);
 	child_pid = fork();
 	if (child_pid == -1)
 		ms_error("fork error");

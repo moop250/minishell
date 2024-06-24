@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:00:48 by pberset           #+#    #+#             */
-/*   Updated: 2024/03/18 14:30:28 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:56:15 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char			*output;
 
 	i = 0;
-	output = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	output = (char *)malloc(sizeof(char) * (ft_strlen(s, '\0') + 1));
 	if (!output)
 		return (NULL);
 	while (s[i])

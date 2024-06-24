@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:07:58 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/18 22:09:32 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:54:41 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**ft_split(char const *s, char c)
 			ft_free_tab(str_array);
 			return (NULL);
 		}
-		s += ft_strlen(str_array[i]);
+		s += ft_strlen(str_array[i], '\0');
 		s += skip_delim(s, c);
 		i++;
 	}

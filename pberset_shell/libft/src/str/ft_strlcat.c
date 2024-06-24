@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:20:48 by pberset           #+#    #+#             */
-/*   Updated: 2024/04/18 17:41:13 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:56:05 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	}
 	if (i < dstsize)
 		dst[i + j] = '\0';
-	return (i + ft_strlen(src));
+	return (i + ft_strlen(src, '\0'));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:55:47 by pberset           #+#    #+#             */
-/*   Updated: 2024/05/27 13:49:49 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:46:53 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int		ft_putnbr_fd(int n, int fd);
 //int		ft_puthex_fd(int n, int case, int fd);
 // Writes char *s into file descriptor int fd
 int		ft_putstr_fd(char *s, int fd);
-// Returns the length of char *s
-size_t	ft_strlen(const char *s);
+// Returns the length of char *s until char c is met
+size_t	ft_strlen(const char *s, const char c);
 // Concatenates size_t dstsize char from char *src into char *dst 
 // and returns the length of the NULL terminated string it tried to create. 
 // Success result should be equal to ft_strlen(dst) + ft_strlen(src)

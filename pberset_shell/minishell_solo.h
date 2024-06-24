@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 12:50:11 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/21 09:58:34 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:00:25 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_commands
 	char	**envp;
 	char	**path;
 	char	*exec_path;
+	size_t	pipe_count;
 }	t_commands;
 
 void	shell(char *input, char **envp);
@@ -39,5 +40,6 @@ void	execute(t_commands *cmd);
 char	**parse(char *input);
 char	*find_exec_path(char *cmd, char **path);
 char	**get_path(char **envp);
+size_t	count_pipes(char *input);
 
 #endif

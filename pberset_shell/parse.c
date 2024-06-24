@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 13:57:28 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/21 09:05:28 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:00:00 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,18 @@ void	init_cmd(t_commands *cmd, char *input, char **envp)
 		mega_free(cmd);
 		return ;
 	}
+}
+
+size_t	count_pipes(char *input)
+{
+	size_t	count;
+
+	count = 0;
+	while (*input)
+	{
+		if (*input == '|')
+			count++;
+		input++;
+	}
+	return (count);
 }
