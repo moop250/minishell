@@ -51,4 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 .DS_Store
+
+# Mah Shit
 minishell
+vgcore.*
