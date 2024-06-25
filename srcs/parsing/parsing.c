@@ -6,11 +6,12 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/24 15:53:35 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:12:04 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include <stdio.h>
 
 static void	quotewrk(t_pipeline **pipe, t_token *token)
 {
@@ -36,7 +37,10 @@ static void	cmdwrk(t_pipeline **pipe, t_token *token)
 	else
 	{
 		i = (*pipe)->param_count;
-		(*pipe)->params[i] = ft_strdup(token->content);
+		if (token->content[0] == '$')
+			(*pipe)->params[i] = ft_strdup(findenvvalue(token->content + 1));
+		else
+			(*pipe)->params[i] = ft_strdup(token->content);
 		(*pipe)->params[i + 1] = NULL;
 		++(*pipe)->param_count;
 	}

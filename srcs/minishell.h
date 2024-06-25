@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/24 17:30:33 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:10:33 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ void		parser(t_core *core, t_token *token);
 void		execute(t_core *core, char **env);
 void		exec_pipes(t_core *core, char **env);
 char		*find_exec_path(char *cmd, char **path);
+char		*findenvvalue(char *in);
 
 #endif

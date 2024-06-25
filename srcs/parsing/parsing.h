@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:24:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/19 17:53:55 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/24 18:35:06 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../minishell.h"
 # include "../lexing/lexing.h"
 
-# define SEPERATOR "+-=;'\"~/?$.<>]{} \n\t"
+# define SEPERATOR "+-=;'\"~/?$.,<>]{} \n\t"
 
 char		*parse_quotes(const char *in);
 t_pipeline	*ms_addpipeline_back(t_core *core);

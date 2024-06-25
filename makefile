@@ -93,7 +93,6 @@ SRCS = srcs/minishell.c \
 
 SUPP = srcs/error_handling/errors.c \
 		srcs/initialization/init.c \
-		srcs/initialization/env_funcs.c \
 		srcs/initialization/init_utils.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \
@@ -106,6 +105,8 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/parsing/exec_path.c \
 		srcs/execution/execute.c \
 		srcs/execution/pipe.c
+		srcs/env/env_funcs.c \
+		srcs/env/env_extras.c \
 
 $(NAME): $(EXFT_LIB) $(SRCS) $(SUPP)
 	@echo "$$HEADER_NAME"

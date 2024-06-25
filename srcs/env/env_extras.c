@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   env_extras.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 15:01:29 by pberset           #+#    #+#             */
-/*   Updated: 2023/10/10 13:53:11 by pberset          ###   ########.fr       */
+/*   Created: 2024/06/24 17:19:00 by hlibine           #+#    #+#             */
+/*   Updated: 2024/06/24 17:35:30 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "../minishell.h"
+
+char	*findenvvalue(char *in)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	t_envparam	*env;
+
+	env = findenv(in);
+	if (env == NULL)
+		return (ft_strdup(""));
+	return (ft_strdup(env->value));
 }
