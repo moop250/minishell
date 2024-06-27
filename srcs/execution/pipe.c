@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/27 16:34:11 by pberset          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/27 16:38:24 by pberset          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	exec_pipes(t_core *core, char **env)
 		core->pipeline = core->pipeline->next;
 		i++;
 	}
-	while ( ++i <= core->pipe_count)
+	while (++i <= core->pipe_count)
 		wait(NULL);
 }
