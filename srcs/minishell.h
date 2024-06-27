@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/27 16:47:46 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/27 17:22:22 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <errno.h>
 # include "../libs/extended_ft/srcs/extended_ft.h"
 
@@ -94,6 +96,7 @@ typedef struct s_core
 	char			*prompt;
 	char			*line;
 	t_token			*token;
+	int				pipe_count;
 	int				token_count;
 	t_pipeline		*pipeline;
 	int				ms_stdin;
@@ -117,6 +120,9 @@ void		clear_envs(t_envparam *envs);
 void		ms_env(t_core *core);
 char		*ms_getcwd(void);
 void		parser(t_core *core, t_token *token);
+void		execute(t_core *core, char **env);
+void		exec_pipes(t_core *core, char **env);
+char		*find_exec_path(char *cmd, char **path);
 char		*findenvvalue(char *in);
 
 #endif

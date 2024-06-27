@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/21 13:55:03 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/24 17:30:39 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,46 +49,20 @@ static char	*ms_prompt(t_core *core)
 t_core	*minishell_loop(int ac, char **av, char **env)
 {
 	t_core		*core;
-	t_pipeline	*tmp;
-	t_pipe_fd	*pipeline_fd;
-	int			i;
-	int			a;
 
 	while (true)
 	{
 		core = init(ac, av, env);
 		core->line = ms_prompt(core);
-		//temp exit
+		add_history(core->line);
 		if (ft_strcmp(core->line, "exit") == 0)
 			break ;
 		if (!tokenizer(ft_strtrim(core->line, WHITESPACE), core))
 			continue ;
 		parser(core, core->token);
-		tmp = core->pipeline;
-		a = -1;
-		while (tmp)
-		{
-			ft_printf_fd(core->ms_stdout, "pipleine %i\n", ++a);
-			i = -1;
-			pipeline_fd = tmp->pipeline_in;
-			while (pipeline_fd)
-			{
-				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->heredoc);
-				pipeline_fd = pipeline_fd->next;
-			}
-			if (tmp->params)
-				while (tmp->params[++i])
-					ft_printf_fd(core->ms_stdout, "param: %s\n", tmp->params[i]);
-			pipeline_fd = tmp->pipeline_out;
-			while (pipeline_fd)
-			{
-				ft_printf_fd(core->ms_stdout, "file name: %s : heredoc %i\n", pipeline_fd->file_name, pipeline_fd->append);
-				pipeline_fd = pipeline_fd->next;
-			}
-			tmp = tmp->next;
-		}
+		if (core->token_count > 0)
+			execute(core, env);
 		ms_pipelinesclear(&core->pipeline);
-		printf("\n");
 	}
 	gfree(core->line);
 	return (core);
