@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/24 17:37:04 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/27 16:47:46 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # define WHITESPACE " \n\t"
 
 # define NOENVPATH "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
+
+// Error Messages
+# define GENERROR "minishell error:"
+# define PARSEERROR "parse error near"
 
 // structs
 typedef struct s_pipe_fd
@@ -98,7 +102,7 @@ typedef struct s_core
 
 // functions
 void		ms_error(char *in);
-void		ms_printerror(char *in);
+void		ms_printerror(int errorcode, char *in);
 t_core		*init(int ac, char **av, char **env);
 int			tokenizer(char *input, t_core *core);
 t_core		*minishell_loop(int ac, char **av, char **env);

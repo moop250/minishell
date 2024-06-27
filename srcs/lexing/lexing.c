@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 14:36:33 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/27 17:09:17 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,26 @@ static int	quote_seperator(const char *input, const int start)
 		++pos;
 	if (input[pos] == input[start])
 		return (pos + 1);
-	ms_printerror(ft_strjoin("no ending quote at ", ft_itoa(pos)));
+	ms_printerror(0, "tmp error while i figure out the mini heredoc");
 	return (-1);
 }
 
 static int	seperator(const char *str, int pos)
 {
-	char	tmp;
+	char	tmp[2];
 	int		count;
 
 	count = 1;
+	tmp[1] = '\0';
 	if (ft_strchr(REDIRECTS, str[pos]))
 	{
-		tmp = str[pos];
-		while (str[++pos] == tmp)
+		tmp[0] = str[pos];
+		while (str[++pos] == tmp[0])
 			++count;
-		if (((tmp == '<' || tmp == '>') && count > 2)
-			|| (tmp == '|' && count > 1))
+		if (((tmp[0] == '<' || tmp[0] == '>') && count > 2)
+			|| (tmp[0] == '|' && count > 1))
 		{
-			ms_printerror(ft_strjoin("ivalid redirection or pipe at ",
-					ft_itoa(pos)));
+			ms_printerror(1, tmp);
 			return (-1);
 		}
 	}
@@ -81,6 +81,33 @@ static int	tokenizer_loop(t_core *core, char *input)
 	return (1);
 }
 
+static int	tokenizer_checker(t_core *core)
+{
+	t_token	*tmp;
+	char	errms[2];
+
+	tmp = core->token;
+	while (tmp)
+	{
+		if ((tmp->content[0] == '<' || tmp->content[0] == '>') && !tmp->next)
+		{
+			ms_printerror(1, "\\n");
+			return (-1);
+		}
+		else if ((tmp->content[0] == '<' || tmp->content[0] == '>')
+			&& (tmp->next->content[0] == '<' || tmp->next->content[0] == '>'
+				|| tmp->next->content[0] == '|'))
+		{
+			errms[0] = tmp->next->content[0];
+			errms[1] = '\0';
+			ms_printerror(1, errms);
+			return (-1);
+		}
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
 int	tokenizer(char *input, t_core *core)
 {
 	int	i;
@@ -88,8 +115,11 @@ int	tokenizer(char *input, t_core *core)
 	core->token_count = 0;
 	gfree(core->line);
 	i = tokenizer_loop(core, input);
-	if (i > 0)
-		return (i);
 	gfree(input);
-	return (1);
+	if (i < 0)
+		return (i);
+	i = tokenizer_checker(core);
+	if (i < 0)
+		ms_tokensclear(&core->token);
+	return (i);
 }
