@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/27 17:22:22 by pberset          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:23:14 by pberset          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_core
 	int				pipe_count;
 	int				token_count;
 	t_pipeline		*pipeline;
+	int				exit_status;
 	int				ms_stdin;
 	int				ms_stdout;
 }	t_core;
