@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/01 17:49:08 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/01 18:05:33 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ char	*parse_envvars(const char *in, int mode)
 	size_t	pos[3];
 	char	*tmp[2];
 
-	pos[0] = mode;
+	pos[0] = mode - 1;
 	pos[1] = mode;
 	out = ft_strdup("");
-	while (in[pos[0] + mode])
+	while (in[++pos[0] + mode])
 	{
 		if (in[pos[0]] == '$')
 		{
@@ -74,13 +74,10 @@ char	*parse_envvars(const char *in, int mode)
 		}
 		if (in[pos[1]] == '"')
 			return (out);
-		++pos[0];
 	}
 	tmp[0] = ft_substr(in, pos[1], pos[0] - pos[1]);
 	tmp[1] = ft_strjoin(out, tmp[0]);
-	gfree(out);
-	gfree(tmp[0]);
-	return (tmp[1]);
+	return (gfree(out), gfree(tmp[0]), tmp[1]);
 }
 
 void	setdelimiter(t_pipeline **pipe, t_token **token, int status)
