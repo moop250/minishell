@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/28 14:23:14 by pberset          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/01 15:12:01 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_pipeline
 {
 	char				**params;
 	int					param_count;
+	char				*execp;
 	bool				heredoc;
 	struct s_pipe_fd	*pipeline_in;
 	struct s_pipe_fd	*pipeline_out;
@@ -99,6 +100,7 @@ typedef struct s_core
 	int				pipe_count;
 	int				token_count;
 	t_pipeline		*pipeline;
+	int				prev_fd;
 	int				exit_status;
 	int				ms_stdin;
 	int				ms_stdout;
@@ -122,7 +124,6 @@ void		ms_env(t_core *core);
 char		*ms_getcwd(void);
 void		parser(t_core *core, t_token *token);
 void		execute(t_core *core, char **env);
-void		exec_pipes(t_core *core, char **env);
 char		*find_exec_path(char *cmd, char **path);
 char		*findenvvalue(char *in);
 

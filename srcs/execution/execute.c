@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 11:01:09 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/24 17:30:37 by pberset          ###   ########.fr       */
+/*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
+/*   Updated: 2024/07/01 16:22:09 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,58 @@
 
 void	execute(t_core *core, char **env)
 {
-	int		child_pid;
-	int		status;
-	char	*exec_path;
+	int		fd[2];
+	int		*child_pid;
+	int		i;
+	t_pipeline	*tmp_pipe;
 
-	if (core->pipe_count == 0)
+	i = 0;
+	tmp_pipe = core->pipeline;
+	core->prev_fd = -1;
+	child_pid = (int *)malloc((core->pipe_count + 1) * sizeof(int));
+	if (!child_pid)
+		ms_error("malloc error\n");
+	while (i <= core->pipe_count)
 	{
-		exec_path = find_exec_path(core->pipeline->params[0], core->env->paths);
-		child_pid = fork();
-		if (child_pid == -1)
-			ms_error("fork error");
-		if (child_pid == 0)
+		if (!access(core->pipeline->params[0], X_OK))
+			core->pipeline->execp = core->pipeline->params[0];
+		else
+			core->pipeline->execp = find_exec_path(core->pipeline->params[0], core->env->paths);
+		if (pipe(fd) == -1)
+			ms_error("pipe error\n");
+		child_pid[i] = fork();
+		if (child_pid[i] == -1)
+			ms_error("child error\n");
+		if (child_pid[i] == 0)
 		{
-			if (execve(exec_path, core->pipeline->params, env) == -1)
+			if (core->prev_fd != -1)
+			{
+				dup2(core->prev_fd, STDIN_FILENO);
+				close(core->prev_fd);
+			}
+			if (i < core->pipe_count)
+			{
+				close(fd[0]);
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[1]);
+			}
+			if (execve(core->pipeline->execp, core->pipeline->params, env) == -1)
 				ms_error("execve error\n");
 		}
 		else
-			waitpid(child_pid, &status, 0);
+		{
+			if (core->prev_fd != -1)
+				close(core->prev_fd);
+			close(fd[1]);
+			core->prev_fd = fd[0];
+		}
+		free(core->pipeline->execp);
+		core->pipeline = core->pipeline->next;
+		i++;
 	}
-	else
-		exec_pipes(core, env);
+	i = 0;
+	while (i++ <= core->pipe_count)
+			waitpid(child_pid[i], &(core->exit_status), 0);
+	free(child_pid);
+	core->pipeline = tmp_pipe;
 }
-
-/* TODO
-If core->pipe_count > 0, we need to handle pipes
-en gros, while pipe_count pipeline
-dup2() to redirect stdout to the write end of the pipe
-dup2() to redirect stdin to the read end of the pipe
-close the read end of the pipe
-close the write end of the pipe
-fork() and exec() the command
-*/

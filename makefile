@@ -81,7 +81,7 @@ ORANGE = \033[38;5;208m
 RESET = \033[0m
 
 NAME = minishell
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -lreadline -g
 DEVFLAGS = -lreadline -g3 -fsanitize=address
 RM = rm -f
@@ -104,7 +104,6 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/parsing/pipeline_ll_funcs.c \
 		srcs/parsing/exec_path.c \
 		srcs/execution/execute.c \
-		srcs/execution/pipe.c \
 		srcs/env/env_funcs.c \
 		srcs/env/env_extras.c \
 
