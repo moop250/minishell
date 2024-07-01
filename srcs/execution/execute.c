@@ -6,11 +6,18 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/01 16:22:09 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/01 18:37:11 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static char	*init_execp(t_core *core)
+{
+	if (access(core->pipeline->params[0], X_OK) == 0)
+		return (core->pipeline->params[0]);
+	return (find_exec_path(core->pipeline->params[0], core->env->paths));
+}
 
 void	execute(t_core *core, char **env)
 {
@@ -27,10 +34,7 @@ void	execute(t_core *core, char **env)
 		ms_error("malloc error\n");
 	while (i <= core->pipe_count)
 	{
-		if (!access(core->pipeline->params[0], X_OK))
-			core->pipeline->execp = core->pipeline->params[0];
-		else
-			core->pipeline->execp = find_exec_path(core->pipeline->params[0], core->env->paths);
+		core->pipeline->execp = init_execp(core);
 		if (pipe(fd) == -1)
 			ms_error("pipe error\n");
 		child_pid[i] = fork();
@@ -59,7 +63,6 @@ void	execute(t_core *core, char **env)
 			close(fd[1]);
 			core->prev_fd = fd[0];
 		}
-		free(core->pipeline->execp);
 		core->pipeline = core->pipeline->next;
 		i++;
 	}
