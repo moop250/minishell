@@ -6,12 +6,11 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/25 17:12:04 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/01 17:38:55 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include <stdio.h>
 
 static void	quotewrk(t_pipeline **pipe, t_token *token)
 {
@@ -23,7 +22,7 @@ static void	quotewrk(t_pipeline **pipe, t_token *token)
 	if (str[0] == '\'')
 		(*pipe)->params[i] = ft_substr(str, 1, ft_strlen(str) - 2);
 	else
-		(*pipe)->params[i] = parse_quotes(str);
+		(*pipe)->params[i] = parse_envvars(str, 1);
 	(*pipe)->params[i + 1] = NULL;
 	++(*pipe)->param_count;
 }
@@ -38,7 +37,7 @@ static void	cmdwrk(t_pipeline **pipe, t_token *token)
 	{
 		i = (*pipe)->param_count;
 		if (token->content[0] == '$')
-			(*pipe)->params[i] = ft_strdup(findenvvalue(token->content + 1));
+			(*pipe)->params[i] = parse_envvars(token->content, 0);
 		else
 			(*pipe)->params[i] = ft_strdup(token->content);
 		(*pipe)->params[i + 1] = NULL;

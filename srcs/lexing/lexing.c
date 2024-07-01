@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/27 17:09:17 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/06/28 13:50:45 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,12 @@ int	tokenizer(char *input, t_core *core)
 	if (i < 0)
 		return (i);
 	i = tokenizer_checker(core);
+	if (core->token)
+		if (core->token->content[0] == '|')
+		{
+			ms_printerror(1, "|");
+			i = -1;
+		}
 	if (i < 0)
 		ms_tokensclear(&core->token);
 	return (i);
