@@ -6,18 +6,24 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:24:59 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/02 13:49:15 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/02 16:33:33 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	get_infile_fd(t_pipe_fd *pipeline_in)
+void	handle_infile(t_pipe_fd *pipeline_in)
 {
-	int	fd;
+	int	f_error;
 
 	if (!pipeline_in || !pipeline_in->file_name)
-		return (-2);
-	fd = open(pipeline_in->file_name, O_RDONLY);
-	return (fd);
+		ms_error("infile error: no file name");
+	pipeline_in->fd = open(pipeline_in->file_name, O_RDONLY);
+	if (pipeline_in->fd == -1)
+		ms_error("infile error: open error");
+	f_error = dup2(pipeline_in->fd, STDIN_FILENO);
+	if (close(pipeline_in->fd) == -1)
+		ms_error("infile error: close error");
+	if (f_error == -1)
+		ms_error("dup2 error\n");
 }

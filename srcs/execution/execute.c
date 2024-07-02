@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/02 13:19:50 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/02 16:40:09 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static void	exec_child(int i, t_core *core, int *fd, char **env)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-	for (int i = 0; i < core->pipeline->param_count; i++)
-		ft_printf_fd(1, "params: %s\n", core->pipeline->params[i]);
 	if (execve(core->pipeline->execp, core->pipeline->params, env) == -1)
 		ms_error("execve error\n");
 }
@@ -46,6 +44,7 @@ static void	pipe_loop(t_core *core, int *child_pid, char **env)
 	i = 0;
 	while (i <= core->pipe_count)
 	{
+		handle_files(core->pipeline);
 		core->pipeline->execp = init_execp(core);
 		if (pipe(fd) == -1)
 			ms_error("pipe error\n");
@@ -71,12 +70,14 @@ void	execute(t_core *core, char **env)
 	int			*child_pid;
 	int			i;
 	t_pipeline	*tmp_pipe;
+	int			b_stdin;
 
 	tmp_pipe = core->pipeline;
 	core->prev_fd = -1;
 	child_pid = (int *)malloc((core->pipe_count + 1) * sizeof(int));
 	if (!child_pid)
 		ms_error("malloc error\n");
+	b_stdin = dup(STDIN_FILENO);
 	pipe_loop(core, child_pid, env);
 	i = 0;
 	while (i <= core->pipe_count)
@@ -86,4 +87,5 @@ void	execute(t_core *core, char **env)
 	}
 	free(child_pid);
 	core->pipeline = tmp_pipe;
+	dup2(b_stdin, STDIN_FILENO);
 }
