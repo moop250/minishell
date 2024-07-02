@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/02 11:26:35 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/02 13:19:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,11 @@ void	execute(t_core *core, char **env)
 		ms_error("malloc error\n");
 	pipe_loop(core, child_pid, env);
 	i = 0;
-	while (i++ <= core->pipe_count)
+	while (i <= core->pipe_count)
+	{
 		waitpid(child_pid[i], &(core->exit_status), 0);
+		i++;
+	}
 	free(child_pid);
 	core->pipeline = tmp_pipe;
 }
