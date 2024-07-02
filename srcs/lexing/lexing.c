@@ -6,29 +6,22 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/28 13:50:45 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/02 16:52:33 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
+#include <stdbool.h>
 
-static int	quote_seperator(const char *input, const int start)
+static int	param_seperator(const char *str, const int pos)
 {
-	int	pos;
-
-	pos = start + 1;
-	while (input[pos] && input[pos] != input[start])
-		++pos;
-	if (input[pos] == input[start])
-		return (pos + 1);
-	ms_printerror(0, "tmp error while i figure out the mini heredoc");
-	return (-1);
 }
 
 static int	seperator(const char *str, int pos)
 {
 	char	tmp[2];
 	int		count;
+	bool	quotes;
 
 	count = 1;
 	tmp[1] = '\0';
@@ -46,9 +39,16 @@ static int	seperator(const char *str, int pos)
 	}
 	else
 	{
-		while (str[pos] && !ft_strchr(WHITESPACE, str[pos])
-			&& !ft_strchr(REDIRECTS, str[pos]))
+		quotes = false;
+		while ((str[pos] && !ft_strchr(WHITESPACE, str[pos])
+				&& !ft_strchr(REDIRECTS, str[pos])) || (str[pos] && quotes))
+		{
+			if ((str[pos] == '"' || str[pos] == '\'') && !quotes)
+				quotes = true;
+			else if ((str[pos] == '"' || str[pos] == '\'') && quotes)
+				quotes = false;
 			++pos;
+		}
 	}
 	return (pos);
 }
@@ -64,10 +64,7 @@ static int	tokenizer_loop(t_core *core, char *input)
 		while (input[i] && ft_strchr(WHITESPACE, input[i]))
 			i++;
 		pos[0] = i;
-		if (ft_strchr(QUOTES, input[i]))
-			pos[1] = quote_seperator(input, pos[0]);
-		else
-			pos[1] = seperator(input, pos[0]);
+		pos[1] = seperator(input, pos[0]);
 		if (pos[1] == -1)
 		{
 			ms_tokensclear(&core->token);
