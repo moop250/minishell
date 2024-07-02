@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/02 13:19:50 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/02 14:52:31 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	pipe_loop(t_core *core, int *child_pid, char **env)
 	i = 0;
 	while (i <= core->pipe_count)
 	{
+		handle_files(core->pipeline);
 		core->pipeline->execp = init_execp(core);
 		if (pipe(fd) == -1)
 			ms_error("pipe error\n");
