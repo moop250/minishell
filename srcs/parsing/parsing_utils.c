@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/01 18:05:33 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/02 14:01:48 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ char	*parse_envvars(const char *in, int mode)
 		{
 			pos[2] = pos[0];
 			out = strwrk(pos, in, out);
-			while (!ft_strchr(SEPERATOR, in[++pos[0]]))
+			while (in[++pos[0]] && !ft_strchr(SEPERATOR, in[pos[0]]))
 				;
 			pos[1] = pos[0];
 			if (in[pos[0]] == '$')
 				--pos[0];
 		}
-		if (in[pos[1]] == '"')
+		if (in[pos[1]] == '"' || !in[pos[1]])
 			return (out);
 	}
 	tmp[0] = ft_substr(in, pos[1], pos[0] - pos[1]);
