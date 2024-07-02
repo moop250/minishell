@@ -6,22 +6,35 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/02 16:52:33 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/02 17:01:11 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
-#include <stdbool.h>
 
-static int	param_seperator(const char *str, const int pos)
+static size_t	param_seperator(const char *str, const int start)
 {
+	bool	quotes;
+	size_t	pos;
+
+	quotes = false;
+	pos = start;
+	while ((str[pos] && !ft_strchr(WHITESPACE, str[pos])
+			&& !ft_strchr(REDIRECTS, str[pos])) || (str[pos] && quotes))
+	{
+		if ((str[pos] == '"' || str[pos] == '\'') && !quotes)
+			quotes = true;
+		else if ((str[pos] == '"' || str[pos] == '\'') && quotes)
+			quotes = false;
+		++pos;
+	}
+	return (pos);
 }
 
 static int	seperator(const char *str, int pos)
 {
 	char	tmp[2];
 	int		count;
-	bool	quotes;
 
 	count = 1;
 	tmp[1] = '\0';
@@ -38,18 +51,7 @@ static int	seperator(const char *str, int pos)
 		}
 	}
 	else
-	{
-		quotes = false;
-		while ((str[pos] && !ft_strchr(WHITESPACE, str[pos])
-				&& !ft_strchr(REDIRECTS, str[pos])) || (str[pos] && quotes))
-		{
-			if ((str[pos] == '"' || str[pos] == '\'') && !quotes)
-				quotes = true;
-			else if ((str[pos] == '"' || str[pos] == '\'') && quotes)
-				quotes = false;
-			++pos;
-		}
-	}
+		pos = param_seperator(str, pos);
 	return (pos);
 }
 
