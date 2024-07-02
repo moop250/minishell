@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/01 18:57:17 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/02 13:19:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	exec_child(int i, t_core *core, int *fd, char **env)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
+	for (int i = 0; i < core->pipeline->param_count; i++)
+		ft_printf_fd(1, "params: %s\n", core->pipeline->params[i]);
 	if (execve(core->pipeline->execp, core->pipeline->params, env) == -1)
 		ms_error("execve error\n");
 }
@@ -77,8 +79,11 @@ void	execute(t_core *core, char **env)
 		ms_error("malloc error\n");
 	pipe_loop(core, child_pid, env);
 	i = 0;
-	while (i++ <= core->pipe_count)
+	while (i <= core->pipe_count)
+	{
 		waitpid(child_pid[i], &(core->exit_status), 0);
+		i++;
+	}
 	free(child_pid);
 	core->pipeline = tmp_pipe;
 }
