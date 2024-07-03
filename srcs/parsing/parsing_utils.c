@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/03 20:28:26 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/03 20:49:32 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static char	*quotewrk(const char *in)
 	return (out);
 }
 
-static int	treat_dollar(const char *in, t_list *list, int pos)
+static int	treat_dollar(const char *in, t_list **list, int pos)
 {
 	int		out;
 	char	*tmp;
@@ -108,9 +108,8 @@ static int	treat_dollar(const char *in, t_list *list, int pos)
 	out = 0;
 	while (in[++out] && !ft_strchr(SEPERATOR, in[out]))
 		;
-	tmp = ft_substr(in, 1, out);
-	printf("%s¦\n", tmp);
-	ft_lstadd_back(&list, ft_lstnew(findenvvalue(tmp)));
+	tmp = ft_substr(in, 1, out - 1);
+	ft_lstadd_back(list, ft_lstnew(findenvvalue(tmp)));
 	gfree(tmp);
 	return (out + pos);
 }
@@ -161,7 +160,7 @@ char	*parse_envvars(const char *in)
 		}
 		else if (in[pos[0]] == '$')
 		{
-			pos[0] = treat_dollar(in + pos[0], list, pos[0]);
+			pos[0] = treat_dollar(in + pos[0], &list, pos[0]);
 			pos[1] = pos[0];
 		}
 		else
