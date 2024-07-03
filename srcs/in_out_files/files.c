@@ -16,4 +16,6 @@ void	handle_files(t_pipeline *pipeline)
 {
 	if (pipeline->pipeline_in)
 		handle_infile(pipeline->pipeline_in);
+	if (pipeline->pipeline_out)
+		handle_outfile(pipeline->pipeline_out);
 }

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/02 16:40:09 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:21:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ static void	exec_child(int i, t_core *core, int *fd, char **env)
 		ms_error("execve error\n");
 }
 
+static void	parental_cleaning(t_core *core, int *fd)
+{
+	if (core->prev_fd != -1)
+		close(core->prev_fd);
+	if (core->pipeline->pipeline_out)
+		close(core->pipeline->pipeline_out->fd);
+	close(fd[1]);
+	core->prev_fd = fd[0];
+}
+
 static void	pipe_loop(t_core *core, int *child_pid, char **env)
 {
 	int	i;
@@ -54,12 +64,7 @@ static void	pipe_loop(t_core *core, int *child_pid, char **env)
 		if (child_pid[i] == 0)
 			exec_child(i, core, fd, env);
 		else
-		{
-			if (core->prev_fd != -1)
-				close(core->prev_fd);
-			close(fd[1]);
-			core->prev_fd = fd[0];
-		}
+			parental_cleaning(core, fd);
 		core->pipeline = core->pipeline->next;
 		i++;
 	}
@@ -71,6 +76,7 @@ void	execute(t_core *core, char **env)
 	int			i;
 	t_pipeline	*tmp_pipe;
 	int			b_stdin;
+	int			b_stdout;
 
 	tmp_pipe = core->pipeline;
 	core->prev_fd = -1;
@@ -78,6 +84,7 @@ void	execute(t_core *core, char **env)
 	if (!child_pid)
 		ms_error("malloc error\n");
 	b_stdin = dup(STDIN_FILENO);
+	b_stdout = dup(STDOUT_FILENO);
 	pipe_loop(core, child_pid, env);
 	i = 0;
 	while (i <= core->pipe_count)
@@ -88,4 +95,5 @@ void	execute(t_core *core, char **env)
 	free(child_pid);
 	core->pipeline = tmp_pipe;
 	dup2(b_stdin, STDIN_FILENO);
+	dup2(b_stdout, STDOUT_FILENO);
 }
