@@ -3,46 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/01 17:38:55 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/03 16:23:59 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static void	quotewrk(t_pipeline **pipe, t_token *token)
-{
-	char	*str;
-	int		i;
-
-	str = token->content;
-	i = (*pipe)->param_count;
-	if (str[0] == '\'')
-		(*pipe)->params[i] = ft_substr(str, 1, ft_strlen(str) - 2);
-	else
-		(*pipe)->params[i] = parse_envvars(str, 1);
-	(*pipe)->params[i + 1] = NULL;
-	++(*pipe)->param_count;
-}
-
 static void	cmdwrk(t_pipeline **pipe, t_token *token)
 {
 	size_t	i;
 
-	if (token->content[0] == '\'' || token->content[0] == '"')
-		quotewrk(pipe, token);
-	else
-	{
-		i = (*pipe)->param_count;
-		if (token->content[0] == '$')
-			(*pipe)->params[i] = parse_envvars(token->content, 0);
-		else
-			(*pipe)->params[i] = ft_strdup(token->content);
-		(*pipe)->params[i + 1] = NULL;
-		++(*pipe)->param_count;
-	}
+	i = (*pipe)->param_count;
+	(*pipe)->params[i] = parse_envvars(token->content);
+	(*pipe)->params[i + 1] = NULL;
+	++(*pipe)->param_count;
 }
 
 static int	setparamcount(t_token *tmp)
