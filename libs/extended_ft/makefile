@@ -6,7 +6,7 @@
 #    By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/18 15:13:08 by hlibine           #+#    #+#              #
-#    Updated: 2024/05/22 13:28:50 by hlibine          ###   ########.fr        #
+#    Updated: 2024/07/03 20:16:09 by hlibine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,6 @@ FILES = srcs/ft_atoi \
 			srcs/ft_lstdelone \
 			srcs/ft_lstclear \
 			srcs/ft_lstiter \
-			srcs/ft_lstmap \
 			srcs/get_next_line/get_next_line \
 			srcs/ft_printf/ft_printf_utils \
  			srcs/ft_printf/ft_printf \
