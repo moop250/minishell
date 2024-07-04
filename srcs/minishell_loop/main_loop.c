@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/02 16:58:40 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/04 13:29:26 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*ms_prompt(t_core *core)
 	prompt = make_prompt(core);
 	tmp = readline(prompt);
 	if (!tmp)
-		ms_error("readline error");
+		ms_error("readline error\n");
 	addgarbage(tmp);
 	gfree(prompt);
 	return (tmp);

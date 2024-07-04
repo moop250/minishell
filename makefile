@@ -83,7 +83,7 @@ RESET = \033[0m
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -lreadline -g
-DEVFLAGS = -lreadline -g3 -fsanitize=address
+DEVFLAGS = -lreadline -g3 
 RM = rm -f
 
 EXTENDED_FT = libs/extended_ft/
@@ -107,6 +107,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/execution/execute.c \
 		srcs/in_out_files/files.c \
 		srcs/in_out_files/infile.c \
+		srcs/in_out_files/heredoc.c \
 		srcs/in_out_files/outfile.c \
 		srcs/env/env_funcs.c \
 		srcs/env/env_extras.c \

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:24:59 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/03 16:08:55 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/04 14:13:34 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,24 @@ void	handle_infile(t_pipe_fd *pipeline_in)
 	int	f_error;
 
 	if (!pipeline_in || !pipeline_in->file_name)
-		ms_error("infile error: no file name");
-	pipeline_in->fd = open(pipeline_in->file_name, O_RDONLY);
-	if (pipeline_in->fd == -1)
-		ms_error("infile error: open error");
-	f_error = dup2(pipeline_in->fd, STDIN_FILENO);
-	if (close(pipeline_in->fd) == -1)
-		ms_error("infile error: close error");
-	if (f_error == -1)
-		ms_error("dup2 error\n");
+		ms_printerror(0, "infile error: no file name");
+	if(pipeline_in->heredoc)
+		handle_heredoc(pipeline_in);
+	else
+	{
+		pipeline_in->fd = open(pipeline_in->file_name, O_RDONLY);
+		if (pipeline_in->fd == -1)
+		{
+			perror(pipeline_in->file_name);
+			return ;
+		}
+		f_error = dup2(pipeline_in->fd, STDIN_FILENO);
+		if (close(pipeline_in->fd) == -1)
+			perror(pipeline_in->file_name);
+		if (f_error == -1)
+			perror("dup2");
+		if (!ft_strcmp(pipeline_in->file_name, ".heredoc"))
+			if (unlink(".heredoc") == -1)
+				perror(".heredoc");
+	}
 }

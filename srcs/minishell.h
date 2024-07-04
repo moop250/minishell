@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/03 15:37:23 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/03 19:53:14 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void		execute(t_core *core, char **env);
 char		*find_exec_path(char *cmd, char **path);
 void		handle_files(t_pipeline *pipeline);
 void		handle_infile(t_pipe_fd *pipeline_in);
+void		handle_heredoc(t_pipe_fd *pipeline_in);
 void		handle_outfile(t_pipe_fd *pipeline_out);
 
 #endif
