@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:24:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 13:36:51 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/04 16:22:59 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_pipe_fd	*ms_addpipe_fd_back(t_pipe_fd **pipe_fd);
 void		ms_freepipefd(t_pipe_fd **pipe_fd);
 void		setdelimiter(t_pipeline **pipe, t_token **token, int status);
 char		*strwrk(size_t pos[3], const char *in, char	*out);
-char		*quotewrk(const char *in);
+size_t		quotewrk(const char *in, t_list **list);
+size_t		treat_dollar(const char *in, t_list **list, size_t pos);
+size_t		treat_text(const char *in, t_list **list, size_t pos[2], int mode);
 
 #endif

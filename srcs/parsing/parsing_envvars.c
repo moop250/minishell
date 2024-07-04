@@ -6,17 +6,17 @@
 /*   By: hlibine <hlibine@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:24:10 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 15:17:02 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/04 17:03:15 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	treat_dollar(const char *in, t_list **list, int pos)
+size_t	treat_dollar(const char *in, t_list **list, size_t pos)
 {
-	int		out;
-	char	*tmp;
-	t_core	*core;
+	size_t		out;
+	char		*tmp;
+	t_core		*core;
 
 	out = 0;
 	core = get_core();
@@ -36,27 +36,25 @@ static int	treat_dollar(const char *in, t_list **list, int pos)
 	return (out + pos);
 }
 
-static int	treat_quote(const char *in, t_list **list, int pos)
+static size_t	treat_quote(const char *in, t_list **list, size_t pos)
 {
-	char	tmp;
-
-	tmp = in[pos];
-	ft_lstadd_back(list, ft_lstnew(quotewrk(in + pos)));
-	while (in[++pos] && in[pos] != tmp)
-		;
+	pos = quotewrk(in + pos, list);
 	return (++pos);
 }
 
-static int	treat_text(const char *in, t_list **list, int pos[2])
+size_t	treat_text(const char *in, t_list **list, size_t pos[2], int mode)
 {
-	int	out;
-
-	while (in[pos[0]] != '"' && in[pos[0]] != '\''
-		&& in[pos[0]] != '$' && in[pos[0]])
-		++pos[0];
+	if (mode == 0)
+	{
+		while (in[pos[0]] != '"' && in[pos[0]] != '\''
+			&& in[pos[0]] != '$' && in[pos[0]])
+			++pos[0];
+	}
+	else
+		while (in[pos[0]] != '"' && in[pos[0]] != '$' && in[pos[0]])
+			++pos[0];
 	ft_lstadd_back(list, ft_lstnew(ft_substr(in, pos[1], pos[0] - pos[1])));
-	out = pos[0];
-	return (out);
+	return (pos[0]);
 }
 
 static char	*recombine(t_list *list)
@@ -86,7 +84,7 @@ static char	*recombine(t_list *list)
 char	*parse_envvars(const char *in)
 {
 	t_list	*list;
-	int		pos[2];
+	size_t	pos[2];
 
 	list = NULL;
 	pos[0] = 0;
@@ -95,7 +93,7 @@ char	*parse_envvars(const char *in)
 	{
 		if (in[pos[0]] == '\'' || in[pos[0]] == '"')
 		{
-			pos[0] = treat_quote(in, &list, pos[0]);
+			pos[0] += treat_quote(in, &list, pos[0]);
 			pos[1] = pos[0];
 		}
 		else if (in[pos[0]] == '$')
@@ -104,7 +102,7 @@ char	*parse_envvars(const char *in)
 			pos[1] = pos[0];
 		}
 		else
-			pos[0] = treat_text(in, &list, pos);
+			pos[0] = treat_text(in, &list, pos, 0);
 	}
 	return (recombine(list));
 }
