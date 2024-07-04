@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/03 16:21:55 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:13:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	*init_execp(t_core *core)
 {
+	if (!core->pipeline->params)
+		return (NULL);
 	if (access(core->pipeline->params[0], X_OK) == 0)
 		return (core->pipeline->params[0]);
 	return (find_exec_path(core->pipeline->params[0], core->env->paths));
@@ -33,7 +35,7 @@ static void	exec_child(int i, t_core *core, int *fd, char **env)
 		close(fd[1]);
 	}
 	if (execve(core->pipeline->execp, core->pipeline->params, env) == -1)
-		ms_error("execve error\n");
+		perror("execve");
 }
 
 static void	parental_cleaning(t_core *core, int *fd)
@@ -42,8 +44,13 @@ static void	parental_cleaning(t_core *core, int *fd)
 		close(core->prev_fd);
 	if (core->pipeline->pipeline_out)
 		close(core->pipeline->pipeline_out->fd);
-	close(fd[1]);
+	close(fd[0]);
 	core->prev_fd = fd[0];
+	if (core->pipeline->execp)
+	{
+		gfree(core->pipeline->execp);
+		core->pipeline->execp = NULL;
+	}
 }
 
 static void	pipe_loop(t_core *core, int *child_pid, char **env)
@@ -55,17 +62,22 @@ static void	pipe_loop(t_core *core, int *child_pid, char **env)
 	while (i <= core->pipe_count)
 	{
 		handle_files(core->pipeline);
-		core->pipeline->execp = init_execp(core);
-		if (pipe(fd) == -1)
-			ms_error("pipe error\n");
-		child_pid[i] = fork();
-		if (child_pid[i] == -1)
-			ms_error("child error\n");
-		if (child_pid[i] == 0)
-			exec_child(i, core, fd, env);
-		else
-			parental_cleaning(core, fd);
-		core->pipeline = core->pipeline->next;
+		if (core->pipeline->params)
+			core->pipeline->execp = init_execp(core);
+		if (core->pipeline->params != NULL)
+		{
+			if (pipe(fd) == -1)
+				perror("pipe");
+			child_pid[i] = fork();
+			if (child_pid[i] == -1)
+				perror("fork");
+			if (child_pid[i] == 0)
+				exec_child(i, core, fd, env);
+			else
+				parental_cleaning(core, fd);
+		}
+		if (core->pipeline->next)
+			core->pipeline = core->pipeline->next;
 		i++;
 	}
 }
