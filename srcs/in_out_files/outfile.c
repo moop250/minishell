@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:06:41 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/04 13:29:18 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:24:48 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 void	handle_outfile(t_pipe_fd *pipeline_out)
 {
-	int	f_error;
-
 	if (pipeline_out->append)
 		pipeline_out->fd = open(pipeline_out->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		pipeline_out->fd = open(pipeline_out->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipeline_out->fd == -1)
-		ms_error("outfile error: open error\n");
-	f_error = dup2(pipeline_out->fd, STDOUT_FILENO);
-	if (f_error == -1)
-		ms_error("dup2 error\n");
+	{
+		perror(pipeline_out->file_name);
+		return ;
+	}
+	if (dup2(pipeline_out->fd, STDOUT_FILENO) == -1)
+		perror("dup2");
+	if (close(pipeline_out->fd) == -1)
+		perror(pipeline_out->file_name);
 }
