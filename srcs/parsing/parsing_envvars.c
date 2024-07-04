@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:24:10 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 13:52:35 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/04 15:17:02 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,23 @@ static int	treat_dollar(const char *in, t_list **list, int pos)
 {
 	int		out;
 	char	*tmp;
+	t_core	*core;
 
 	out = 0;
-	while (in[++out] && !ft_strchr(SEPERATOR, in[out]))
-		;
-	tmp = ft_substr(in, 1, out - 1);
-	ft_lstadd_back(list, ft_lstnew(findenvvalue(tmp)));
-	gfree(tmp);
+	core = get_core();
+	if (in[1] != '?')
+	{
+		while (in[++out] && !ft_strchr(SEPERATOR, in[out]))
+			;
+		tmp = ft_substr(in, 1, out - 1);
+		ft_lstadd_back(list, ft_lstnew(findenvvalue(tmp)));
+		gfree(tmp);
+	}
+	else
+	{
+		ft_lstadd_back(list, ft_lstnew(ft_itoa(core->exit_status)));
+		pos += 2;
+	}
 	return (out + pos);
 }
 
