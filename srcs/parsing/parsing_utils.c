@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 13:36:20 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/04 14:26:07 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	*dbl_quotes(const char *in)
 			if (in[pos[0]] == '$')
 				--pos[0];
 			else if (in[pos[0]] == '"')
-				++pos[1];
+				return (out);
 		}
 	}
 	tmp[0] = ft_substr(in, pos[1], pos[0] - pos[1]);
