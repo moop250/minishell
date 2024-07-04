@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:47:31 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/04 10:39:03 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:33:57 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	handle_heredoc(t_pipe_fd *pipeline_in)
 	input = "";
 	pipeline_in->fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipeline_in->fd == -1)
-		ms_error("infile error: open error");
+	{
+		perror(".heredoc open");
+		return ;
+	}
 	while (42)
 	{
 		input = readline("> ");
@@ -31,9 +34,9 @@ void	handle_heredoc(t_pipe_fd *pipeline_in)
 		free(input);
 	}
 	free(input);
-	close(pipeline_in->fd);
+	if (close(pipeline_in->fd) == -1)
+		perror(".heredoc close");
 	free(pipeline_in->file_name);
 	pipeline_in->file_name = ft_strdup(".heredoc");
 	pipeline_in->heredoc = false;
-	handle_infile(pipeline_in);
 }
