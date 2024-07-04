@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:06:33 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/27 17:01:07 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/04 17:54:35 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ms_printerror(int errorcode, char *in)
 		ft_printf_fd(2, "%s %s", GENERROR, in);
 	else if (errorcode == 1)
 		ft_printf_fd(2, "%s %s '%s'", GENERROR, PARSEERROR, in);
+	else if (errorcode == 2)
+		ft_printf_fd(2, "%s, %s '%s'", GENERROR, QUOTEERROR, in);
 	ft_printf_fd(2, "\033[0m\n");
 }
 

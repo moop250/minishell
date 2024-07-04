@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/02 17:01:11 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/04 17:56:48 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,25 @@ static size_t	param_seperator(const char *str, const int start)
 {
 	bool	quotes;
 	size_t	pos;
+	char	lst[2];
 
 	quotes = false;
 	pos = start;
+	lst[1] = '\0';
 	while ((str[pos] && !ft_strchr(WHITESPACE, str[pos])
 			&& !ft_strchr(REDIRECTS, str[pos])) || (str[pos] && quotes))
 	{
 		if ((str[pos] == '"' || str[pos] == '\'') && !quotes)
+		{
 			quotes = true;
+			lst[0] = str[pos];
+		}
 		else if ((str[pos] == '"' || str[pos] == '\'') && quotes)
 			quotes = false;
 		++pos;
 	}
+	if (quotes)
+		return (ms_printerror(2, lst), -1);
 	return (pos);
 }
 
