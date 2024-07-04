@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/03 16:23:59 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/04 13:35:26 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ static int	setparamcount(t_token *tmp)
 		tmp = tmp->next;
 	}
 	return (count);
+}
+
+void	setdelimiter(t_pipeline **pipe, t_token **token, int status)
+{
+	t_pipe_fd	*tmp;
+
+	if (status == 1)
+	{
+		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_in);
+		if ((*token)->content[1])
+			tmp->heredoc = true;
+	}
+	else
+	{
+		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_out);
+		if ((*token)->content[1])
+			tmp->append = true;
+	}
+	tmp->file_name = ft_strdup((*token)->next->content);
+	(*token) = (*token)->next;
 }
 
 static void	passpipes(t_pipeline **pipe, t_token **token)

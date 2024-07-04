@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/03 20:49:32 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/04 13:36:20 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*ms_seperate_env(const char *in)
 	return (out);
 }
 
-static char	*strwrk(size_t pos[3], const char *in, char	*out)
+char	*strwrk(size_t pos[3], const char *in, char	*out)
 {
 	char	*tmp[2];
 
@@ -59,7 +59,7 @@ static char	*dbl_quotes(const char *in)
 	pos[0] = 0;
 	pos[1] = 1;
 	out = ft_strdup("");
-	while (in[++pos[0]] != '"')
+	while (in[++pos[0]] != '"' && in[pos[0]])
 	{
 		if (in[pos[0]] == '$')
 		{
@@ -70,6 +70,8 @@ static char	*dbl_quotes(const char *in)
 			pos[1] = pos[0];
 			if (in[pos[0]] == '$')
 				--pos[0];
+			else if (in[pos[0]] == '"')
+				++pos[1];
 		}
 	}
 	tmp[0] = ft_substr(in, pos[1], pos[0] - pos[1]);
@@ -89,7 +91,7 @@ static char	*sgl_quotes(const char *in)
 	return (out);
 }
 
-static char	*quotewrk(const char *in)
+char	*quotewrk(const char *in)
 {
 	char	*out;
 
@@ -98,98 +100,4 @@ static char	*quotewrk(const char *in)
 	else
 		out = sgl_quotes(in);
 	return (out);
-}
-
-static int	treat_dollar(const char *in, t_list **list, int pos)
-{
-	int		out;
-	char	*tmp;
-
-	out = 0;
-	while (in[++out] && !ft_strchr(SEPERATOR, in[out]))
-		;
-	tmp = ft_substr(in, 1, out - 1);
-	ft_lstadd_back(list, ft_lstnew(findenvvalue(tmp)));
-	gfree(tmp);
-	return (out + pos);
-}
-
-static char	*recombine(t_list *list)
-{
-	t_list	*tmp;
-	char	*str;
-	char	*out;
-
-	out = ft_strdup("");
-	tmp = list;
-	while (tmp)
-	{
-		str = ft_strjoin(out, tmp->content);
-		gfree(out);
-		out = str;
-		tmp = tmp->next;
-	}
-	ft_lstclear(&list);
-	return (out);
-}
-
-/*
-	pos[0] = position for in
-	pos[1] = start of current array section
-*/
-
-char	*parse_envvars(const char *in)
-{
-	t_list	*list;
-	int		pos[2];
-	char	tmp;
-
-	list = NULL;
-	pos[0] = 0;
-	pos[1] = 0;
-	while (in[pos[0]])
-	{
-		if (in[pos[0]] == '\'' || in[pos[0]] == '"')
-		{
-			tmp = in[pos[0]];
-			ft_lstadd_back(&list, ft_lstnew(quotewrk(in + pos[0])));
-			while (in[++pos[0]] && in[pos[0]] != tmp)
-				;
-			++pos[0];
-			pos[1] = pos[0];
-		}
-		else if (in[pos[0]] == '$')
-		{
-			pos[0] = treat_dollar(in + pos[0], &list, pos[0]);
-			pos[1] = pos[0];
-		}
-		else
-		{
-			while (in[pos[0]] != '"' && in[pos[0]] != '\''
-				&& in[pos[0]] != '$' && in[pos[0]])
-			++pos[0];
-			ft_lstadd_back(&list, ft_lstnew(ft_substr(in, pos[1], pos[0] - pos[1])));
-		}
-	}
-	return (recombine(list));
-}
-
-void	setdelimiter(t_pipeline **pipe, t_token **token, int status)
-{
-	t_pipe_fd	*tmp;
-
-	if (status == 1)
-	{
-		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_in);
-		if ((*token)->content[1])
-			tmp->heredoc = true;
-	}
-	else
-	{
-		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_out);
-		if ((*token)->content[1])
-			tmp->append = true;
-	}
-	tmp->file_name = ft_strdup((*token)->next->content);
-	(*token) = (*token)->next;
 }

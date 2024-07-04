@@ -103,6 +103,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/parsing/pipeline_fd_funcs.c \
 		srcs/parsing/pipeline_ll_funcs.c \
 		srcs/parsing/exec_path.c \
+		srcs/parsing/parsing_envvars.c \
 		srcs/execution/execute.c \
 		srcs/in_out_files/files.c \
 		srcs/in_out_files/infile.c \
