@@ -6,12 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/02 14:01:48 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/04 14:26:07 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include <stdio.h>
 
 static char	*ms_seperate_env(const char *in)
 {
@@ -28,7 +27,7 @@ static char	*ms_seperate_env(const char *in)
 	return (out);
 }
 
-static char	*strwrk(size_t pos[3], const char *in, char	*out)
+char	*strwrk(size_t pos[3], const char *in, char	*out)
 {
 	char	*tmp[2];
 
@@ -51,16 +50,16 @@ static char	*strwrk(size_t pos[3], const char *in, char	*out)
 	pos[2] = end of curent array section
 */
 
-char	*parse_envvars(const char *in, int mode)
+static char	*dbl_quotes(const char *in)
 {
-	char	*out;
 	size_t	pos[3];
 	char	*tmp[2];
+	char	*out;
 
-	pos[0] = mode - 1;
-	pos[1] = mode;
+	pos[0] = 0;
+	pos[1] = 1;
 	out = ft_strdup("");
-	while (in[++pos[0] + mode])
+	while (in[++pos[0]] != '"' && in[pos[0]])
 	{
 		if (in[pos[0]] == '$')
 		{
@@ -71,31 +70,34 @@ char	*parse_envvars(const char *in, int mode)
 			pos[1] = pos[0];
 			if (in[pos[0]] == '$')
 				--pos[0];
+			else if (in[pos[0]] == '"')
+				return (out);
 		}
-		if (in[pos[1]] == '"' || !in[pos[1]])
-			return (out);
 	}
 	tmp[0] = ft_substr(in, pos[1], pos[0] - pos[1]);
 	tmp[1] = ft_strjoin(out, tmp[0]);
 	return (gfree(out), gfree(tmp[0]), tmp[1]);
 }
 
-void	setdelimiter(t_pipeline **pipe, t_token **token, int status)
+static char	*sgl_quotes(const char *in)
 {
-	t_pipe_fd	*tmp;
+	size_t	tmp;
+	char	*out;
 
-	if (status == 1)
-	{
-		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_in);
-		if ((*token)->content[1])
-			tmp->heredoc = true;
-	}
+	tmp = 0;
+	while (in[++tmp] != '\'')
+		;
+	out = ft_substr(in, 1, tmp - 1);
+	return (out);
+}
+
+char	*quotewrk(const char *in)
+{
+	char	*out;
+
+	if (in[0] == '"')
+		out = dbl_quotes(in);
 	else
-	{
-		tmp = ms_addpipe_fd_back(&(*pipe)->pipeline_out);
-		if ((*token)->content[1])
-			tmp->append = true;
-	}
-	tmp->file_name = ft_strdup((*token)->next->content);
-	(*token) = (*token)->next;
+		out = sgl_quotes(in);
+	return (out);
 }
