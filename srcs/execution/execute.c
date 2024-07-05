@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/10 14:55:50 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/10 14:58:44 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	exec_child(int i, t_core *core, int *fd, char **env)
 	if (i < core->pipe_count)
 		dup2(fd[1], STDOUT_FILENO);
 	if (execve(core->pipeline->execp, core->pipeline->params, env) == -1)
-		perror("execve");
+		perror(core->pipeline->params[0]);
 }
 
 static void	parental_cleaning(t_core *core, int *fd)
