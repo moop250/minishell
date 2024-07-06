@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 18:03:25 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/05 09:06:36 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ static int	tokenizer_checker(t_core *core)
 	tmp = core->token;
 	while (tmp)
 	{
-		if ((tmp->content[0] == '<' || tmp->content[0] == '>') && !tmp->next)
+		if ((tmp->content[0] == '<' || tmp->content[0] == '>'
+				|| tmp->content[0] == '|') && !tmp->next)
 		{
 			ms_printerror(1, "\\n");
 			return (-1);
@@ -126,11 +127,13 @@ int	tokenizer(char *input, t_core *core)
 		return (i);
 	i = tokenizer_checker(core);
 	if (core->token)
+	{
 		if (core->token->content[0] == '|')
 		{
 			ms_printerror(1, "|");
 			i = -1;
 		}
+	}
 	if (i < 0)
 		ms_tokensclear(&core->token);
 	return (i);
