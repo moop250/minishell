@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/04 16:52:11 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/09 16:54:32 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ static void	exec_child(int i, t_core *core, int *fd, char **env)
 	close(fd[0]);
 	if (i < core->pipe_count)
 		dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
 	if (execve(core->pipeline->execp, core->pipeline->params, env) == -1)
 		perror("execve");
+	close(fd[1]);
+	exit(1);
 }
 
 static void	parental_cleaning(t_core *core, int *fd)
@@ -42,8 +43,12 @@ static void	parental_cleaning(t_core *core, int *fd)
 		close(core->prev_fd);
 	core->prev_fd = fd[0];
 	close(fd[1]);
-	if (core->pipeline->pipeline_out)
+	if (core->pipeline->pipeline_out \
+		&& core->pipeline->pipeline_out->fd != -1)
+	{
 		close(core->pipeline->pipeline_out->fd);
+		core->pipeline->pipeline_out->fd = -1;
+	}
 	if (core->pipeline->execp)
 	{
 		gfree(core->pipeline->execp);

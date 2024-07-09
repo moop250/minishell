@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:06:41 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/04 16:24:48 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/09 16:55:09 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,4 @@ void	handle_outfile(t_pipe_fd *pipeline_out)
 	}
 	if (dup2(pipeline_out->fd, STDOUT_FILENO) == -1)
 		perror("dup2");
-	if (close(pipeline_out->fd) == -1)
-		perror(pipeline_out->file_name);
 }
