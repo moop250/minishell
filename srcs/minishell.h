@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/03 19:53:14 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:52:25 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 // Error Messages
 # define GENERROR "minishell error:"
 # define PARSEERROR "parse error near"
+# define QUOTEERROR "incomplete quote of type"
 
 // structs
 typedef struct s_pipe_fd

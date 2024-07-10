@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/02 17:01:11 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/05 09:06:36 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,25 @@ static size_t	param_seperator(const char *str, const int start)
 {
 	bool	quotes;
 	size_t	pos;
+	char	lst[2];
 
 	quotes = false;
 	pos = start;
+	lst[1] = '\0';
 	while ((str[pos] && !ft_strchr(WHITESPACE, str[pos])
 			&& !ft_strchr(REDIRECTS, str[pos])) || (str[pos] && quotes))
 	{
 		if ((str[pos] == '"' || str[pos] == '\'') && !quotes)
+		{
 			quotes = true;
-		else if ((str[pos] == '"' || str[pos] == '\'') && quotes)
+			lst[0] = str[pos];
+		}
+		else if (str[pos] == lst[0] && quotes)
 			quotes = false;
 		++pos;
 	}
+	if (quotes)
+		return (ms_printerror(2, lst), -1);
 	return (pos);
 }
 
@@ -88,7 +95,8 @@ static int	tokenizer_checker(t_core *core)
 	tmp = core->token;
 	while (tmp)
 	{
-		if ((tmp->content[0] == '<' || tmp->content[0] == '>') && !tmp->next)
+		if ((tmp->content[0] == '<' || tmp->content[0] == '>'
+				|| tmp->content[0] == '|') && !tmp->next)
 		{
 			ms_printerror(1, "\\n");
 			return (-1);
@@ -119,11 +127,13 @@ int	tokenizer(char *input, t_core *core)
 		return (i);
 	i = tokenizer_checker(core);
 	if (core->token)
+	{
 		if (core->token->content[0] == '|')
 		{
 			ms_printerror(1, "|");
 			i = -1;
 		}
+	}
 	if (i < 0)
 		ms_tokensclear(&core->token);
 	return (i);
