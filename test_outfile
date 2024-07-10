@@ -1,0 +1,18 @@
+def test_handle_files():
+    # Test case 1: File exists
+    assert handle_files("input.txt") == "File exists"
+
+    # Test case 2: File does not exist
+    assert handle_files("nonexistent.txt") == "File does not exist"
+
+    # Test case 3: File is a directory
+    assert handle_files("directory") == "File is a directory"
+
+    # Test case 4: File is empty
+    assert handle_files("empty.txt") == "File is empty"
+
+    # Test case 5: File is not readable
+    assert handle_files("unreadable.txt") == "File is not readable"
+
+    # Test case 6: File is not writable
+    assert handle_files("unwritable.txt") == "File is not writable"
