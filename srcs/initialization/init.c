@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/28 16:40:30 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/11 14:05:37 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_core	*init(int ac, char **av, char **env)
 		ms_error("minishell called with argument");
 	core = galloc(sizeof(t_core));
 	core->env = galloc(sizeof(t_env));
+	core->env->envp = env;
 	core->env->rawenvs = NULL;
 	core->token = NULL;
 	core->argc = ac;

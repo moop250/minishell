@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 17:52:25 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/11 17:01:31 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <errno.h>
 # include "../libs/extended_ft/srcs/extended_ft.h"
 
@@ -58,6 +59,7 @@ typedef struct s_pipeline
 	int					param_count;
 	char				*execp;
 	bool				heredoc;
+	int					prev_fd;
 	struct s_pipe_fd	*pipeline_in;
 	struct s_pipe_fd	*pipeline_out;
 	struct s_pipeline	*next;
@@ -87,6 +89,7 @@ typedef struct s_env
 	char		*user;
 	char		*hostname;
 	char		**paths;
+	char		**envp;
 }	t_env;
 
 typedef struct s_core
@@ -101,7 +104,6 @@ typedef struct s_core
 	int				pipe_count;
 	int				token_count;
 	t_pipeline		*pipeline;
-	int				prev_fd;
 	int				exit_status;
 	int				ms_stdin;
 	int				ms_stdout;
@@ -110,6 +112,7 @@ typedef struct s_core
 // functions
 void		ms_error(char *in);
 void		ms_printerror(int errorcode, char *in);
+void		exec_err(int pipe_fd[2], char *execp, char *msg);
 t_core		*init(int ac, char **av, char **env);
 int			tokenizer(char *input, t_core *core);
 t_core		*minishell_loop(int ac, char **av, char **env);
@@ -127,8 +130,11 @@ void		parser(t_core *core, t_token *token);
 char		*findenvvalue(char *in);
 
 // execution
-void		execute(t_core *core, char **env);
-char		*find_exec_path(char *cmd, char **path);
+void		execute(t_core *core);
+void		execute_one(t_pipeline *pipeline, char **paths, char **env);
+void		execute_multi(t_pipeline *pipeline, char **paths, char **env);
+char		*init_execp(t_pipeline *current, char **paths);
+void		exec_child(int pipe_fd[2], t_pipeline *current, t_core *core);
 void		handle_files(t_pipeline *pipeline);
 void		handle_infile(t_pipe_fd *pipeline_in);
 void		handle_heredoc(t_pipe_fd *pipeline_in);

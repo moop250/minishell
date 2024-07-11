@@ -6,13 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 13:37:48 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/04 15:30:36 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/11 16:30:34 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*find_exec_path(char *cmd, char **path)
+static char	*find_exec_path(char *cmd, char **path)
 {
 	int		i;
 	char	*exec_path;
@@ -34,4 +34,12 @@ char	*find_exec_path(char *cmd, char **path)
 		i++;
 	}
 	return (NULL);
+}
+char	*init_execp(t_pipeline *current, char **paths)
+{
+	if (!current->params)
+		return (NULL);
+	if (access(current->params[0], X_OK) == 0)
+		return (current->params[0]);
+	return (find_exec_path(current->params[0], paths));
 }
