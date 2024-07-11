@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:37 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 18:52:10 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/11 19:00:42 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 
 static void	clean_parent(pid_t child_pid, int *status, int pipe_fd[2], t_pipeline *current)
 {
-	if (current->next != NULL)
-		close(pipe_fd[1]);
+	struct stat	st;
+
+	if (fstat(pipe_fd[1], &st) == 0)
+		if (close(pipe_fd[1]) < 0)
+			exec_err(pipe_fd, NULL, "close pipe_fd[1]");
 	if (current->prev != NULL)
-		close(current->prev_fd);
+		if (close(current->prev_fd) < 0)
+			exec_err(pipe_fd, NULL, "close prev_fd");
 	if (current->next != NULL)
 		current->next->prev_fd = pipe_fd[0];
+	if (fstat(pipe_fd[0], &st) == 0)
+		if (close(pipe_fd[0]) < 0)
+			exec_err(pipe_fd, NULL, "close pipe_fd[0]");
 	if (waitpid(child_pid, status, 0) < 0)
 	{
 		exec_err(pipe_fd, current->execp, "waitpid");
@@ -92,6 +99,7 @@ void	execute_multi(t_pipeline *pipeline, char **paths, char **env)
 			exec_err(pipefd, current->execp, current->params[0]);
 			exit(EXIT_FAILURE);
 		}
-		clean_parent(pid, &status, pipefd, current);
+		else
+			clean_parent(pid, &status, pipefd, current);
 	}
 }
