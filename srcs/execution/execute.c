@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/10 14:58:44 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/11 11:56:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,95 +21,37 @@ static char	*init_execp(t_core *core)
 	return (find_exec_path(core->pipeline->params[0], core->env->paths));
 }
 
-static void	exec_child(int i, t_core *core, int *fd, char **env)
-{
-	if (core->prev_fd != -1)
-	{
-		dup2(core->prev_fd, STDIN_FILENO);
-		close(core->prev_fd);
-	}
-	close(fd[0]);
-	if (i < core->pipe_count)
-		dup2(fd[1], STDOUT_FILENO);
-	if (execve(core->pipeline->execp, core->pipeline->params, env) == -1)
-		perror(core->pipeline->params[0]);
-}
-
-static void	parental_cleaning(t_core *core, int *fd)
-{
-	if (core->pipeline->pipeline_out && core->pipeline->pipeline_out->fd != -1)
-	{
-		close(core->pipeline->pipeline_out->fd);
-		core->pipeline->pipeline_out->fd = -1;
-	}
-	if (core->prev_fd != -1)
-		close(core->prev_fd);
-	core->prev_fd = fd[0];
-	close(fd[1]);
-	if (core->pipeline->pipeline_out \
-		&& core->pipeline->pipeline_out->fd != -1)
-	{
-		close(core->pipeline->pipeline_out->fd);
-		core->pipeline->pipeline_out->fd = -1;
-	}
-	if (core->pipeline->execp)
-	{
-		free(core->pipeline->execp);
-		core->pipeline->execp = NULL;
-	}
-}
-
-static void	pipe_loop(t_core *core, int *child_pid, char **env)
-{
-	int	i;
-	int	fd[2];
-
-	i = 0;
-	while (i <= core->pipe_count)
-	{
-		handle_files(core->pipeline);
-		if (core->pipeline->params)
-		{
-			core->pipeline->execp = init_execp(core);
-			if (pipe(fd) == -1)
-				perror("pipe");
-			child_pid[i] = fork();
-			if (child_pid[i] == -1)
-				perror("fork");
-			if (child_pid[i] == 0)
-				exec_child(i, core, fd, env);
-		}
-		parental_cleaning(core, fd);
-		if (core->pipeline->next)
-			core->pipeline = core->pipeline->next;
-		i++;
-	}
-}
-
 void	execute(t_core *core, char **env)
 {
-	int			*child_pid;
-	int			i;
-	t_pipeline	*tmp_pipe;
-	int			b_stdin;
-	int			b_stdout;
+	t_pipeline	*start;
+	pid_t		child_pid;
+	int			status;
+	int			pipe_fd[2];
 
-	tmp_pipe = core->pipeline;
-	core->prev_fd = -1;
-	child_pid = (int *)malloc((core->pipe_count + 1) * sizeof(int));
-	if (!child_pid)
-		ms_error("malloc error\n");
-	b_stdin = dup(STDIN_FILENO);
-	b_stdout = dup(STDOUT_FILENO);
-	pipe_loop(core, child_pid, env);
-	i = 0;
-	while (i <= core->pipe_count)
+	if (core->pipeline == NULL)
+		return ;
+	if (pipe(pipe_fd) < 0)
 	{
-		waitpid(child_pid[i], &(core->exit_status), 0);
-		i++;
+		perror("pipe");
+		return ;
 	}
-	free(child_pid);
-	core->pipeline = tmp_pipe;
-	dup2(b_stdin, STDIN_FILENO);
-	dup2(b_stdout, STDOUT_FILENO);
+	start = core->pipeline;
+	while (core->pipeline != NULL)
+	{
+		if ((child_pid = fork()) < 0)
+		{
+			perror("fork");
+			return ;
+		}
+		if (child_pid == 0)
+		{
+			core->pipeline->execp = init_execp(core);
+			if (execve(core->pipeline->execp, core->pipeline->params, env) < 0)
+				perror(core->pipeline->params[0]);
+			exit(EXIT_FAILURE);
+		}
+		else
+			if (waitpid(child_pid, &status, 0) < 0)
+				perror("waitpid");
+	}
 }
