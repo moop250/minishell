@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:23 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 16:58:54 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/11 18:47:25 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	execute_one(t_pipeline *pipeline, char **paths, char **env)
 		child_solo(pipeline, paths, env);
 	else
 	{
-		if (waitpid(pid, status, 0) < 0)
+		if (waitpid(pid, &status, 0) < 0)
 		{
 			perror("waitpid");
 			return ;
