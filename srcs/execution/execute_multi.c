@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:37 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 19:00:42 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/13 23:11:32 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void	clean_parent(pid_t child_pid, int *status, int pipe_fd[2], t_pipelin
 {
 	struct stat	st;
 
-	if (fstat(pipe_fd[1], &st) == 0)
-		if (close(pipe_fd[1]) < 0)
-			exec_err(pipe_fd, NULL, "close pipe_fd[1]");
 	if (current->prev != NULL)
 		if (close(current->prev_fd) < 0)
 			exec_err(pipe_fd, NULL, "close prev_fd");
 	if (current->next != NULL)
-		current->next->prev_fd = pipe_fd[0];
+		current->next->prev_fd = pipe_fd[1];
+	if (fstat(pipe_fd[1], &st) == 0)
+		if (close(pipe_fd[1]) < 0)
+			exec_err(pipe_fd, NULL, "close pipe_fd[1]");
 	if (fstat(pipe_fd[0], &st) == 0)
 		if (close(pipe_fd[0]) < 0)
 			exec_err(pipe_fd, NULL, "close pipe_fd[0]");
@@ -63,6 +63,8 @@ void	execute_multi(t_pipeline *pipeline, char **paths, char **env)
 		}
 		if (pid == 0)
 		{
+			if (fstat(current->prev_fd, &st) != 0)
+				open(current->prev_fd);
 			if (current->prev != NULL)
 			{
 				if (dup2(current->prev_fd, STDIN_FILENO) < 0)
