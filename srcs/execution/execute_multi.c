@@ -6,102 +6,126 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:37 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/13 23:11:32 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/14 18:17:32 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-static void	clean_parent(pid_t child_pid, int *status, int pipe_fd[2], t_pipeline *current)
+void	close_all_other_pipes(int **pipefd, int i, int cmd_count)
 {
-	struct stat	st;
+	int	j;
 
-	if (current->prev != NULL)
-		if (close(current->prev_fd) < 0)
-			exec_err(pipe_fd, NULL, "close prev_fd");
-	if (current->next != NULL)
-		current->next->prev_fd = pipe_fd[1];
-	if (fstat(pipe_fd[1], &st) == 0)
-		if (close(pipe_fd[1]) < 0)
-			exec_err(pipe_fd, NULL, "close pipe_fd[1]");
-	if (fstat(pipe_fd[0], &st) == 0)
-		if (close(pipe_fd[0]) < 0)
-			exec_err(pipe_fd, NULL, "close pipe_fd[0]");
-	if (waitpid(child_pid, status, 0) < 0)
+	j = 0;
+	while (j < cmd_count - 1)
 	{
-		exec_err(pipe_fd, current->execp, "waitpid");
-		return ;
+		if (j != i - 1 && j != i)
+		{
+			if (close(pipefd[j][0]) < 0)
+			{
+				exec_err(pipefd[j], NULL, "close pipefd[j][0]");
+				exit(EXIT_FAILURE);
+			}
+			if (close(pipefd[j][1]) < 0)
+			{
+				exec_err(pipefd[j], NULL, "close pipefd[j][1]");
+				exit(EXIT_FAILURE);
+			}
+		}
+		j++;
 	}
-	current = current->next;
 }
 
-void	execute_multi(t_pipeline *pipeline, char **paths, char **env)
+void execute_multi(int cmd_count, t_pipeline *pipeline, char **paths, char **env)
 {
-	int			pipefd[2];
-	pid_t		pid;
-	t_pipeline	*current;
-	int			status;
+    int         **pipefd;
+    int         i;
+    pid_t       *pid;
+    t_pipeline  *current;
+    int         status;
 
-	current = pipeline;
-	pipeline->prev_fd = -1;
-	while (current != NULL)
-	{
-		if (current->next != NULL)
-		{
-			if (pipe(pipefd) < 0)
-			{
-				exec_err(pipefd, NULL, "pipe");
-				return ;
-			}
-		}
-		pid = fork();
-		if (pid < 0)
-		{
-			exec_err(pipefd, NULL, "fork");
-			return ;
-		}
-		if (pid == 0)
-		{
-			if (fstat(current->prev_fd, &st) != 0)
-				open(current->prev_fd);
-			if (current->prev != NULL)
-			{
-				if (dup2(current->prev_fd, STDIN_FILENO) < 0)
-				{
-					exec_err(pipefd, NULL, "dup2 prev_fd");
-					exit(EXIT_FAILURE);
-				}
-				if (close(current->prev_fd) < 0)
-				{
-					exec_err(pipefd, NULL, "close prev_fd");
-					exit(EXIT_FAILURE);
-				}
-			}
-			if (current->next != NULL)
-			{
-				if(dup2(pipefd[1], STDOUT_FILENO) < 0)
-				{
-					exec_err(pipefd, NULL, "dup2 pipefd[1]");
-					exit(EXIT_FAILURE);
-				}
-				if (close(pipefd[0]) < 0)
-				{
-					exec_err(pipefd, NULL, "close pipefd[0]");
-					exit(EXIT_FAILURE);
-				}
-				if (close(pipefd[1]) < 0)
-				{
-					exec_err(pipefd, NULL, "close pipefd[1]");
-					exit(EXIT_FAILURE);
-				}
-			}
-			current->execp = init_execp(current, paths);
-			execve(current->execp, current->params, env);
-			exec_err(pipefd, current->execp, current->params[0]);
-			exit(EXIT_FAILURE);
-		}
-		else
-			clean_parent(pid, &status, pipefd, current);
-	}
+    pipefd = (int **)ft_calloc(cmd_count - 1, sizeof(*pipefd));
+    if(!pipefd)
+    {
+        exec_err(NULL, NULL, "ft_calloc");
+        return;
+    }
+    i = 0;
+    while (i < cmd_count - 1) {
+        pipefd[i] = (int *)ft_calloc(2, sizeof(int));
+        if (pipe(pipefd[i]) < 0)
+        {
+            exec_err(NULL, NULL, "pipe");
+            return;
+        }
+        i++;
+    }
+    current = pipeline;
+    pid = (pid_t *)ft_calloc(cmd_count, sizeof(pid_t));
+    i = 0;
+    while (i < cmd_count)
+    {
+        pid[i] = fork();
+        if (pid[i] < 0)
+        {
+            exec_err(NULL, NULL, "fork");
+            return;
+        }
+        if (pid[i] == 0)
+        {
+            // First command
+            if (i == 0 && cmd_count > 1)
+            {
+                dup2(pipefd[0][1], STDOUT_FILENO);
+            }
+            // Middle commands
+            else if (i < cmd_count - 1)
+            {
+                dup2(pipefd[i-1][0], STDIN_FILENO);
+                dup2(pipefd[i][1], STDOUT_FILENO);
+            }
+            // Last command
+            else if (i == cmd_count - 1 && i > 0)
+            {
+                dup2(pipefd[i-1][0], STDIN_FILENO);
+            }
+
+            // Close all pipe fds in child
+            int j = 0;
+            while (j < cmd_count - 1)
+            {
+                close(pipefd[j][0]);
+                close(pipefd[j][1]);
+                j++;
+            }
+
+            current->execp = init_execp(current, paths);
+            execve(current->execp, current->params, env);
+            exec_err(NULL, current->execp, current->params[0]);
+            exit(EXIT_FAILURE);
+        }
+        current = current->next;
+        i++;
+    }
+
+    // Parent process
+    // Close all pipe fds in parent
+    i = 0;
+    while (i < cmd_count - 1)
+    {
+        close(pipefd[i][0]);
+        close(pipefd[i][1]);
+        free(pipefd[i]);
+        i++;
+    }
+    free(pipefd);
+
+    // Wait for all child processes
+    i = 0;
+    while (i < cmd_count)
+    {
+        waitpid(pid[i], &status, 0);
+        i++;
+    }
+    free(pid);
 }

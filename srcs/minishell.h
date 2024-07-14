@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/11 18:45:05 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/14 17:42:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <signal.h>
 # include <errno.h>
 # include "../libs/extended_ft/srcs/extended_ft.h"
 
@@ -59,7 +60,6 @@ typedef struct s_pipeline
 	int					param_count;
 	char				*execp;
 	bool				heredoc;
-	int					prev_fd;
 	struct s_pipe_fd	*pipeline_in;
 	struct s_pipe_fd	*pipeline_out;
 	struct s_pipeline	*next;
@@ -112,7 +112,7 @@ typedef struct s_core
 // functions
 void		ms_error(char *in);
 void		ms_printerror(int errorcode, char *in);
-void		exec_err(int pipe_fd[2], char *execp, char *msg);
+void		exec_err(int *pipe_fd, char *execp, char *msg);
 t_core		*init(int ac, char **av, char **env);
 int			tokenizer(char *input, t_core *core);
 t_core		*minishell_loop(int ac, char **av, char **env);
@@ -132,7 +132,7 @@ char		*findenvvalue(char *in);
 // execution
 void		execute(t_core *core);
 void		execute_one(t_pipeline *pipeline, char **paths, char **env);
-void		execute_multi(t_pipeline *pipeline, char **paths, char **env);
+void		execute_multi(int cmd_count, t_pipeline *pipeline, char **paths, char **env);
 char		*init_execp(t_pipeline *current, char **paths);
 void		handle_files(t_pipeline *pipeline);
 void		handle_infile(t_pipe_fd *pipeline_in);

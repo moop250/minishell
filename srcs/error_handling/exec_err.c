@@ -6,13 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:25:18 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 15:57:45 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/14 17:30:28 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"../minishell.h"
 
-void	exec_err(int pipe_fd[2], char *execp, char *msg)
+void	exec_err(int *pipe_fd, char *execp, char *msg)
 {
 	struct stat	st;
 	int			i;
