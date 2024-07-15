@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:37 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/15 16:10:42 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 18:44:41 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 			}
 			close_all_pipes(pipefd, cmd_count);
 			current->execp = init_execp(current, env->paths);
-			execve(current->execp, current->params, env->envp);
+			if (current->execp)
+				execve(current->execp, current->params, env->envp);
 			exec_err(NULL, current->execp, current->params[0]);
 			exit(EXIT_FAILURE);
 		}
