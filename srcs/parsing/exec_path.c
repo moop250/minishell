@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 13:37:48 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/15 15:59:37 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 16:18:25 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char	*find_exec_path(char *cmd, char **path)
 		free(exec_path);
 		i++;
 	}
+	ft_printf_fd(1, "%s: Unknown command...\n", cmd);
 	return (NULL);
 }
 

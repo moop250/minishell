@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/14 18:19:03 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 16:18:40 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*make_prompt(t_core *core)
 		prompt = ft_strjoin(&core->argv[0][2], "$ ");
 	else
 	{
-		tmp = ft_strjoin("minisHELLldivers:\033[1;34m", findenv("PWD")->value);
+		tmp = ft_strjoin("minisHELLdivers:\033[1;34m", findenv("PWD")->value);
 		prompt = ft_strjoin(tmp, "\033[0m$ ");
 		gfree(tmp);
 	}

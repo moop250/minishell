@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:37:32 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/15 14:11:11 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 16:10:16 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,22 @@ int	**init_pipes(int cmd_count)
 	int	i;
 
 	pipefd = (int **)ft_calloc(cmd_count - 1, sizeof(*pipefd));
-    if(!pipefd)
-    {
-        exec_err(NULL, NULL, "pipefd");
-        return (NULL);
-    }
-    i = 0;
-    while (i < cmd_count - 1) {
-        pipefd[i] = (int *)ft_calloc(2, sizeof(int));
-        if (pipe(pipefd[i]) < 0)
-        {
-            exec_err(NULL, NULL, "pipe");
+	if (!pipefd)
+	{
+		exec_err(NULL, NULL, "pipefd");
+		return (NULL);
+	}
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		pipefd[i] = (int *)ft_calloc(2, sizeof(int));
+		if (pipe(pipefd[i]) < 0)
+		{
+			exec_err(NULL, NULL, "pipe");
 			free_pipes(pipefd, i);
-            return (NULL);
-        }
-        i++;
-    }
+			return (NULL);
+		}
+		i++;
+	}
 	return (pipefd);
 }
