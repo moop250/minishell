@@ -108,6 +108,8 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/execution/execute.c \
 		srcs/execution/execute_one.c \
 		srcs/execution/execute_multi.c \
+		srcs/execution/exec_child.c \
+		srcs/execution/execute_utils.c \
 		srcs/in_out_files/files.c \
 		srcs/in_out_files/infile.c \
 		srcs/in_out_files/heredoc.c \

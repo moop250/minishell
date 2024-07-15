@@ -6,38 +6,37 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:10:57 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 16:28:44 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 13:50:49 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exec_child(int pipe_fd[2], t_pipeline *current, t_core *core)
+void	exec_child(int **pipefd, int cmd_count, t_pipeline *current, t_env *env)
 {
-	if (current->prev != NULL)
+	int i = 0;
+	if (i == 0 && cmd_count > 1)
 	{
-		if (dup2(current->prev_fd, STDIN_FILENO) < 0)
-		{
-			exec_err(pipe_fd, NULL, "dup2");
-			exit(EXIT_FAILURE);
-		}
+		dup2(pipefd[0][1], STDOUT_FILENO);
 	}
-	if (current->next != NULL)
+	else if (i < cmd_count - 1)
 	{
-		if (dup2(pipe_fd[1], STDOUT_FILENO) < 0)
-		{
-			exec_err(pipe_fd, NULL, "dup2");
-			exit(EXIT_FAILURE);
-		}
-		exec_err(pipe_fd, NULL, NULL);
+		dup2(pipefd[i-1][0], STDIN_FILENO);
+		dup2(pipefd[i][1], STDOUT_FILENO);
 	}
-	current->execp = init_execp(current, core->env->paths);
-	if (!current->execp)
+	else if (i == cmd_count - 1 && i > 0)
 	{
-		exec_err(pipe_fd, NULL, NULL);
-		ms_error("exec path not found");
+		dup2(pipefd[i-1][0], STDIN_FILENO);
 	}
-	if (execve(current->execp, current->params, core->env->envp) < 0)
-		exec_err(pipe_fd, current->execp, "execve");
+	int j = 0;
+	while (j < cmd_count - 1)
+	{
+		close(pipefd[j][0]);
+		close(pipefd[j][1]);
+		j++;
+	}
+	current->execp = init_execp(current, env->paths);
+	execve(current->execp, current->params, env->envp);
+	exec_err(NULL, current->execp, current->params[0]);
 	exit(EXIT_FAILURE);
 }

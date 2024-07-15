@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/05 09:06:36 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/15 14:13:35 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static size_t	param_seperator(const char *str, const int start)
 	quotes = false;
 	pos = start;
 	lst[1] = '\0';
+	lst[0] = '\0';
 	while ((str[pos] && !ft_strchr(WHITESPACE, str[pos])
 			&& !ft_strchr(REDIRECTS, str[pos])) || (str[pos] && quotes))
 	{
