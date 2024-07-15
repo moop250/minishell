@@ -1,23 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   exec_err.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/14 14:50:49 by pberset          ###   ########.fr       */
+/*   Created: 2024/07/11 13:25:18 by pberset           #+#    #+#             */
+/*   Updated: 2024/07/14 17:30:28 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include	"../minishell.h"
 
-void	execute(t_core *core)
+void	exec_err(int *pipe_fd, char *execp, char *msg)
 {
-	if (core->pipeline == NULL)
-		return ;
-	if (core->pipeline->next == NULL)
-		execute_one(core->pipeline, core->env->paths, core->env->envp);
-	else
-		execute_multi(core->pipe_count + 1, core->pipeline, core->env->paths, core->env->envp);
+	struct stat	st;
+	int			i;
+
+	if (msg)
+		perror(msg);
+	i = 0;
+	if (pipe_fd)
+	{
+		while (i < 2)
+		{
+			if (fstat(pipe_fd[i], &st) == 0)
+			{
+				if (close(pipe_fd[i]) < 0)
+					perror("close");
+			}
+			else
+			{
+				if (errno != EBADF)
+					perror("fstat");
+			}
+			i++;
+		}
+	}
+	if (execp)
+		free(execp);
 }
