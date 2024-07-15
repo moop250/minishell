@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 17:13:32 by hlibine          ###   LAUSANNE.ch       */
+/*   Created: 2024/07/10 14:18:04 by hlibine           #+#    #+#             */
+/*   Updated: 2024/07/15 11:28:15 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-void	ms_export(char **in, t_core *core)
-{
-	size_t		i;
-	t_envparam	*param;
+# include "../minishell.h"
 
-	i = 0;
-	while (in[++i])
-	{
-		param = findenv(in[i]);
-		if (!param)
-			addenvend(core, in[i], false);
-		else
-		{
-			gfree(param->value);
-			param->value = ft_strdup(in[i]);
-		}
-	}
-	core->exit_status = 0;
-}
+void	ms_unset(char **in, t_core *core);
+void	ms_env(t_core *core);
+void	ms_export(char **in, t_core *core);
+
+#endif
