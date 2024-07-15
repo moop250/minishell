@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/15 16:18:40 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 17:07:34 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ static char	*ms_prompt(t_core *core)
 	char	*prompt;
 
 	prompt = make_prompt(core);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	tmp = readline(prompt);
 	if (!tmp)
 		ms_error("readline error\n");
