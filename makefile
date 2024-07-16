@@ -83,7 +83,7 @@ RESET = \033[0m
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -lreadline -g
-DEVFLAGS = -lreadline -g3 
+DEVFLAGS = -lreadline -g3 -fsanitize=address
 RM = rm -f
 
 EXTENDED_FT = libs/extended_ft/
