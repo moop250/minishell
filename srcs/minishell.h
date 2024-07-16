@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/16 14:28:15 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/16 16:32:59 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void		init_envs(t_core *core, char **env);
 void		init_noenv(t_core *core);
 void		fill_core_env(t_core *core);
 void		clear_envs(t_envparam *envs);
-void		ms_env(t_core *core);
 char		*ms_getcwd(void);
 void		parser(t_core *core, t_token *token);
 char		*findenvvalue(char *in);
