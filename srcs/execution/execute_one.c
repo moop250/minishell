@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:23 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 14:10:40 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 15:27:44 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,9 @@ void	execute_one(t_pipeline *pipeline, char **paths, char **env)
 		close(buf_stdin);
 		dup2(buf_stdout, STDOUT_FILENO);
 		close(buf_stdout);
+		if (pipeline->pipeline_in != NULL)
+			close(pipeline->pipeline_in->fd);
+		if (pipeline->pipeline_out != NULL)
+			close(pipeline->pipeline_out->fd);
 	}
 }

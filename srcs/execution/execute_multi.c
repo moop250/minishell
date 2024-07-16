@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:37 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/15 18:44:41 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 15:32:12 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 	i = 0;
 	while (i < cmd_count)
 	{
+		handle_files(current);
 		pid[i] = fork();
 		if (pid[i] < 0)
 		{
@@ -83,6 +84,10 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 			exec_err(NULL, current->execp, current->params[0]);
 			exit(EXIT_FAILURE);
 		}
+		if (current->pipeline_in != NULL)
+			close(current->pipeline_in->fd);
+		if (current->pipeline_out != NULL)
+			close(current->pipeline_out->fd);
 		current = current->next;
 		i++;
 	}
