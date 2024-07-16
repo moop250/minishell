@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:23 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 18:47:25 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:03:19 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ static void	child_solo(t_pipeline *pipeline, char **paths, char **env)
 {
 	pipeline->execp = init_execp(pipeline, paths);
 	if (!pipeline->execp)
-	{
-		ft_printf_fd(2, "%s: executable not found", pipeline->params[0]);
 		exit(EXIT_FAILURE);
-	}
 	if (execve(pipeline->execp, pipeline->params, env) < 0)
 	{
 		exec_err(NULL, pipeline->execp, "execve");

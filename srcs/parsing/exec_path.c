@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 13:37:48 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 16:30:34 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/15 16:18:25 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static char	*find_exec_path(char *cmd, char **path)
 {
 	int		i;
+	char	*buff;
 	char	*exec_path;
 
 	i = 0;
@@ -22,19 +23,22 @@ static char	*find_exec_path(char *cmd, char **path)
 		return (NULL);
 	while (path[i])
 	{
-		exec_path = ft_strjoin(path[i], "/");
-		if (!exec_path)
+		buff = ft_strjoin(path[i], "/");
+		if (!buff)
 			return (NULL);
-		exec_path = ft_strjoin(exec_path, cmd);
+		exec_path = ft_strjoin(buff, cmd);
+		free(buff);
 		if (!exec_path)
 			return (NULL);
 		if (access(exec_path, X_OK) == 0)
 			return (exec_path);
-		gfree(exec_path);
+		free(exec_path);
 		i++;
 	}
+	ft_printf_fd(1, "%s: Unknown command...\n", cmd);
 	return (NULL);
 }
+
 char	*init_execp(t_pipeline *current, char **paths)
 {
 	if (!current->params)

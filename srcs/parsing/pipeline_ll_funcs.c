@@ -67,6 +67,7 @@ static void	ms_pipelinedelone(t_pipeline *pipeline)
 		return ;
 	i = -1;
 	if (pipeline->params)
+	{
 		while (pipeline->params[++i])
 			gfree(pipeline->params[i]);
 	gfree(pipeline->params);
