@@ -6,15 +6,11 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:46:13 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 11:44:13 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/16 11:54:06 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-/*
- * prints the given string on STDOUT
- * -n	no ending '\n'
- * */
 
 void	ms_echo(char **in, t_core *core)
 {
