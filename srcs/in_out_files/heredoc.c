@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:47:31 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/15 16:13:38 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 14:19:26 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_heredoc(t_pipe_fd *p_in)
 	}
 	while (42)
 	{
-		input = readline("> ");
+		input = readline("heredoc> ");
 		if (ft_strlen(p_in->file_name) == ft_strlen(input) \
 			&& !ft_strncmp(input, p_in->file_name, ft_strlen(p_in->file_name)))
 			break ;

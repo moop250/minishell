@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:23 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 11:50:55 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 14:10:40 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	child_solo(t_pipeline *pipeline, char **paths, char **env)
 {
-	handle_files(pipeline);
 	pipeline->execp = init_execp(pipeline, paths);
 	if (!pipeline->execp)
 		exit(EXIT_FAILURE);
@@ -29,7 +28,12 @@ void	execute_one(t_pipeline *pipeline, char **paths, char **env)
 {
 	pid_t	pid;
 	int		status;
+	int		buf_stdin;
+	int		buf_stdout;
 
+	buf_stdin = dup(STDIN_FILENO);
+	buf_stdout = dup(STDOUT_FILENO);
+	handle_files(pipeline);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -45,5 +49,9 @@ void	execute_one(t_pipeline *pipeline, char **paths, char **env)
 			perror("waitpid");
 			return ;
 		}
+		dup2(buf_stdin, STDIN_FILENO);
+		close(buf_stdin);
+		dup2(buf_stdout, STDOUT_FILENO);
+		close(buf_stdout);
 	}
 }

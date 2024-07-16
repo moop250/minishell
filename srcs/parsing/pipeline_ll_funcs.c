@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/16 11:22:03 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/16 11:59:08 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	ms_pipelinedelone(t_pipeline *pipeline)
 	{
 		while (pipeline->params[++i])
 			gfree(pipeline->params[i]);
+	}
 	gfree(pipeline->params);
 	if (pipeline->pipeline_out)
 		ms_freepipefd(&pipeline->pipeline_out);
