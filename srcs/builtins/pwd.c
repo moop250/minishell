@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:56:52 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 14:11:37 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/16 14:25:51 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	ms_pwd(t_core *core)
 	tmp = ms_getcwd();
 	ft_printf_fd(core->ms_stdout, "%s\n", tmp);
 	gfree(tmp);
+	core->exit_status = 0;
 }
