@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:24:59 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 14:45:08 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 20:20:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	handle_infile(t_pipe_fd *pipeline_in)
 	}
 	if (dup2(pipeline_in->fd, STDIN_FILENO) == -1)
 		perror("dup2");
+	if (close(pipeline_in->fd) == -1)
+		perror("close");
 	if (!ft_strcmp(pipeline_in->file_name, ".heredoc"))
 		if (unlink(".heredoc") == -1)
 			perror("unlink");

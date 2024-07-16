@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:37 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 15:32:12 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 20:28:46 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 		{
 			if (i == 0 && cmd_count > 1)
 			{
-				dup2(pipefd[0][1], STDOUT_FILENO);
+				dup2(pipefd[0][1], STDOUT_FILENO); // pipeline->out dup2 pipeline->out->fd ?
 			}
 			else if (i < cmd_count - 1)
 			{
@@ -74,9 +74,7 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 				dup2(pipefd[i][1], STDOUT_FILENO);
 			}
 			else if (i == cmd_count - 1 && i > 0)
-			{
 				dup2(pipefd[i - 1][0], STDIN_FILENO);
-			}
 			close_all_pipes(pipefd, cmd_count);
 			current->execp = init_execp(current, env->paths);
 			if (current->execp)
@@ -84,10 +82,6 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 			exec_err(NULL, current->execp, current->params[0]);
 			exit(EXIT_FAILURE);
 		}
-		if (current->pipeline_in != NULL)
-			close(current->pipeline_in->fd);
-		if (current->pipeline_out != NULL)
-			close(current->pipeline_out->fd);
 		current = current->next;
 		i++;
 	}
