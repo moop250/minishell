@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/15 17:01:12 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 14:28:15 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_env
 	char		*hostname;
 	char		**paths;
 	char		**envp;
+	char		*cwd;
 }	t_env;
 
 typedef struct s_core

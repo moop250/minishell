@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/11 14:05:37 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 14:29:26 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ char	*ms_getcwd(void)
 	return (result);
 }
 
+static void	ms_update(t_core *core)
+{
+	gfree(core->env->cwd);
+	core->env->cwd = ms_getcwd();
+}
+
 t_core	*init(int ac, char **av, char **env)
 {
 	static t_core	*core;
@@ -37,6 +43,7 @@ t_core	*init(int ac, char **av, char **env)
 	core->env = galloc(sizeof(t_env));
 	core->env->envp = env;
 	core->env->rawenvs = NULL;
+	core->env->cwd = ms_getcwd();
 	core->token = NULL;
 	core->argc = ac;
 	core->argv = av;
