@@ -6,11 +6,16 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/11 17:13:32 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/16 13:29:26 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+void	print_export(void)
+{
+
+}
 
 void	ms_export(char **in, t_core *core)
 {
@@ -18,6 +23,8 @@ void	ms_export(char **in, t_core *core)
 	t_envparam	*param;
 
 	i = 0;
+	if (in[1] == NULL)
+		print_export();
 	while (in[++i])
 	{
 		param = findenv(in[i]);
