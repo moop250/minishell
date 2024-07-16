@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:23 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/15 15:03:19 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/16 11:50:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	child_solo(t_pipeline *pipeline, char **paths, char **env)
 {
+	handle_files(pipeline);
 	pipeline->execp = init_execp(pipeline, paths);
 	if (!pipeline->execp)
 		exit(EXIT_FAILURE);
