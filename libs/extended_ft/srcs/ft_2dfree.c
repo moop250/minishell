@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
+/*   ft_2dfree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 15:33:27 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/17 17:05:04 by hlibine          ###   ########.fr       */
+/*   Created: 2024/07/17 16:50:05 by hlibine           #+#    #+#             */
+/*   Updated: 2024/07/17 16:58:08 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "extended_ft.h"
 
-/*
-Takes a string as input
-Returns a 1 if the entire string is comprised of digits
-Returns a 0 if the string contains non numeric characters
- */
-int	ft_isnumeric(const char *str)
+void	ft_2dfree(void **in)
 {
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		++str;
-	}
-	return (1);
+	int	i;
+
+	if (!in)
+		return ;
+	i = -1;
+	while (in[++i])
+		gfree(in[i]);
+	gfree(in);
 }

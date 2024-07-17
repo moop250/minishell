@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:13:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/17 15:43:30 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/17 17:10:55 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void		ft_lstclear(t_list **lst);
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		*ft_realloc(void *in, size_t oldsize, size_t newsize);
 void		ft_3dfree(void ***array);
+void		ft_2dfree(void **in);
 void		*galloc(size_t size);
 void		razegarbage(void);
 t_garbcol	**getgarbage(void);
