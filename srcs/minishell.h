@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/17 15:18:49 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/17 17:53:00 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define GENERROR "minishell error:"
 # define PARSEERROR "parse error near"
 # define QUOTEERROR "incomplete quote of type"
+# define TOOMANY "too many arguments"
+# define WHYLETTER "numeric argument required"
 
 // structs
 typedef struct s_pipe_fd
