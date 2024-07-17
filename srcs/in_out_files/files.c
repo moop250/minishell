@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 11:18:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 15:15:53 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/17 17:59:08 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,43 @@ static void	in_and_out(t_pipe_fd *p_in, t_pipe_fd*p_out)
 	}
 	if (bytes_read == -1)
 		perror("read");
-	if (close(p_in->fd) == -1)
-		perror("close infile");
-	if (close(p_out->fd) < 0)
-	{
-		perror("close out fd");
-		return ;
-	}
 }
 
 void	handle_files(t_pipeline *pipeline)
 {
+	int	buf_fd[2];
+
+	buf_fd[0] = -1;
+	buf_fd[1] = -1;
 	if (pipeline->pipeline_in)
+	{
+		buf_fd[0] = dup(STDIN_FILENO);
 		handle_infile(pipeline->pipeline_in);
+	}
 	if (pipeline->pipeline_out)
+	{
+		buf_fd[1] = dup(STDOUT_FILENO);
 		handle_outfile(pipeline->pipeline_out);
+	}
 	if (pipeline->pipeline_in != NULL && pipeline->pipeline_out != NULL)
 		in_and_out(pipeline->pipeline_in, pipeline->pipeline_out);
+	if (buf_fd[0] != -1)
+	{
+		dup2(buf_fd[0], STDIN_FILENO);
+		close(buf_fd[0]);
+	}
+	if (buf_fd[1] != -1)
+	{
+		dup2(buf_fd[1], STDOUT_FILENO);
+		close(buf_fd[1]);
+	}
+	if (pipeline->next == NULL)
+	{
+		if (pipeline->pipeline_in && pipeline->pipeline_in->fd != -1 \
+			&& pipeline->params[0] == NULL)
+			close(pipeline->pipeline_in->fd);
+		if (pipeline->pipeline_out && pipeline->pipeline_out->fd != -1 \
+			&& pipeline->params[0] == NULL)
+			close(pipeline->pipeline_out->fd);
+	}
 }

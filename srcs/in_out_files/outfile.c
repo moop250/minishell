@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:06:41 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 20:21:07 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/17 17:07:25 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,4 @@ void	handle_outfile(t_pipe_fd *p_out)
 		close(p_out->fd);
 		perror("dup2");
 	}
-	if (close(p_out->fd) == -1)
-		perror("close");
 }
