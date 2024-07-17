@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/16 16:11:16 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/17 17:40:57 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ms_env(char **in, t_core *core)
 
 	if (in[1])
 	{
-		// env called with param error
+		ms_printerror(3, NULL);
 		core->exit_status = 1;
 		return ;
 	}

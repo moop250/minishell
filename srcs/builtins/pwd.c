@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:56:52 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 16:05:55 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/17 17:40:49 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ms_pwd(char **in, t_core *core)
 
 	if (in[1])
 	{
-		// put error message here
+		ms_printerror(3, NULL);
 		core->exit_status = 1;
 		return ;
 	}
