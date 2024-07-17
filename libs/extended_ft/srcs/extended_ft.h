@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:13:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/03 20:15:47 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/17 15:43:30 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ void		gfree(void *address);
 char		*get_next_line(int fd);
 int			ft_strcmp(const char *str1, const char *str2);
 int			ft_printf_fd(int fd, const char *format, ...);
+int			ft_isnumeric(const char *str);
 
 #endif

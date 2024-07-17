@@ -6,7 +6,7 @@
 #    By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/18 15:13:08 by hlibine           #+#    #+#              #
-#    Updated: 2024/07/03 20:16:09 by hlibine          ###   ########.fr        #
+#    Updated: 2024/07/17 15:44:27 by hlibine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ FILES = srcs/ft_atoi \
 			srcs/ft_lstiter \
 			srcs/get_next_line/get_next_line \
 			srcs/ft_printf/ft_printf_utils \
- 			srcs/ft_printf/ft_printf \
+			srcs/ft_printf/ft_printf \
+			srcs/ft_isnumeric \
 
 SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
