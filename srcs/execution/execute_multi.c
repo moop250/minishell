@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:37 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 20:28:46 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/17 12:35:58 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 	i = 0;
 	while (i < cmd_count)
 	{
-		handle_files(current);
 		pid[i] = fork();
 		if (pid[i] < 0)
 		{
@@ -64,14 +63,27 @@ void	execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env)
 		}
 		if (pid[i] == 0)
 		{
+			handle_files(current);
 			if (i == 0 && cmd_count > 1)
 			{
-				dup2(pipefd[0][1], STDOUT_FILENO); // pipeline->out dup2 pipeline->out->fd ?
+				if (current->pipeline_out)
+				{
+					dup2(pipefd[i][1], current->pipeline_out->fd);
+					close(current->pipeline_out->fd);
+				}
+				else
+					dup2(pipefd[i][1], STDOUT_FILENO);
 			}
 			else if (i < cmd_count - 1)
 			{
 				dup2(pipefd[i - 1][0], STDIN_FILENO);
-				dup2(pipefd[i][1], STDOUT_FILENO);
+				if (current->pipeline_out)
+				{
+					dup2(pipefd[i][1], current->pipeline_out->fd);
+					close(current->pipeline_out->fd);
+				}
+				else
+					dup2(pipefd[i][1], STDOUT_FILENO);
 			}
 			else if (i == cmd_count - 1 && i > 0)
 				dup2(pipefd[i - 1][0], STDIN_FILENO);
