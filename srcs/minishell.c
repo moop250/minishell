@@ -6,19 +6,17 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 14:34:35 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/17 10:40:21 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing/parsing.h"
 
-int	main(int ac, char **av, char **env)
+void	ms_freeall(t_core *core)
 {
-	t_core	*core;
 	char	**paths;
 
-	core = minishell_loop(ac, av, env);
 	close(core->ms_stdin);
 	close(core->ms_stdout);
 	if (core->token)
@@ -37,5 +35,13 @@ int	main(int ac, char **av, char **env)
 		free(core->env->hostname);
 	gfree(core->env);
 	gfree(core);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_core	*core;
+
+	core = minishell_loop(ac, av, env);
+	ms_freeall(core);
 	return (0);
 }

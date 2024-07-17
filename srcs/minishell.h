@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/16 16:32:59 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/17 15:18:49 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void		clear_envs(t_envparam *envs);
 char		*ms_getcwd(void);
 void		parser(t_core *core, t_token *token);
 char		*findenvvalue(char *in);
+void		ms_freeall(t_core *core);
 
 // execution
 void		execute(t_core *core);
