@@ -1,0 +1,150 @@
+Language: C
+Code structure Norm: You can't write functions longer than 25 lines. You can't write lines with more than 80 columns. You can't write functions with more than four parameters. You can't declare global variables. You can't define more than five local variables in a function. You can't initialize a variable on the same line as its declaration.
+Program purpose: A custom shell interpreter.
+Task: You are given a strating main that initializes a prompt and all environment variables.
+You are also given a working parsing and lexing function.
+Assume that all tokens are sorted, heredoc, infiles and outfiles are detected.
+Pipes are also counted and split into a doubly linked list.
+You are given the valid execution path of a command.
+Your task is to handle the execution of commands passed to the `input = readline()`.
+You start with the execute function.
+Your task is to correctly handle forks, pipes and dup2 the outputs and inputs to the appropriate file descriptors.
+You must also open the infiles and outfiles accordingly.
+You must order it so that it behaves like bash.
+Allowed library functions: readline, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history, printf, malloc, free, write, access, open, read, close, fork, wait, waitpid, wait3, wait4, signal, sigaction, sigemptyset, sigaddset, kill, exit, getcwd, chdir, stat, lstat, fstat, unlink, execve, dup,  dup2, pipe, opendir, readdir, closedir, strerror, perror, isatty, ttyname, ttyslot, ioctl, getenv, tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs.
+Helper functions: You are free to define any number of helper functions that you need.
+
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+
+typedef struct s_command {
+    char **args;
+    char *infile;
+    char *outfile;
+    int append;
+    struct s_command *next;
+    struct s_command *prev;
+} t_command;
+
+int execute_single_command(t_command *cmd, char **envp);
+int handle_redirections(t_command *cmd);
+void close_pipes(int pipes[2][2], int pipe_count);
+int setup_pipes(t_command *cmd, int pipes[2][2], int i, int pipe_count);
+
+int execute(t_command *cmd_list, char **envp)
+{
+    int pipes[2][2];
+    int pipe_count;
+    int i;
+    int status;
+    pid_t pid;
+
+    pipe_count = 0;
+    for (t_command *tmp = cmd_list; tmp->next; tmp = tmp->next)
+        pipe_count++;
+
+    i = 0;
+    while (cmd_list)
+    {
+        if (i < pipe_count && pipe(pipes[i % 2]) == -1)
+            return (1);
+
+        pid = fork();
+        if (pid == -1)
+            return (1);
+        else if (pid == 0)
+        {
+            if (setup_pipes(cmd_list, pipes, i, pipe_count) != 0)
+                exit(1);
+            if (handle_redirections(cmd_list) != 0)
+                exit(1);
+            close_pipes(pipes, pipe_count);
+            execute_single_command(cmd_list, envp);
+        }
+
+        cmd_list = cmd_list->next;
+        i++;
+    }
+
+    close_pipes(pipes, pipe_count);
+    while (wait(&status) > 0)
+        ;
+    return (WEXITSTATUS(status));
+}
+
+int execute_single_command(t_command *cmd, char **envp)
+{
+    char *path;
+    
+    path = get_command_path(cmd->args[0]);
+    if (!path)
+    {
+        write(2, "Command not found: ", 19);
+        write(2, cmd->args[0], strlen(cmd->args[0]));
+        write(2, "\n", 1);
+        exit(127);
+    }
+
+    execve(path, cmd->args, envp);
+    perror("execve");
+    exit(1);
+}
+
+int handle_redirections(t_command *cmd)
+{
+    int fd;
+
+    if (cmd->infile)
+    {
+        fd = open(cmd->infile, O_RDONLY);
+        if (fd == -1)
+            return (1);
+        dup2(fd, STDIN_FILENO);
+        close(fd);
+    }
+
+    if (cmd->outfile)
+    {
+        int flags = O_WRONLY | O_CREAT;
+        flags |= cmd->append ? O_APPEND : O_TRUNC;
+        fd = open(cmd->outfile, flags, 0644);
+        if (fd == -1)
+            return (1);
+        dup2(fd, STDOUT_FILENO);
+        close(fd);
+    }
+
+    return (0);
+}
+
+void close_pipes(int pipes[2][2], int pipe_count)
+{
+    int i;
+
+    i = 0;
+    while (i < pipe_count)
+    {
+        close(pipes[i % 2][0]);
+        close(pipes[i % 2][1]);
+        i++;
+    }
+}
+
+int setup_pipes(t_command *cmd, int pipes[2][2], int i, int pipe_count)
+{
+    if (i > 0)
+    {
+        if (dup2(pipes[(i - 1) % 2][0], STDIN_FILENO) == -1)
+            return (1);
+    }
+
+    if (i < pipe_count)
+    {
+        if (dup2(pipes[i % 2][1], STDOUT_FILENO) == -1)
+            return (1);
+    }
+
+    return (0);
+}

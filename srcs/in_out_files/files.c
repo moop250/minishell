@@ -6,16 +6,23 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 11:18:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/02 14:49:55 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 19:05:13 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_files(t_pipeline *pipeline)
+int	handle_files(t_pipeline *pipeline)
 {
 	if (pipeline->pipeline_in)
-		handle_infile(pipeline->pipeline_in);
+	{
+		if (handle_infile(pipeline->pipeline_in) != 0)
+			return (1);
+	}
 	if (pipeline->pipeline_out)
-		handle_outfile(pipeline->pipeline_out);
+	{
+		if (handle_outfile(pipeline->pipeline_out) != 0)
+			return (1);
+	}
+	return (0);
 }
