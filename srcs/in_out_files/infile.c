@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:24:59 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/19 18:35:57 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 22:06:12 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	handle_infile(t_pipe_fd *pipeline_in)
 	{
 		perror(pipeline_in->file_name);
 		return (1);
+	}
+	if (pipeline_in->next)
+	{
+		close(pipeline_in->fd);
+		return (handle_infile(pipeline_in->next));
 	}
 	if (dup2(pipeline_in->fd, STDIN_FILENO) == -1)
 		perror("dup2");
