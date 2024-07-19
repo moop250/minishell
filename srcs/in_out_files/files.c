@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 11:18:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/17 17:59:08 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:22:56 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	in_and_out(t_pipe_fd *p_in, t_pipe_fd*p_out)
 		perror("read");
 }
 
-void	handle_files(t_pipeline *pipeline)
+int	handle_files(t_pipeline *pipeline)
 {
 	int	buf_fd[2];
 
@@ -40,12 +40,14 @@ void	handle_files(t_pipeline *pipeline)
 	if (pipeline->pipeline_in)
 	{
 		buf_fd[0] = dup(STDIN_FILENO);
-		handle_infile(pipeline->pipeline_in);
+		if (handle_infile(pipeline->pipeline_in) != 0)
+			return (1);
 	}
 	if (pipeline->pipeline_out)
 	{
 		buf_fd[1] = dup(STDOUT_FILENO);
-		handle_outfile(pipeline->pipeline_out);
+		if (handle_outfile(pipeline->pipeline_out) != 0)
+			return (1);
 	}
 	if (pipeline->pipeline_in != NULL && pipeline->pipeline_out != NULL)
 		in_and_out(pipeline->pipeline_in, pipeline->pipeline_out);
@@ -68,4 +70,5 @@ void	handle_files(t_pipeline *pipeline)
 			&& pipeline->params[0] == NULL)
 			close(pipeline->pipeline_out->fd);
 	}
+	retunr (0);
 }

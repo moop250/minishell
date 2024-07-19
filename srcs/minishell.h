@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/15 17:01:12 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:30:15 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,15 +130,15 @@ void		parser(t_core *core, t_token *token);
 char		*findenvvalue(char *in);
 
 // execution
-void		execute(t_core *core);
-void		execute_one(t_pipeline *pipeline, char **paths, char **env);
-void		execute_multi(int cmd_count, t_pipeline *pipeline, t_env *env);
-int			**init_pipes(int cmd_count);
+int			execute(t_core *core);
+int			execute_one(t_pipeline *pipeline, char **paths, char **env);
+int			init_pipes(t_pipeline *cmd, int pipes[2][2], int i, int pipe_count);
+void		close_pipes(int pipes[2][2], int pipe_count);
 void		free_pipes(int **pipes, int pipe_count);
 char		*init_execp(t_pipeline *current, char **paths);
-void		handle_files(t_pipeline *pipeline);
-void		handle_infile(t_pipe_fd *p_in);
-void		handle_heredoc(t_pipe_fd *p_in);
-void		handle_outfile(t_pipe_fd *p_out);
+int			handle_files(t_pipeline *pipeline);
+int			handle_infile(t_pipe_fd *p_in);
+int			handle_heredoc(t_pipe_fd *p_in);
+int			handle_outfile(t_pipe_fd *p_out);
 
 #endif
