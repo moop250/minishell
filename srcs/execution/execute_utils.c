@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:37:32 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/19 17:33:23 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:34:21 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	handle_redirections(t_pipeline *cmd)
 	return (0);
 }
 
-int	init_pipes(t_pipeline *cmd, int pipes[2][2], int i, int pipe_count)
+int	init_pipes(int pipes[2][2], int i, int pipe_count)
 {
 	if ( i > 0)
 	{

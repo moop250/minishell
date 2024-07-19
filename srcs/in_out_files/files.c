@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 11:18:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/19 17:22:56 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:35:37 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ int	handle_files(t_pipeline *pipeline)
 			&& pipeline->params[0] == NULL)
 			close(pipeline->pipeline_out->fd);
 	}
-	retunr (0);
+	return (0);
 }

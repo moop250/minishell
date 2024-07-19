@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/19 15:17:37 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:35:11 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute(t_core *core)
 		}
 		else if (pid == 0)
 		{
-			if (setup_pipes(core->pipeline, pipes, i, core->pipe_count) != 0)
+			if (init_pipes(pipes, i, core->pipe_count) != 0)
 				exit(EXIT_FAILURE);
 			if (handle_redirections(core->pipeline) != 0)
 				exit(EXIT_FAILURE);

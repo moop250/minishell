@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:24:59 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/19 17:37:01 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:35:57 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	handle_infile(t_pipe_fd *pipeline_in)
 {
 	if (!pipeline_in || !pipeline_in->file_name)
-		return ;
+		return (2);
 	if (pipeline_in->heredoc)
 		if (handle_heredoc(pipeline_in) != 0)
 			return (1);
