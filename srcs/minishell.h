@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/19 18:34:37 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:51:48 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char		*findenvvalue(char *in);
 // execution
 int			execute(t_core *core);
 int			execute_one(t_pipeline *pipeline, char **paths, char **env);
-int			init_pipes(int pipes[2][2], int i, int pipe_count);
+int			init_pipes(t_pipeline *cmd, int pipes[2][2], int i, int pipe_count);
 void		close_pipes(int pipes[2][2], int pipe_count);
 void		free_pipes(int **pipes, int pipe_count);
 char		*init_execp(t_pipeline *current, char **paths);
