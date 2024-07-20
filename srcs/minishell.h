@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/20 16:58:50 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/20 18:17:23 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include <termios.h>
 # include <errno.h>
 # include "../libs/extended_ft/srcs/extended_ft.h"
 

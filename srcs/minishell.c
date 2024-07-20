@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/20 17:46:27 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/20 22:23:37 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,26 @@ void	ms_freeall(t_core *core)
 	gfree(core);
 }
 
+static void	ignore_ctrl(void)
+{
+	struct termios	new_term;
+
+	tcgetattr(1, &new_term);
+	new_term.c_lflag |= ECHO;
+	new_term.c_cc[VQUIT] = _POSIX_VDISABLE;
+	tcsetattr(1, TCSANOW, &new_term);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_core	*core;
 
+	ignore_ctrl();
 	if (signal(SIGINT, signal_handler) == SIG_ERR) {
 		printf("Failed to register SIGINT\n");
 		return (1);
 	}
-	if (signal(SIGQUIT, signal_handler) == SIG_ERR) {
-		printf("Failed to register SIGQUIT\n");
-		return (1);
-	}
+
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	return (0);
