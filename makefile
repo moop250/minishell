@@ -117,6 +117,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/in_out_files/infile.c \
 		srcs/in_out_files/heredoc.c \
 		srcs/in_out_files/outfile.c \
+		srcs/signals/signals.c \
 		srcs/env/env_funcs.c \
 		srcs/env/env_extras.c \
 

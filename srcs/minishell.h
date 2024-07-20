@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/20 11:04:50 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/20 16:58:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,14 @@ int			execute(t_core *core);
 int			execute_one(t_core *core);
 int			execute_builtins(t_core *core);
 int			init_pipes(t_pipeline *cmd, int pipes[2][2], int i, int pipe_count);
-void		close_pipes(int pipes[2][2], int pipe_count);
-void		free_pipes(int **pipes, int pipe_count);
-char		*init_execp(t_pipeline *current, char **paths);
 int			handle_redirections(t_pipeline *cmd);
 int			handle_files(t_pipeline *pipeline);
 int			handle_infile(t_pipe_fd *p_in);
 int			handle_heredoc(t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
+char		*init_execp(t_pipeline *current, char **paths);
+void		close_pipes(int pipes[2][2], int pipe_count);
+void		free_pipes(int **pipes, int pipe_count);
+void		signal_handler(int signal);
 
 #endif

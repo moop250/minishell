@@ -6,12 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/19 18:39:52 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/20 16:51:33 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../parsing/parsing.h"
+#include "../builtins/builtins.h"
 
 char	*make_prompt(t_core *core)
 {
@@ -40,7 +41,10 @@ static char	*ms_prompt(t_core *core)
 	prompt = make_prompt(core);
 	tmp = readline(prompt);
 	if (!tmp)
-		ms_error("readline error\n");
+	{
+		gfree(prompt);
+		return (NULL);
+	}
 	addgarbage(tmp);
 	gfree(prompt);
 	return (tmp);
@@ -54,10 +58,9 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	{
 		core = init(ac, av, env);
 		core->line = ms_prompt(core);
-		if (core->line[0] != 0)
-			add_history(core->line);
-		if (ft_strcmp(core->line, "exit") == 0)
+		if (core->line == NULL)
 			break ;
+		add_history(core->line);
 		if (tokenizer(ft_strtrim(core->line, WHITESPACE), core) < 0)
 			continue ;
 		parser(core, core->token);
