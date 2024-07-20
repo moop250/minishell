@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/19 19:00:26 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/20 10:53:15 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	execute(t_core *core)
 				exit(EXIT_FAILURE);
 			if (handle_redirections(core->pipeline) != 0)
 				exit(EXIT_FAILURE);
-			execute_one(core->pipeline, core->env->paths, core->env->envp);
+			execute_one(core);
 		}
 		if (i > 0)
 			close(pipes[(i - 1) % 2][0]);

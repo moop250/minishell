@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/17 17:40:57 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/20 11:48:32 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ms_env(char **in, t_core *core)
 	while (tmp)
 	{
 		if (tmp->value)
-			ft_printf_fd(core->ms_stdout, "%s%s=%s%s\n", ORANGE,
+			ft_printf_fd(STDOUT_FILENO, "%s%s=%s%s\n", ORANGE,
 				tmp->name, tmp->value, CLEAR);
 		tmp = tmp->next;
 	}

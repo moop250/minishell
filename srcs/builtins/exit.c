@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:52:51 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/17 18:12:01 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/20 11:14:31 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	ms_exit(t_core *core, char **in)
+void	ms_exit(char **in, t_core *core)
 {
 	unsigned int	i;
 

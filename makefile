@@ -98,7 +98,11 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \
 		srcs/minishell_loop/main_loop.c \
+		srcs/builtins/echo.c \
 		srcs/builtins/env.c \
+		srcs/builtins/exit.c \
+		srcs/builtins/pwd.c \
+		srcs/builtins/unset.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/parsing_utils.c \
 		srcs/parsing/pipeline_fd_funcs.c \
@@ -108,6 +112,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/execution/execute.c \
 		srcs/execution/execute_one.c \
 		srcs/execution/execute_utils.c \
+		srcs/execution/execute_builtins.c \
 		srcs/in_out_files/files.c \
 		srcs/in_out_files/infile.c \
 		srcs/in_out_files/heredoc.c \

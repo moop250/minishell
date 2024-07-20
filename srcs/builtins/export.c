@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/17 17:20:00 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/20 11:27:40 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	print_export(t_core *core)
 	while (sorted_in[++i])
 		ft_printf_fd(core->ms_stdout, "declare -x %s\n", sorted_in[i]);
 	i = -1;
-	ft_2dfree(sorted_in);
+	ft_2dfree((void **)sorted_in);
 }
 
 void	ms_export(char **in, t_core *core)
