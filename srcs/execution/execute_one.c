@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:11:23 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 11:03:53 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/20 23:26:34 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	execute_one(t_core *core)
 	}
 	if (!ft_strcmp(core->pipeline->execp, "builtin"))
 		exit(execute_builtins(core));
-	if (execve(core->pipeline->execp, core->pipeline->params, core->env->envp) < 0)
+	if (execve(core->pipeline->execp, core->pipeline->params, core->env->envp) \
+		< 0)
 	{
 		exec_err(NULL, core->pipeline->execp, "execve");
 		exit(EXIT_FAILURE);

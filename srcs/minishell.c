@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/20 22:23:37 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/20 23:22:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	main(int ac, char **av, char **env)
 	t_core	*core;
 
 	ignore_ctrl();
-	if (signal(SIGINT, signal_handler) == SIG_ERR) {
+	if (signal(SIGINT, signal_handler) == SIG_ERR)
+	{
 		printf("Failed to register SIGINT\n");
 		return (1);
 	}
-
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	return (0);
