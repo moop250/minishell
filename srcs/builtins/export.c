@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/21 22:21:24 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/22 00:01:01 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	env_sorter(char **envs, size_t len)
 	{
 		j = -1;
 		while (++j < len - 1 - i)
+		{
 			if (ft_strcmp(envs[j], envs[j + 1]) > 0)
 			{
 				tmp = ft_strdup(envs[j]);
@@ -30,6 +31,7 @@ static void	env_sorter(char **envs, size_t len)
 				envs[j] = envs[j + 1];
 				envs[j + 1] = tmp;
 			}
+		}
 	}
 }
 
@@ -62,7 +64,7 @@ static void	print_export(t_core *core)
 	ft_2dfree((void **)sorted_list);
 }
 
-void	ms_export(char **in, t_core *core)
+int	ms_export(char **in, t_core *core)
 {
 	size_t		i;
 	t_envparam	*param;
@@ -81,5 +83,5 @@ void	ms_export(char **in, t_core *core)
 			param->value = ft_strdup(in[i]);
 		}
 	}
-	core->exit_status = 0;
+	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:57:39 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 11:14:43 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/22 00:02:45 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	ms_unset(char **in, t_core *core)
+int	ms_unset(char **in)
 {
 	t_envparam	*tmp;
 	int			i;
@@ -30,5 +30,5 @@ void	ms_unset(char **in, t_core *core)
 			gfree(tmp);
 		}
 	}
-	core->exit_status = 0;
+	return (0);
 }
