@@ -6,13 +6,13 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/21 22:06:04 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/21 22:11:36 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static void	env_sorter(char **envs, int len)
+static void	env_sorter(char **envs, size_t len)
 {
 	size_t	i;
 	size_t	j;
@@ -35,9 +35,9 @@ static void	env_sorter(char **envs, int len)
 
 static void	print_export(t_core *core)
 {
-	char	**sorted_list;
+	char		**sorted_list;
 	t_envparam	*tmp;
-	size_t	i;
+	size_t		i;
 
 	tmp = core->env->rawenvs;
 	i = 0;
