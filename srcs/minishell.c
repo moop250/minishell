@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/17 17:22:02 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/19 13:41:31 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ms_freeall(t_core *core)
 	if (core->pipeline)
 		ms_pipelinesclear(&core->pipeline);
 	clear_envs(core->env->rawenvs);
-	ft_2dfree(core->env->paths);
+	ft_2dfree((void **)core->env->paths);
 	if (core->env->hasenv)
 		free(core->env->hostname);
 	gfree(core->env);
