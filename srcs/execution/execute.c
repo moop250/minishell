@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/21 11:07:06 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 22:25:04 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	test(pid_t pid, int pipe, char *msg)
 		perror(msg);
 		return (1);
 	}
+	return (0);
 }
 
 static void	err(int handle, char *msg)
