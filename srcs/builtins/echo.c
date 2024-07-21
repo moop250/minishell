@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:46:13 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/16 11:54:06 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/21 21:39:54 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ms_echo(char **in, t_core *core)
 	}
 	while (in[++i])
 	{
-		if ((!flag && i == 1) || (flag && i == 2))
+		if ((!flag && i != 1) || (flag && i != 2))
 			ft_printf_fd(core->ms_stdout, " ");
 		ft_printf_fd(core->ms_stdout, "%s", in[i]);
 	}
