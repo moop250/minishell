@@ -6,31 +6,60 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 11:27:40 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 22:21:24 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static char	**env_sorter(t_envparam *env)
+static void	env_sorter(char **envs, size_t len)
 {
-	t_envparam	*tmp;
-	char		**out;
+	size_t	i;
+	size_t	j;
+	char	*tmp;
 
-	return (out);
+	i = -1;
+	while (++i < len)
+	{
+		j = -1;
+		while (++j < len - 1 - i)
+			if (ft_strcmp(envs[j], envs[j + 1]) > 0)
+			{
+				tmp = ft_strdup(envs[j]);
+				gfree(envs[j]);
+				envs[j] = envs[j + 1];
+				envs[j + 1] = tmp;
+			}
+	}
 }
 
 static void	print_export(t_core *core)
 {
-	char	**sorted_in;
-	size_t	i;
+	char		**sorted_list;
+	t_envparam	*tmp;
+	size_t		i;
 
+	tmp = core->env->rawenvs;
+	i = 0;
+	while (tmp)
+	{
+		++i;
+		tmp = tmp->next;
+	}
+	sorted_list = galloc((i + 1) * sizeof(char *));
+	tmp = core->env->rawenvs;
 	i = -1;
-	sorted_in = env_sorter(core->env->rawenvs);
-	while (sorted_in[++i])
-		ft_printf_fd(core->ms_stdout, "declare -x %s\n", sorted_in[i]);
+	while (tmp)
+	{
+		sorted_list[++i] = ft_strdup(tmp->name);
+		tmp = tmp->next;
+	}
+	sorted_list[i] = NULL;
+	env_sorter(sorted_list, i);
 	i = -1;
-	ft_2dfree((void **)sorted_in);
+	while (sorted_list[++i])
+		ft_printf_fd(core->ms_stdout, "declare -x %s\n", sorted_list[i]);
+	ft_2dfree((void **)sorted_list);
 }
 
 void	ms_export(char **in, t_core *core)

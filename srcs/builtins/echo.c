@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:46:13 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 11:14:21 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 22:21:03 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ms_echo(char **in, t_core *core)
 	}
 	while (in[++i])
 	{
-		if ((!flag && i == 1) || (flag && i == 2))
+		if ((!flag && i != 1) || (flag && i != 2))
 			ft_printf_fd(core->ms_stdout, " ");
 		ft_printf_fd(core->ms_stdout, "%s", in[i]);
 	}
