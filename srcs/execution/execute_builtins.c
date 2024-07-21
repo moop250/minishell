@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 10:52:05 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 11:27:09 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 22:31:41 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	execute_builtins(t_core *core)
 	if (!ft_strcmp(core->pipeline->params[0], "exit"))
 		ms_exit(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "export"))
-	{
-		ft_printf_fd(2, "export: Env not sorted yet\n");
-		return (1);
-	}
+		ms_export(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "pwd"))
 		ms_pwd(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "unset"))

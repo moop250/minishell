@@ -100,6 +100,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/minishell_loop/main_loop.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/env.c \
+		srcs/builtins/export.c \
 		srcs/builtins/exit.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/unset.c \
