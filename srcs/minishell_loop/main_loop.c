@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 11:05:59 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 11:53:33 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 			temp = core;
 			core->exit_status = execute(temp);
 		}
-		ms_pipelinesclear(&core->pipeline);
+		ms_pipelinesclear(core->pipeline);
 	}
 	rl_clear_history();
 	gfree(core->line);

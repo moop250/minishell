@@ -6,24 +6,11 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:37:32 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 23:43:56 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 11:49:40 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	free_pipes(int **pipes, int pipe_count)
-{
-	int	i;
-
-	i = 0;
-	while (i < pipe_count)
-	{
-		free(pipes[i]);
-		i++;
-	}
-	free(pipes);
-}
 
 void	close_pipes(int pipes[2][2], int pipe_count)
 {

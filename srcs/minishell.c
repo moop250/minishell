@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 10:11:26 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 11:50:56 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ms_freeall(t_core *core)
 	close(core->ms_stdin);
 	close(core->ms_stdout);
 	if (core->token)
-		ms_tokensclear(&core->token);
+		ms_tokensclear(core->token);
 	if (core->pipeline)
-		ms_pipelinesclear(&core->pipeline);
+		ms_pipelinesclear(core->pipeline);
 	clear_envs(core->env->rawenvs);
 	ft_2dfree((void **)core->env->paths);
 	if (core->env->hasenv)
