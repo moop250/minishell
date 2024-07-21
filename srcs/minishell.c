@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/20 23:22:55 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/21 10:11:26 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ms_freeall(t_core *core)
 	ft_2dfree((void **)core->env->paths);
 	if (core->env->hasenv)
 		free(core->env->hostname);
+	gfree(core->env->cwd);
 	gfree(core->env);
 	gfree(core);
 }

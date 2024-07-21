@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_fd_funcs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:05:06 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/19 14:54:31 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/21 11:21:33 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ static void	ms_pipe_fddelone(t_pipe_fd *pipe_fd)
 	if (!pipe_fd)
 		return ;
 	gfree(pipe_fd->file_name);
+	pipe_fd->file_name = NULL;
 	if (pipe_fd->fd > 0)
 		close(pipe_fd->fd);
 	gfree(pipe_fd);
+	pipe_fd = NULL;
 	return ;
 }
 

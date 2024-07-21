@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/16 15:55:15 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/21 09:51:52 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ms_getcwd(void)
 {
 	char	*result;
-	char	path[PATH_MAX];
+	char	path[1024];
 
 	result = NULL;
 	result = getcwd(result, sizeof(path));

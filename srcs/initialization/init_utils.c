@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:00:30 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 14:38:57 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/21 10:10:37 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	init_noenv(t_core *core)
 
 void	init_envs(t_core *core, char **env)
 {
-	int	i;
-	int	a;
+	int			i;
+	int			a;
 
 	i = -1;
 	core->env->hasenv = true;
