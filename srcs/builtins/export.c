@@ -6,31 +6,60 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/17 17:20:00 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/21 22:06:04 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static char	**env_sorter(t_envparam *env)
+static void	env_sorter(char **envs, int len)
 {
-	t_envparam	*tmp;
-	char		**out;
+	size_t	i;
+	size_t	j;
+	char	*tmp;
 
-	return (out);
+	i = -1;
+	while (++i < len)
+	{
+		j = -1;
+		while (++j < len - 1 - i)
+			if (ft_strcmp(envs[j], envs[j + 1]) > 0)
+			{
+				tmp = ft_strdup(envs[j]);
+				gfree(envs[j]);
+				envs[j] = envs[j + 1];
+				envs[j + 1] = tmp;
+			}
+	}
 }
 
 static void	print_export(t_core *core)
 {
-	char	**sorted_in;
+	char	**sorted_list;
+	t_envparam	*tmp;
 	size_t	i;
 
+	tmp = core->env->rawenvs;
+	i = 0;
+	while (tmp)
+	{
+		++i;
+		tmp = tmp->next;
+	}
+	sorted_list = galloc((i + 1) * sizeof(char *));
+	tmp = core->env->rawenvs;
 	i = -1;
-	sorted_in = env_sorter(core->env->rawenvs);
-	while (sorted_in[++i])
-		ft_printf_fd(core->ms_stdout, "declare -x %s\n", sorted_in[i]);
+	while (tmp)
+	{
+		sorted_list[++i] = ft_strdup(tmp->name);
+		tmp = tmp->next;
+	}
+	sorted_list[i] = NULL;
+	env_sorter(sorted_list, i);
 	i = -1;
-	ft_2dfree(sorted_in);
+	while (sorted_list[++i])
+		ft_printf_fd(core->ms_stdout, "declare -x %s\n", sorted_list[i]);
+	ft_2dfree((void **)sorted_list);
 }
 
 void	ms_export(char **in, t_core *core)
