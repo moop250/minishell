@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:46:13 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/21 23:13:22 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/22 14:06:19 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ms_echo(char **in, t_core *core)
 			flag = true;
 		}
 	}
-	printf("%i\n", i);
 	while (in[++i])
 	{
 		ft_printf_fd(core->ms_stdout, "%s", in[i]);
