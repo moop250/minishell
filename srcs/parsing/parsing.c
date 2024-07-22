@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 11:51:47 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/22 13:59:44 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,5 @@ void	parser(t_core *core, t_token *token)
 			token = token->next;
 		}
 	}
-	ms_tokensclear(core->token);
+	ms_tokensclear(&core->token);
 }

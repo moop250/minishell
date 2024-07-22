@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:21 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 12:24:45 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/22 13:58:48 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,18 @@ static void	ms_tokendelone(t_token *token)
 	return ;
 }
 
-void	ms_tokensclear(t_token *token)
+void	ms_tokensclear(t_token **token)
 {
 	t_token	*temp;
 
 	if (!token)
 		return ;
-	while (token)
+	while (*token)
 	{
-		temp = token->next;
-		ms_tokendelone(token);
-		token = temp;
+		temp = (*token)->next;
+		ms_tokendelone(*token);
+		*token = temp;
 	}
-	token = NULL;
+	*token = NULL;
 	return ;
 }

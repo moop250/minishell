@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 22:20:45 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/22 14:00:56 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ms_freeall(t_core *core)
 	close(core->ms_stdin);
 	close(core->ms_stdout);
 	if (core->token)
-		ms_tokensclear(core->token);
+		ms_tokensclear(&core->token);
 	if (core->pipeline)
 		ms_pipelinesclear(core->pipeline);
 	clear_envs(core->env->rawenvs);

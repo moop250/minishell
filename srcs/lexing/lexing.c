@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 12:06:21 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/22 13:56:50 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ static int	tokenizer_loop(t_core *core, char *input)
 		pos[1] = seperator(input, pos[0]);
 		if (pos[1] == -1)
 		{
-			ms_tokensclear(core->token);
+			ms_tokensclear(&core->token);
 			return (-1);
 		}
-		ms_addtoken_back(core, \
+		ms_addtoken_back(core,
 			ms_newtoken(ft_substr(input, pos[0], pos[1] - pos[0])));
 		i = pos[1];
 		++core->token_count;
@@ -136,6 +136,6 @@ int	tokenizer(char *input, t_core *core)
 		}
 	}
 	if (i < 0)
-		ms_tokensclear(core->token);
+		ms_tokensclear(&core->token);
 	return (i);
 }
