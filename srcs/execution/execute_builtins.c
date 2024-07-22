@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 10:52:05 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/21 22:31:41 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/22 14:00:35 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int	execute_builtins(t_core *core)
 	if (!ft_strcmp(core->pipeline->params[0], "pwd"))
 		ms_pwd(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "unset"))
-		ms_unset(core->pipeline->params, core);
+		ms_unset(core->pipeline->params);
 	return (core->exit_status);
 }
