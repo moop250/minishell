@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/22 00:01:01 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/23 13:16:07 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	env_sorter(char **envs, size_t len)
 	char	*tmp;
 
 	i = -1;
+	envs[len] = NULL;
 	while (++i < len)
 	{
 		j = -1;
@@ -56,11 +57,11 @@ static void	print_export(t_core *core)
 		sorted_list[++i] = ft_strdup(tmp->name);
 		tmp = tmp->next;
 	}
-	sorted_list[i] = NULL;
 	env_sorter(sorted_list, i);
 	i = -1;
 	while (sorted_list[++i])
-		ft_printf_fd(core->ms_stdout, "declare -x %s\n", sorted_list[i]);
+		ft_printf_fd(core->ms_stdout, "declare -x %s=\"%s\"\n",
+			sorted_list[i], findenvvalue(sorted_list[i]));
 	ft_2dfree((void **)sorted_list);
 }
 
@@ -68,20 +69,20 @@ int	ms_export(char **in, t_core *core)
 {
 	size_t		i;
 	t_envparam	*param;
+	char		**tmp;
 
 	i = 0;
 	if (in[1] == NULL)
 		print_export(core);
 	while (in[++i])
 	{
-		param = findenv(in[i]);
+		tmp = ft_split(in[i], '=');
+		param = findenv(tmp[0]);
 		if (!param)
 			addenvend(core, in[i], false);
 		else
-		{
-			gfree(param->value);
-			param->value = ft_strdup(in[i]);
-		}
+			modifenv(param, tmp[1]);
+		ft_2dfree((void **)tmp);
 	}
 	return (0);
 }
