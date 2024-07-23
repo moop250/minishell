@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:46:13 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/22 14:06:19 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/22 14:35:51 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ms_echo(char **in, t_core *core)
 
 	i = 0;
 	flag = false;
+	core->exit_status = core->exit_status;
 	if (in[1])
 	{
 		if (in[1][0] == '-' && in[1][1] == 'n' && in[1][2] == '\0')
@@ -29,11 +30,11 @@ int	ms_echo(char **in, t_core *core)
 	}
 	while (in[++i])
 	{
-		ft_printf_fd(core->ms_stdout, "%s", in[i]);
+		ft_printf_fd(STDOUT_FILENO, "%s", in[i]);
 		if (in[i + i])
-			ft_printf_fd(core->ms_stdout, " ");
+			ft_printf_fd(STDOUT_FILENO, " ");
 	}
 	if (!flag)
-		ft_printf_fd(core->ms_stdout, "\n");
+		ft_printf_fd(STDOUT_FILENO, "\n");
 	return (0);
 }
