@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:48:11 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/29 16:52:01 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/23 18:56:19 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,20 @@
  *
  * If dir begins with a slash (/), then CDPATH is not used.
 */
+ #include "builtins.h"
+
+ int	ms_cd(char **in, t_core *core)
+ {
+	(void)core;
+ 	if (!ft_strcmp(in[1], ".."))
+		if (chdir(in[1]) < 0)
+			return (1);
+	if (!ft_strcmp(in[1], "."))
+		return (0);
+	if (!ft_strcmp(in[1], "~"))
+	{
+		if (chdir("/Users/pberset") < 0)
+			return (1);
+	}
+	return (0);
+ }

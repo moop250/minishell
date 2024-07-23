@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/23 17:51:52 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/23 18:29:30 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	ms_update(t_core *core)
 		tmp = tmp->next;
 	core->env->envp = galloc((i + 1) * sizeof(char *));
 	core->env->envp[i] = NULL;
-	i = 0;
+	i = -1;
 	tmp = core->env->rawenvs;
 	while (++i, tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 11:49:53 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/23 18:54:36 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_env
 	t_envparam	*rawenvs;
 	bool		hasenv;
 	char		*user;
+	char		*home;
 	char		*hostname;
 	char		**paths;
 	char		**envp;
