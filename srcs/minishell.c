@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/22 14:00:56 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/23 15:45:45 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ms_freeall(t_core *core)
 	if (core->env->hasenv)
 		free(core->env->hostname);
 	gfree(core->env->cwd);
+	ft_2dfree((void **)core->env->envp);
 	gfree(core->env);
 	gfree(core);
 }
