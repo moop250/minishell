@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 13:37:48 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/23 15:13:28 by pberset          ###   ########.fr       */
+/*   Created: 2024/07/24 14:19:16 by pberset           #+#    #+#             */
+/*   Updated: 2024/07/24 14:30:20 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ char	*init_execp(t_pipeline *current, char **paths)
 		return (NULL);
 	if (access(current->params[0], X_OK) == 0)
 		return (current->params[0]);
+	if (is_builtin(current->params[0]))
+		return ("builtin");
 	return (find_exec_path(current->params[0], paths));
 }

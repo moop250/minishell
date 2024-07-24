@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 11:53:33 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/24 15:19:39 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	{
 		core = init(ac, av, env);
 		core->line = ms_prompt(core);
-		if (core->line == NULL || !ft_strcmp(core->line, "exit"))
+		if (core->line == NULL)
 			break ;
 		add_history(core->line);
 		if (tokenizer(ft_strtrim(core->line, WHITESPACE), core) < 0)

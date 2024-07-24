@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/23 18:54:36 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/24 14:30:09 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void		ms_freeall(t_core *core);
 // execution
 int			execute(t_core *core);
 int			execute_one(t_core *core);
+int			is_builtin(char *cmd);
 int			execute_builtins(t_core *core);
 int			init_pipes(t_pipeline *cmd, int pipes[2][2], int i, int pipe_count);
 int			handle_redirections(t_pipeline *cmd);
