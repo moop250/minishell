@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:03:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/22 13:56:50 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/24 17:11:53 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int	tokenizer(char *input, t_core *core)
 
 	core->token_count = 0;
 	gfree(core->line);
+	core->line = NULL;
 	i = tokenizer_loop(core, input);
 	gfree(input);
 	if (i < 0)

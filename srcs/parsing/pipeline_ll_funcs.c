@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 11:48:48 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/24 17:24:25 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	ms_pipelinedelone(t_pipeline *pipeline)
 	}
 }
 
-void	ms_pipelinesclear(t_pipeline *pipeline)
+void	ms_pipelinesclear(t_pipeline **pipeline)
 {
 	t_pipeline	*temp;
 
@@ -90,10 +90,10 @@ void	ms_pipelinesclear(t_pipeline *pipeline)
 		return ;
 	while (pipeline)
 	{
-		temp = (pipeline)->next;
-		ms_pipelinedelone(pipeline);
-		pipeline = temp;
+		temp = (*pipeline)->next;
+		ms_pipelinedelone(*pipeline);
+		*pipeline = temp;
 	}
-	pipeline = NULL;
+	*pipeline = NULL;
 	return ;
 }

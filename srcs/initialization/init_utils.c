@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:12:33 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 10:13:00 by pberset          ###   ########.ch       */
+/*   Updated: 2024/07/24 17:26:05 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	init_noenv(t_core *core)
 
 void	init_envs(t_core *core, char **env)
 {
-	int			i;
-	int			a;
+	int	i;
+	int	a;
 
 	i = -1;
 	core->env->hasenv = true;
