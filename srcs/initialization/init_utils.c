@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 12:00:30 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/21 10:10:37 by pberset          ###   ########.fr       */
+/*   Created: 2024/07/24 10:12:33 by pberset           #+#    #+#             */
+/*   Updated: 2024/07/24 10:13:00 by pberset          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	fill_core_env(t_core *core)
 	if (core->env->hasenv == true)
 	{
 		core->env->user = findenv("USER")->value;
+		core->env->home = findenv("HOME")->value;
 		core->env->hostname = ms_gethostname();
 		modifenv(findenv("SHLVL"),
 			ft_itoa(ft_atoi(findenv("SHLVL")->value) + 1));

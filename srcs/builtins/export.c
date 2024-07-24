@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/23 13:16:07 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/24 09:58:27 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	print_export(t_core *core)
 	env_sorter(sorted_list, i);
 	i = -1;
 	while (sorted_list[++i])
-		ft_printf_fd(core->ms_stdout, "declare -x %s=\"%s\"\n",
+		ft_printf_fd(STDOUT_FILENO, "declare -x %s=\"%s\"\n",
 			sorted_list[i], findenvvalue(sorted_list[i]));
 	ft_2dfree((void **)sorted_list);
 }
