@@ -5,24 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 11:37:32 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/21 11:49:40 by pberset          ###   ########.fr       */
+/*   Created: 2024/07/24 14:16:52 by pberset           #+#    #+#             */
+/*   Updated: 2024/07/24 15:08:42 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	close_pipes(int pipes[2][2], int pipe_count)
+int	is_builtin(char *cmd)
 {
-	int	i;
-
-	i = 0;
-	while (i < pipe_count)
-	{
-		close(pipes[i % 2][0]);
-		close(pipes[i % 2][1]);
-		i++;
-	}
+	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") || \
+		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") || \
+		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") || \
+		!ft_strcmp(cmd, "exit"))
+		return (1);
+	return (0);
 }
 
 int	handle_redirections(t_pipeline *cmd)

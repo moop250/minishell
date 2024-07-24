@@ -66,6 +66,7 @@ static void	set_env(t_core *core, char **env)
 		core->env->envp[i] = strdup(env[i]);
 	core->env->rawenvs = NULL;
 	core->env->cwd = ms_getcwd();
+	
 }
 
 t_core	*init(int ac, char **av, char **env)

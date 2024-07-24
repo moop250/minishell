@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/21 22:28:40 by pberset          ###   ########.fr       */
+/*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
+/*   Updated: 2024/07/24 15:32:39 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	execute(t_core *core)
 	int		status;
 	pid_t	pid;
 
+	if (!core->pipe_count && is_builtin(core->pipeline->params[0]))
+		return (execute_builtins(core));
 	i = 0;
 	while (i < core->pipe_count + 1)
 	{
@@ -55,10 +57,13 @@ int	execute(t_core *core)
 		test(pid, 0, "fork");
 		if (pid == 0)
 		{
-			err(init_pipes(core->pipeline, pipes, i, core->pipe_count), "pipe");
+			if (i < core->pipe_count || i > 0)
+				err(init_pipes(core->pipeline, pipes, i, core->pipe_count), "pipe");
 			err(handle_redirections(core->pipeline), "redirections");
 			execute_one(core);
 		}
+		else
+			waitpid(pid, &status, 0);
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
 		i++;
