@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 15:03:44 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/23 15:48:53 by pberset          ###   ########.fr       */
+/*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
+/*   Updated: 2024/07/24 15:31:04 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,24 @@ int	execute(t_core *core)
 	int		status;
 	pid_t	pid;
 
+	if (!core->pipe_count && is_builtin(core->pipeline->params[0]))
+		return (execute_builtins(core));
 	i = 0;
 	while (i < core->pipe_count + 1)
 	{
 		if (i < core->pipe_count)
 			test(0, pipe(pipes[i % 2]), "pipe");
-		if (is_builtin(core->pipeline->params[0]))
+		pid = fork();
+		test(pid, 0, "fork");
+		if (pid == 0)
 		{
 			if (i < core->pipe_count || i > 0)
 				err(init_pipes(core->pipeline, pipes, i, core->pipe_count), "pipe");
 			err(handle_redirections(core->pipeline), "redirections");
-			core->exit_status = execute_builtins(core);
+			execute_one(core);
 		}
 		else
-		{
-			pid = fork();
-			test(pid, 0, "fork");
-			if (pid == 0)
-			{
-				if (i < core->pipe_count || i > 0)
-					err(init_pipes(core->pipeline, pipes, i, core->pipe_count), "pipe");
-				err(handle_redirections(core->pipeline), "redirections");
-				execute_one(core);
-			}
-			else
-				waitpid(pid, &status, 0);
-		}
+			waitpid(pid, &status, 0);
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
 		i++;
