@@ -6,12 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/23 15:45:45 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/24 15:06:51 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing/parsing.h"
+#include <unistd.h>
 
 void	ms_freeall(t_core *core)
 {
@@ -29,6 +30,8 @@ void	ms_freeall(t_core *core)
 	ft_2dfree((void **)core->env->envp);
 	gfree(core->env);
 	gfree(core);
+	if (access(".heredoc", F_OK) == 0)
+		unlink(".heredoc");
 }
 
 static void	ignore_ctrl(void)
