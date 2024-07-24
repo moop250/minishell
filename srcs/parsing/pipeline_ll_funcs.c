@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 17:24:25 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/24 17:37:48 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	ms_pipelinesclear(t_pipeline **pipeline)
 
 	if (!pipeline)
 		return ;
-	while (pipeline)
+	while (*pipeline)
 	{
 		temp = (*pipeline)->next;
 		ms_pipelinedelone(*pipeline);
