@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 15:31:04 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/24 15:32:39 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ static void	close_pipes(int i, int pipe_count, int pipes[2][2])
 		test(0, close(pipes[(i - 1) % 2][0]), "close");
 	if (i < pipe_count)
 		test(0, close(pipes[i % 2][1]), "close");
-}
-
-static int	is_builtin(char *cmd)
-{
-	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") || \
-		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") || \
-		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") || \
-		!ft_strcmp(cmd, "exit"))
-		return (1);
-	return (0);
 }
 
 int	execute(t_core *core)
