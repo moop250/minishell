@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:19:03 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 15:30:38 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/24 17:43:10 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	execute_one(t_core *core)
 		ft_printf_fd(2, "%s: command not found\n", core->pipeline->params[0]);
 		exit(127);
 	}
+	if (!ft_strcmp(core->pipeline->execp, "builtin"))
+		exit(execute_builtins(core));
 	if (execve(core->pipeline->execp, core->pipeline->params, core->env->envp) \
 		< 0)
 	{
