@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:57:39 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/23 15:15:28 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/24 17:24:50 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	ms_unset(char **in)
 		tmp = findenv(in[i]);
 		if (tmp)
 		{
-			tmp->prev->next = tmp->next;
-			tmp->next->prev = tmp->prev;
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
+			if (tmp->next)
+				tmp->next->prev = tmp->prev;
 			gfree(tmp->name);
 			gfree(tmp->value);
 			gfree(tmp);
