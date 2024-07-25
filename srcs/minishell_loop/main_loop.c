@@ -6,13 +6,12 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 16:47:28 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/25 15:35:32 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../parsing/parsing.h"
-#include "../builtins/builtins.h"
 
 char	*make_prompt(t_core *core)
 {
@@ -26,7 +25,7 @@ char	*make_prompt(t_core *core)
 		prompt = ft_strjoin(&core->argv[0][2], "$ ");
 	else
 	{
-		tmp = ft_strjoin("minisHELLdivers:", findenv("PWD")->value);
+		tmp = ft_strjoin("minisHELLdivers:", core->env->cwd);
 		prompt = ft_strjoin(tmp, "$ ");
 		free(tmp);
 	}
