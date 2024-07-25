@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 09:58:27 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/25 15:04:18 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,14 @@ int	ms_export(char **in, t_core *core)
 		tmp = ft_split(in[i], '=');
 		param = findenv(tmp[0]);
 		if (!param)
-			addenvend(core, in[i], false);
+		{
+			if (!tmp[1])
+				addenvend(core, in[i], false);
+			else
+				addenvend(core, in[i], true);
+		}
 		else
-			modifenv(param, tmp[1]);
+			modifenv(param, ft_strdup(tmp[1]));
 		ft_2dfree((void **)tmp);
 	}
 	return (0);
