@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/26 16:31:07 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/26 18:51:41 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ms_getcwd(void)
 	return (result);
 }
 
-static void	ms_update(t_core *core)
+void	ms_update(t_core *core)
 {
 	t_envparam	*tmp;
 	int			i;
@@ -34,8 +34,8 @@ static void	ms_update(t_core *core)
 	i = -1;
 	gfree(core->env->cwd);
 	core->env->cwd = ms_getcwd();
-	//ft_2dfree((void **)core->env->paths);
-	//core->env->paths = ft_split(findenvvalue("PATH"), ':');
+	ft_2dfree((void **)core->env->paths);
+	core->env->paths = ft_split(findenvvalue("PATH"), ':');
 	ft_2dfree((void **)core->env->envp);
 	tmp = core->env->rawenvs;
 	while (++i, tmp)
@@ -73,28 +73,29 @@ static void	set_env(t_core *core, char **env)
 t_core	*init(int ac, char **av, char **env)
 {
 	static t_core	*core = NULL;
+	char			*tmp;
 
+	if (core)
+		return (core);
 	if (ac > 1)
 		ms_error("minishell called with argument");
-	if (!core)
-	{
-		core = galloc(sizeof(t_core));
-		core->token = NULL;
-		set_env(core, env);
-		core->argc = ac;
-		core->argv = av;
-		if (!core->env->envp[0])
-			init_noenv(core);
-		else
-			init_envs(core, core->env->envp);
-		fill_core_env(core);
-		core->ms_stdin = dup(STDIN_FILENO);
-		core->ms_stdout = dup(STDOUT_FILENO);
-		core->pipeline = NULL;
-		core->exit_status = 0;
-	}
+	core = galloc(sizeof(t_core));
+	core->token = NULL;
+	set_env(core, env);
+	core->argc = ac;
+	core->argv = av;
+	if (!core->env->envp[0])
+		init_noenv(core);
 	else
-		ms_update(core);
+		init_envs(core, core->env->envp);
+	fill_core_env(core);
+	core->pipeline = NULL;
+	core->exit_status = 0;
+	if (!findenv("PWD"))
+	{
+		addenvend(core, tmp = ft_strjoin("PWD=", ms_getcwd()), true);
+		gfree(tmp);
+	}
 	return (core);
 }
 

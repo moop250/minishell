@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 14:30:09 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:46:20 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ typedef struct s_core
 	int				token_count;
 	t_pipeline		*pipeline;
 	int				exit_status;
-	int				ms_stdin;
-	int				ms_stdout;
 }	t_core;
 
 // functions
@@ -133,6 +131,7 @@ char		*ms_getcwd(void);
 void		parser(t_core *core, t_token *token);
 char		*findenvvalue(char *in);
 void		ms_freeall(t_core *core);
+void		ms_update(t_core *core);
 
 // execution
 int			execute(t_core *core);

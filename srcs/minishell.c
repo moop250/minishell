@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 17:36:15 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:47:29 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing/parsing.h"
-#include <unistd.h>
 
 void	ms_freeall(t_core *core)
 {
-	close(core->ms_stdin);
-	close(core->ms_stdout);
 	if (core->token)
 		ms_tokensclear(&core->token);
 	if (core->pipeline)

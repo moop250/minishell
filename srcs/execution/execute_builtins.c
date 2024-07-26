@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 10:52:05 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 15:11:33 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:52:40 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	execute_builtins(t_core *core)
 	if (!ft_strcmp(core->pipeline->params[0], "cd"))
 		ms_cd(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "echo"))
-		ms_echo(core->pipeline->params, core);
+		ms_echo(core->pipeline->params);
 	if (!ft_strcmp(core->pipeline->params[0], "env"))
 		ms_env(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "exit"))

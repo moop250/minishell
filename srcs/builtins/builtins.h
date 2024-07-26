@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:18:04 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/23 18:46:33 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:52:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../minishell.h"
 
 int		ms_cd(char **in, t_core *core);
-int		ms_echo(char **in, t_core *core);
+int		ms_echo(char **in);
 int		ms_env(char **in, t_core *core);
 void	ms_exit(char **in, t_core *core);
 int		ms_export(char **in, t_core *core);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:14:28 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 11:31:36 by pberset          ###   ########.ch       */
+/*   Updated: 2024/07/26 18:53:51 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	ms_cd(char **in, t_core *core)
 			return (1);
 		}
 	}
-	findenv("PWD")->value = ms_getcwd();
+	modifenv(findenv("PWD"), ft_strdup(ms_getcwd()));
 	return (0);
 }
