@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 17:36:46 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 10:03:17 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static void	set_env(t_core *core, char **env)
 		core->env->envp[i] = strdup(env[i]);
 	core->env->rawenvs = NULL;
 	core->env->cwd = ms_getcwd();
-	
 }
 
 t_core	*init(int ac, char **av, char **env)
