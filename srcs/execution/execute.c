@@ -6,37 +6,26 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 15:32:39 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 10:14:30 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	test(pid_t pid, int pipe, char *msg)
-{
-	while (pid < 0 || pipe < 0)
-	{
-		perror(msg);
-		return (1);
-	}
-	return (0);
-}
-
-static void	err(int handle, char *msg)
-{
-	if (handle != 0)
-	{
-		perror(msg);
-		exit(EXIT_FAILURE);
-	}
-}
-
 static void	close_pipes(int i, int pipe_count, int pipes[2][2])
 {
 	if (i > 0)
-		test(0, close(pipes[(i - 1) % 2][0]), "close");
+		close(pipes[(i - 1) % 2][0]);
 	if (i < pipe_count)
-		test(0, close(pipes[i % 2][1]), "close");
+		close(pipes[i % 2][1]);
+}
+
+static void	child_exec(t_core *core, int pipes[2][2], int i)
+{
+	if (i < core->pipe_count || i > 0)
+		init_pipes(core->pipeline, pipes, i, core->pipe_count);
+	handle_redirections(core->pipeline);
+	execute_one(core);
 }
 
 int	execute(t_core *core)
@@ -52,16 +41,10 @@ int	execute(t_core *core)
 	while (i < core->pipe_count + 1)
 	{
 		if (i < core->pipe_count)
-			test(0, pipe(pipes[i % 2]), "pipe");
+			pipe(pipes[i % 2]);
 		pid = fork();
-		test(pid, 0, "fork");
 		if (pid == 0)
-		{
-			if (i < core->pipe_count || i > 0)
-				err(init_pipes(core->pipeline, pipes, i, core->pipe_count), "pipe");
-			err(handle_redirections(core->pipeline), "redirections");
-			execute_one(core);
-		}
+			child_exec(core, pipes, i);
 		else
 			waitpid(pid, &status, 0);
 		close_pipes(i, core->pipe_count, pipes);
