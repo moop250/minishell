@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:12:33 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 17:26:05 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 00:40:26 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ void	fill_core_env(t_core *core)
 		core->env->user = findenv("USER")->value;
 		core->env->home = findenv("HOME")->value;
 		core->env->hostname = ms_gethostname();
-		modifenv(findenv("SHLVL"),
-			ft_itoa(ft_atoi(findenv("SHLVL")->value) + 1));
+		if (!findenv("SHLVL"))
+			addenvend(core, ft_strdup("SHLVL=1"), true);
+		else
+			modifenv(findenv("SHLVL"),
+				ft_itoa(ft_atoi(findenv("SHLVL")->value) + 1));
 	}
 	else
-	{
 		core->env->user = core->argv[0];
-	}
 }
 
 void	clear_envs(t_envparam *envs)

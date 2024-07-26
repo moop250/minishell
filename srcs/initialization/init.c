@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 17:36:46 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/26 16:31:07 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	ms_update(t_core *core)
 	i = -1;
 	gfree(core->env->cwd);
 	core->env->cwd = ms_getcwd();
+	//ft_2dfree((void **)core->env->paths);
+	//core->env->paths = ft_split(findenvvalue("PATH"), ':');
 	ft_2dfree((void **)core->env->envp);
 	tmp = core->env->rawenvs;
 	while (++i, tmp)
@@ -66,12 +68,11 @@ static void	set_env(t_core *core, char **env)
 		core->env->envp[i] = strdup(env[i]);
 	core->env->rawenvs = NULL;
 	core->env->cwd = ms_getcwd();
-	
 }
 
 t_core	*init(int ac, char **av, char **env)
 {
-	static t_core	*core;
+	static t_core	*core = NULL;
 
 	if (ac > 1)
 		ms_error("minishell called with argument");
@@ -92,7 +93,8 @@ t_core	*init(int ac, char **av, char **env)
 		core->pipeline = NULL;
 		core->exit_status = 0;
 	}
-	ms_update(core);
+	else
+		ms_update(core);
 	return (core);
 }
 
