@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 10:52:05 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/26 18:52:40 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/28 11:42:44 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 int	execute_builtins(t_core *core)
 {
+	int	status;
+
 	if (!ft_strcmp(core->pipeline->params[0], "cd"))
-		ms_cd(core->pipeline->params, core);
+		status = ms_cd(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "echo"))
-		ms_echo(core->pipeline->params);
+		status = ms_echo(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "env"))
-		ms_env(core->pipeline->params, core);
+		status = ms_env(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "exit"))
 		ms_exit(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "export"))
-		ms_export(core->pipeline->params, core);
+		status = ms_export(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "pwd"))
-		ms_pwd(core->pipeline->params, core);
+		status = ms_pwd(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "unset"))
-		ms_unset(core->pipeline->params);
-	return (core->exit_status);
+		status = ms_unset(core->pipeline->params);
+	return (status);
 }
