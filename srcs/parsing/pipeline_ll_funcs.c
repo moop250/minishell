@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_ll_funcs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 17:37:48 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/28 19:45:11 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,34 +65,36 @@ static void	ms_pipelinedelone(t_pipeline *pipeline)
 
 	if (!pipeline)
 		return ;
-	i = -1;
 	if (pipeline->params)
 	{
-		while (pipeline->params[++i])
+		i = 0;
+		while (pipeline->params[i])
+		{
 			gfree(pipeline->params[i]);
+			i++;
+		}
 		gfree(pipeline->params);
-		pipeline->params = NULL;
 		if (pipeline->pipeline_out)
 			ms_freepipefd(&pipeline->pipeline_out);
 		if (pipeline->pipeline_in)
 			ms_freepipefd(&pipeline->pipeline_in);
 		gfree(pipeline);
-		pipeline = NULL;
-		return ;
 	}
 }
 
 void	ms_pipelinesclear(t_pipeline **pipeline)
 {
-	t_pipeline	*temp;
+	t_pipeline	*next;
+	t_pipeline	*current;
 
-	if (!pipeline)
+	if (!pipeline || !*pipeline)
 		return ;
-	while (*pipeline)
+	current = *pipeline;
+	while (current)
 	{
-		temp = (*pipeline)->next;
-		ms_pipelinedelone(*pipeline);
-		*pipeline = temp;
+		next = current->next;
+		ms_pipelinedelone(current);
+		current = next;
 	}
 	*pipeline = NULL;
 	return ;

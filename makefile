@@ -83,7 +83,7 @@ RESET = \033[0m
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -lreadline -g
-DEVFLAGS = -lreadline -g3
+DEVFLAGS = -lreadline -g3 -fsanitize=address
 RM = rm -f
 
 EXTENDED_FT = libs/extended_ft/
@@ -95,6 +95,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/error_handling/exec_err.c \
 		srcs/initialization/init.c \
 		srcs/initialization/init_utils.c \
+		srcs/initialization/init_env.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \
 		srcs/minishell_loop/main_loop.c \

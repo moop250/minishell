@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/22 13:59:44 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/28 19:47:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	cmdwrk(t_pipeline **pipe, t_token *token)
 	size_t	i;
 
 	i = (*pipe)->param_count;
-	(*pipe)->params[i] = parse_envvars(token->content);
+	(*pipe)->params[i] = parse_envvars(token->content); //leak
 	(*pipe)->params[i + 1] = NULL;
 	++(*pipe)->param_count;
 }
@@ -79,7 +79,7 @@ void	parser(t_core *core, t_token *token)
 		pipe = ms_addpipeline_back(core);
 		tmp = setparamcount(token);
 		if (tmp > 0)
-			pipe->params = galloc((tmp + 1) * sizeof(char *));
+			pipe->params = galloc((tmp + 1) * sizeof(char *)); //leak
 		pipe->param_count = 0;
 		while (token)
 		{
@@ -89,7 +89,7 @@ void	parser(t_core *core, t_token *token)
 				core->pipe_count++;
 				break ;
 			}
-			passpipes(&pipe, &token);
+			passpipes(&pipe, &token); //leak
 			token = token->next;
 		}
 	}

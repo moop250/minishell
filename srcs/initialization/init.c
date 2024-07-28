@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/26 18:58:11 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:46:49 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ms_update(t_core *core)
 	gfree(core->env->cwd);
 	core->env->cwd = ms_getcwd();
 	ft_2dfree((void **)core->env->paths);
-	core->env->paths = ft_split(findenvvalue("PATH"), ':');
+	core->env->paths = ms_get_env_paths();
 	ft_2dfree((void **)core->env->envp);
 	tmp = core->env->rawenvs;
 	while (++i, tmp)
