@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/29 12:56:42 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:04:28 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ int	execute(t_core *core)
 		else
 			waitpid(pid, &status, 0);
 		close_pipes(i, core->pipe_count, pipes);
-		tmp = tmp->next;
+		core->pipeline = core->pipeline->next;
 		i++;
 	}
 	while (wait(&status) > 0)
 		;
+	core->pipeline = tmp;
 	return (WEXITSTATUS(status));
 }
