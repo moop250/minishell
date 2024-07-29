@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:12:33 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/26 00:40:26 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/29 13:37:42 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	init_noenv(t_core *core)
 	tmp = ms_getcwd();
 	str = ft_strjoin("PWD=", tmp);
 	addenvend(core, str, true);
+	addenvend(core, "_=", true);
 	gfree(tmp);
 	gfree(str);
 }
