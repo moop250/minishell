@@ -6,23 +6,19 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/29 10:23:51 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 23:35:03 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ms_getcwd(void)
+static void	ms_free_space(t_core *core)
 {
-	char	*result;
-	char	path[PATH_MAX];
-
-	result = NULL;
-	result = getcwd(result, sizeof(path));
-	if (!result)
-		ms_error("getcwd error");
-	addgarbage(result);
-	return (result);
+	gfree(core->env->cwd);
+	core->env->cwd = ms_getcwd();
+	ft_2dfree((void **)core->env->paths);
+	core->env->paths = ms_get_env_paths();
+	ft_2dfree((void **)core->env->envp);
 }
 
 void	ms_update(t_core *core)
@@ -32,11 +28,7 @@ void	ms_update(t_core *core)
 	char		*temp;
 
 	i = -1;
-	gfree(core->env->cwd);
-	core->env->cwd = ms_getcwd();
-	ft_2dfree((void **)core->env->paths);
-	core->env->paths = ms_get_env_paths();
-	ft_2dfree((void **)core->env->envp);
+	ms_free_space(core);
 	tmp = core->env->rawenvs;
 	while (++i, tmp)
 		tmp = tmp->next;
@@ -47,7 +39,10 @@ void	ms_update(t_core *core)
 	while (++i, tmp)
 	{
 		temp = ft_strjoin(tmp->name, "=");
-		core->env->envp[i] = ft_strjoin(temp, tmp->value);
+		if (tmp->value)
+			core->env->envp[i] = ft_strjoin(temp, tmp->value);
+		else
+			core->env->envp[i] = ft_strdup(temp);
 		gfree(temp);
 		tmp = tmp->next;
 	}

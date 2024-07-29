@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 14:34:13 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/29 23:37:22 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,15 @@ void	addenvend(t_core *core, char *in, bool env)
 	int			i;
 
 	i = 0;
+	value = NULL;
 	while (in[i] && in[i] != '=')
 		++i;
 	name = ft_substr(in, 0, i);
-	value = ft_substr(in, i + 1, ft_strlen(in) - i);
+	if (in[i] == '=')
+	{
+		env = true;
+		value = ft_substr(in, i + 1, ft_strlen(in) - i);
+	}
 	new = ms_newenv(name, value, env);
 	if (!core->env->rawenvs)
 		core->env->rawenvs = new;
