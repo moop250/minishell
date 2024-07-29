@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/26 18:29:59 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/29 11:55:50 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static char	*ms_prompt(t_core *core)
 t_core	*minishell_loop(int ac, char **av, char **env)
 {
 	t_core	*core;
-	t_core	*temp;
 
 	while (true)
 	{
@@ -67,10 +66,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 			continue ;
 		parser(core, core->token);
 		if (core->token_count > 0)
-		{
-			temp = core;
-			core->exit_status = execute(temp);
-		}
+			core->exit_status = execute(core);
 		ms_pipelinesclear(&core->pipeline);
 	}
 	rl_clear_history();
