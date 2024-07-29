@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:20:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/28 14:46:49 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 10:23:51 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	set_env(t_core *core, char **env)
 	core->env->envp[i] = NULL;
 	i = -1;
 	while (env[++i])
-		core->env->envp[i] = strdup(env[i]);
+		core->env->envp[i] = ft_strdup(env[i]);
 	core->env->rawenvs = NULL;
 	core->env->cwd = ms_getcwd();
 }

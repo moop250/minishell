@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_ll_funcs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/28 19:45:11 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 10:59:03 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static t_pipeline	*newpipe(void)
 	if (!node)
 		return (NULL);
 	node->params = NULL;
-	node->heredoc = NULL;
+	node->param_count = 0;
+	node->heredoc = false;
 	node->pipeline_in = NULL;
 	node->pipeline_out = NULL;
 	node->next = NULL;
 	node->prev = NULL;
-	node->param_count = 0;
 	return (node);
 }
 
