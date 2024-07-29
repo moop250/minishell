@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/29 18:51:29 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 22:04:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 {
 	if (i > 0)
+	{
 		if (close(pipes[(i - 1) % 2][0]) < 0)
 		{
 			perror("close pipes");
 			return (-1);
 		}
+	}
 	if (i < pipe_count)
+	{
 		if (close(pipes[i % 2][1]) < 0)
 		{
 			perror("close pipes");
 			return (-2);
 		}
+	}
 	return (0);
 }
 
@@ -56,6 +60,7 @@ int	execute(t_core *core)
 		pid[i] = fork();
 		if (pid[i] == 0)
 			child_exec(core, pipes, i);
+		modifenv(findenv("_="), core->pipeline->params[0]);
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
 	}

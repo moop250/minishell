@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 10:52:05 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/28 11:43:33 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 21:42:59 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int	execute_builtins(t_core *core)
 		status = ms_pwd(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "unset"))
 		status = ms_unset(core->pipeline->params);
+	modifenv(findenv("_="), core->pipeline->params[0]);
 	return (status);
 }
