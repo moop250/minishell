@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/29 17:49:37 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:22:20 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	signal_handler(int signal)
 	if (signal == SIGINT)
 	{
 		write(1, "\n", 1);
-		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_on_new_line();
 		rl_redisplay();
+		ft_printf_fd(STDOUT_FILENO, "\033[2K");
+		ft_printf_fd(1, "\r");
 	}
-	if (signal == SIGUSR1)
-		write(1, "\n", 1);
 }
 
 void	setup_sig_handler(void)
@@ -38,10 +38,10 @@ void	setup_sig_handler(void)
 static void	child_signal_handler(int signal, siginfo_t *info, void *context)
 {
 	(void)context;
+	(void)info;
 	if (signal == SIGINT)
 	{
-		kill(info->si_pid, SIGUSR1);
-		ft_printf_fd(1, "Received SIGINT and replied\n");
+		ft_printf_fd(1, "  kldnfkjklklkldnl\n");
 	}
 }
 
