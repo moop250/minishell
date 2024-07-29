@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:14:28 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/26 18:59:11 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/29 11:02:52 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	ms_cd(char **in, t_core *core)
 {
-	modifenv(findenv("OLDPWD"), ft_strdup(findenvvalue("PWD")));
+	char	*tmp;
+
+	modifenv(findenv("OLDPWD"), findenvvalue("PWD"));
 	if (core->pipeline->param_count > 2)
 	{
 		ft_printf_fd(2, "cd: too many arguments\n");
@@ -34,6 +36,7 @@ int	ms_cd(char **in, t_core *core)
 			return (1);
 		}
 	}
-	modifenv(findenv("PWD"), ft_strdup(ms_getcwd()));
+	tmp = ms_getcwd();
+	modifenv(findenv("PWD"), tmp);
 	return (0);
 }

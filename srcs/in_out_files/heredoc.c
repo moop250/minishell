@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:47:31 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 23:28:09 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 12:49:43 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	handle_heredoc(t_pipe_fd *p_in)
 			break ;
 		ft_putstr_fd(input, p_in->fd);
 		ft_putchar_fd('\n', p_in->fd);
-		free(input);
+		gfree(input);
 	}
-	free(input);
+	gfree(input);
 	if (close(p_in->fd) == -1)
 		perror(".heredoc close");
-	free(p_in->file_name);
+	gfree(p_in->file_name);
 	p_in->file_name = ft_strdup(".heredoc");
 	p_in->heredoc = false;
 	return (0);

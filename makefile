@@ -95,6 +95,7 @@ SUPP = srcs/error_handling/errors.c \
 		srcs/error_handling/exec_err.c \
 		srcs/initialization/init.c \
 		srcs/initialization/init_utils.c \
+		srcs/initialization/init_env.c \
 		srcs/lexing/lexing.c \
 		srcs/lexing/token_funcs.c \
 		srcs/minishell_loop/main_loop.c \

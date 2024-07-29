@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:25:18 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 23:24:09 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 12:58:56 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	exec_err(int *pipe_fd, char *execp, char *msg)
 		}
 	}
 	if (execp)
-		free(execp);
+		gfree(execp);
 }

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:19:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/24 17:42:11 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 12:41:40 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static char	*find_exec_path(char *cmd, char **path)
 		if (!buff)
 			return (NULL);
 		exec_path = ft_strjoin(buff, cmd);
-		free(buff);
+		gfree(buff);
 		if (!exec_path)
 			return (NULL);
 		if (access(exec_path, X_OK) == 0)
 			return (exec_path);
-		free(exec_path);
+		gfree(exec_path);
 		i++;
 	}
 	return (NULL);

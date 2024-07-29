@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:02:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/29 12:50:21 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/29 13:01:47 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static t_pipeline	*newpipe(void)
 	if (!node)
 		return (NULL);
 	node->params = NULL;
-	node->heredoc = NULL;
+	node->param_count = 0;
+	node->heredoc = false;
 	node->pipeline_in = NULL;
 	node->pipeline_out = NULL;
 	node->next = NULL;
 	node->prev = NULL;
-	node->param_count = 0;
 	return (node);
 }
 
@@ -71,22 +71,22 @@ static void	ms_pipelinedelone(t_pipeline *pipeline)
 		if (pipeline->pipeline_in)
 			ms_freepipefd(&pipeline->pipeline_in);
 		gfree(pipeline);
-		pipeline = NULL;
-		return ;
 	}
 }
 
 void	ms_pipelinesclear(t_pipeline **pipeline)
 {
-	t_pipeline	*temp;
+	t_pipeline	*next;
+	t_pipeline	*current;
 
-	if (!pipeline)
+	if (!pipeline || !*pipeline)
 		return ;
-	while (*pipeline)
+	current = *pipeline;
+	while (current)
 	{
-		temp = (*pipeline)->next;
-		ms_pipelinedelone(*pipeline);
-		*pipeline = temp;
+		next = current->next;
+		ms_pipelinedelone(current);
+		current = next;
 	}
 	*pipeline = NULL;
 	return ;

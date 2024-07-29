@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/26 18:46:20 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:23:23 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_pipeline
 {
 	char				**params;
 	int					param_count;
-	char				*execp;
 	bool				heredoc;
 	struct s_pipe_fd	*pipeline_in;
 	struct s_pipe_fd	*pipeline_out;
@@ -130,6 +129,7 @@ void		clear_envs(t_envparam *envs);
 char		*ms_getcwd(void);
 void		parser(t_core *core, t_token *token);
 char		*findenvvalue(char *in);
+char		**ms_get_env_paths(void);
 void		ms_freeall(t_core *core);
 void		ms_update(t_core *core);
 
