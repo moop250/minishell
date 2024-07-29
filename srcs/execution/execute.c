@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/29 16:01:07 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 16:51:52 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 
 static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
+	setup_child_sig_handler();
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
 	handle_redirections(core->pipeline);
@@ -59,8 +60,14 @@ int	execute(t_core *core)
 		core->pipeline = core->pipeline->next;
 	}
 	i = -1;
+	struct sigaction sa_ignore;
+    sa_ignore.sa_handler = SIG_IGN;
+    sigemptyset(&sa_ignore.sa_mask);
+    sa_ignore.sa_flags = 0;
+    sigaction(SIGINT, &sa_ignore, NULL);
 	while (++i < core->pipe_count + 1)
 		waitpid(pid[i], &status, 0);
-	ft_2dfree((void *)pid);
+	gfree(pid);
+	setup_sig_handler();
 	return (WEXITSTATUS(status));
 }
