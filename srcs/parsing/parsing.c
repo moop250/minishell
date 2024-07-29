@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/28 19:47:06 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:26:21 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	parser(t_core *core, t_token *token)
 		pipe = ms_addpipeline_back(core);
 		tmp = setparamcount(token);
 		if (tmp > 0)
-			pipe->params = galloc((tmp + 1) * sizeof(char *)); //leak
+			pipe->params = galloc((tmp + 1) * sizeof(char *));
 		pipe->param_count = 0;
 		while (token)
 		{
@@ -89,7 +89,7 @@ void	parser(t_core *core, t_token *token)
 				core->pipe_count++;
 				break ;
 			}
-			passpipes(&pipe, &token); //leak
+			passpipes(&pipe, &token);
 			token = token->next;
 		}
 	}
