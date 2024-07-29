@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/26 18:29:59 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/29 12:43:31 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*make_prompt(t_core *core)
 	{
 		tmp = ft_strjoin("minisHELLdivers:", core->env->cwd);
 		prompt = ft_strjoin(tmp, "$ ");
-		free(tmp);
+		gfree(tmp);
 	}
 	return (prompt);
 }
