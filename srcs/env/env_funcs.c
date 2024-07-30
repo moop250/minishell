@@ -6,11 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/06/18 14:34:13 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/30 17:41:39 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "env.h"
 
 t_envparam	*ms_newenv(char *name, char *value, bool env)
 {
@@ -47,10 +47,15 @@ void	addenvend(t_core *core, char *in, bool env)
 	int			i;
 
 	i = 0;
+	value = NULL;
 	while (in[i] && in[i] != '=')
 		++i;
 	name = ft_substr(in, 0, i);
-	value = ft_substr(in, i + 1, ft_strlen(in) - i);
+	if (in[i] == '=')
+	{
+		env = true;
+		value = ft_substr(in, i + 1, ft_strlen(in) - i);
+	}
 	new = ms_newenv(name, value, env);
 	if (!core->env->rawenvs)
 		core->env->rawenvs = new;
@@ -86,7 +91,9 @@ void	modifenv(t_envparam *env, char *str)
 	if (!env || !str)
 		return ;
 	tmp = &env;
-	gfree((*tmp)->value);
+	if ((*tmp)->value)
+		gfree((*tmp)->value);
 	(*tmp)->value = ft_strdup(str);
 	gfree(str);
+	(*tmp)->base = true;
 }

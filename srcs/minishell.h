@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/30 17:38:59 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 18:04:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ char		*findenvvalue(char *in);
 char		**ms_get_env_paths(void);
 void		ms_freeall(t_core *core);
 void		ms_update(t_core *core);
+t_envparam	*ms_cust_addenvend(t_envparam *param,
+				char *name, char	*value, bool env);
 
 // execution
 int			execute(t_core *core);
