@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:12:33 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/29 13:37:42 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/30 15:53:23 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_noenv(t_core *core)
 	char	*str;
 
 	core->env->hasenv = false;
+	addenvend(core, "OLDPWD", false);
 	addenvend(core, "SHLVL=1", true);
 	core->env->paths = ft_split(NOENVPATH, ':');
 	tmp = ms_getcwd();
