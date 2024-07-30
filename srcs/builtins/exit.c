@@ -6,13 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:52:51 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/20 23:23:22 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:29:22 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	ms_exit(char **in, t_core *core)
+int	ms_exit(char **in, t_core *core)
 {
 	unsigned int	i;
 
@@ -28,7 +28,7 @@ void	ms_exit(char **in, t_core *core)
 		else if (in[2])
 		{
 			ms_printerror(3, NULL);
-			return ;
+			return (1);
 		}
 	}
 	ms_freeall(core);

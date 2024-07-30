@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/25 15:04:18 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/30 15:42:35 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,16 @@ int	ms_export(char **in, t_core *core)
 		tmp = ft_split(in[i], '=');
 		param = findenv(tmp[0]);
 		if (!param)
-		{
-			if (!tmp[1])
-				addenvend(core, in[i], false);
-			else
-				addenvend(core, in[i], true);
-		}
+			addenvend(core, in[i], false);
 		else
-			modifenv(param, ft_strdup(tmp[1]));
+		{
+			if (in[i][ft_strlen(in[i]) - 1] == '=')
+				modifenv(param, strdup(""));
+			else if (!tmp[1])
+				modifenv(param, NULL);
+			else
+				modifenv(param, ft_strdup(tmp[1]));
+		}
 		ft_2dfree((void **)tmp);
 	}
 	return (0);
