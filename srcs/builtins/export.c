@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/30 17:45:41 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/07/30 18:00:21 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	swap_nodes(t_envparam *a, t_envparam *b)
 
 static void	env_sorter(t_envparam *envs)
 {
-	int		swapped;
+	int			swapped;
 	t_envparam	*ptr;
 	t_envparam	*lptr;
 
@@ -68,7 +68,8 @@ static void	print_export(t_core *core)
 	while (tmp)
 	{
 		if (tmp->value)
-			ft_printf_fd(STDOUT_FILENO, "declare -x %s=\"%s\"\n", tmp->name, tmp->value);
+			ft_printf_fd(STDOUT_FILENO, "declare -x %s=\"%s\"\n",
+				tmp->name, tmp->value);
 		else
 			ft_printf_fd(STDOUT_FILENO, "declare -x %s\n", tmp->name);
 		tmp = tmp->next;
