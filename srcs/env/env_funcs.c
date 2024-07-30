@@ -6,11 +6,12 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/29 23:37:22 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/30 01:48:47 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdbool.h>
 
 t_envparam	*ms_newenv(char *name, char *value, bool env)
 {
@@ -91,7 +92,9 @@ void	modifenv(t_envparam *env, char *str)
 	if (!env || !str)
 		return ;
 	tmp = &env;
-	gfree((*tmp)->value);
+	if ((*tmp)->value)
+		gfree((*tmp)->value);
 	(*tmp)->value = ft_strdup(str);
 	gfree(str);
+	(*tmp)->base = true;
 }
