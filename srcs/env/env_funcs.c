@@ -6,12 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:49 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/30 01:48:47 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/07/30 17:41:39 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-#include <stdbool.h>
+#include "env.h"
 
 t_envparam	*ms_newenv(char *name, char *value, bool env)
 {

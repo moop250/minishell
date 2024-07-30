@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/28 21:23:23 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 17:31:04 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char		*findenvvalue(char *in);
 char		**ms_get_env_paths(void);
 void		ms_freeall(t_core *core);
 void		ms_update(t_core *core);
+t_envparam	*ms_cust_addenvend(t_envparam *param, char *name, char	*value, bool env);
 
 // execution
 int			execute(t_core *core);
