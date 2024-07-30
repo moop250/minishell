@@ -6,13 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/30 14:16:46 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 17:41:36 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	signal_handler(int signal)
+void	handle_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -20,37 +20,29 @@ static void	signal_handler(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		ft_printf_fd(STDOUT_FILENO, "\033[2K");
-		ft_printf_fd(1, "\r");
 	}
 }
 
-void	setup_sig_handler(void)
+void	handle_sigquit(int signal)
 {
-	struct sigaction	sa;
-
-	sa.sa_handler = signal_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-}
-
-static void	child_signal_handler(int signal, siginfo_t *info, void *context)
-{
-	(void)context;
-	(void)info;
-	if (signal == SIGINT)
+	if (signal == SIGQUIT)
 	{
-		exit(130);
+		write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
+		exit(131);
 	}
 }
 
-void	setup_child_sig_handler(void)
+void	setup_signals(void)
 {
-	struct sigaction	sa;
+    struct sigaction sa_int, sa_quit;
 
-	sa.sa_sigaction = child_signal_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_SIGINFO;
-	sigaction(SIGINT, &sa, NULL);
+    sa_int.sa_handler = handle_sigint;
+    sigemptyset(&sa_int.sa_mask);
+    sa_int.sa_flags = SA_RESTART;
+    sigaction(SIGINT, &sa_int, NULL);
+
+    sa_quit.sa_handler = handle_sigquit;
+    sigemptyset(&sa_quit.sa_mask);
+    sa_quit.sa_flags = SA_RESTART;
+    sigaction(SIGQUIT, &sa_quit, NULL);
 }

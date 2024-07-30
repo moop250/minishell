@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/29 16:34:27 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 17:39:57 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,11 @@ void	ms_freeall(t_core *core)
 		unlink(".heredoc");
 }
 
-static void	ignore_ctrl(void)
-{
-	struct termios	new_term;
-
-	tcgetattr(1, &new_term);
-	new_term.c_lflag |= ECHO;
-	new_term.c_cc[VQUIT] = _POSIX_VDISABLE;
-	tcsetattr(1, TCSANOW, &new_term);
-}
-
 int	main(int ac, char **av, char **env)
 {
-	t_core	*core;
+	t_core					*core;
 
-	ignore_ctrl();
-	setup_sig_handler();
+	setup_signals();
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	razegarbage();

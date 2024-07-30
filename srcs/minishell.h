@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/29 16:44:09 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 17:38:59 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ typedef struct s_core
 	int				exit_status;
 }	t_core;
 
+// Global. Yes, I gave up
+// extern volatile sig_atomic_t	g_sigint_received;
+
 // functions
 void		ms_error(char *in);
 void		ms_printerror(int errorcode, char *in);
@@ -145,7 +148,9 @@ int			handle_infile(t_pipe_fd *p_in);
 int			handle_heredoc(t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
-void		setup_sig_handler(void);
-void		setup_child_sig_handler(void);
+//void		sigint_handler(int signal);
+void		handle_sigint(int signal);
+void		handle_sigquit(int signal);
+void		setup_signals(void);
 
 #endif
