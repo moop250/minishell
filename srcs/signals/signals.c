@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/29 19:22:20 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:16:46 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	child_signal_handler(int signal, siginfo_t *info, void *context)
 	(void)info;
 	if (signal == SIGINT)
 	{
-		ft_printf_fd(1, "  kldnfkjklklkldnl\n");
+		exit(130);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 10:52:05 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/30 10:35:15 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:32:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	execute_builtins(t_core *core)
 {
 	int		status;
 
-	modifenv(findenv("_"), ft_strdup(core->pipeline->params[core->pipeline->param_count - 1]));
+	modifenv(findenv("_"), ft_strdup(core->pipeline->params[0]));
 	if (!ft_strcmp(core->pipeline->params[0], "cd"))
 		status = ms_cd(core->pipeline->params, core);
 	if (!ft_strcmp(core->pipeline->params[0], "echo"))
