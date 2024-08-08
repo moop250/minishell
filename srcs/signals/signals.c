@@ -35,11 +35,8 @@ void	handle_sigquit(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		if (foreground_pid)
-		{
-			write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
-			kill(foreground_pid, SIGQUIT);
-		}
+		write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
+		kill(foreground_pid, SIGQUIT);
 	}
 }
 
