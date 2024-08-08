@@ -38,16 +38,8 @@ void	handle_sigquit(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		if (!foreground_pid)
-		{
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-		else
-		{
-			write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
-			kill(foreground_pid, SIGQUIT);
-		}
+		write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
+		kill(foreground_pid, SIGQUIT);
 	}
 }
 

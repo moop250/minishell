@@ -37,6 +37,7 @@ static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 
 static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
+	setup_signals(SIGQUIT, handle_sigquit);
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
 	handle_redirections(core->pipeline);

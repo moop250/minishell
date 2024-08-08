@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **env)
 
 	foreground_pid = 0;
 	setup_signals(SIGINT, handle_sigint);
-	setup_signals(SIGQUIT, handle_sigquit);
+	setup_signals(SIGQUIT, SIG_IGN);
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	razegarbage();
