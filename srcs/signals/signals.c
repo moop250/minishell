@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/08 13:28:13 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 13:38:36 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	handle_sigint(int signal)
 			rl_redisplay();
 		}
 		else
+		{
+			write(STDOUT_FILENO, "\n", 1);
 			kill(foreground_pid, SIGINT);
+		}
 	}
 }
 
