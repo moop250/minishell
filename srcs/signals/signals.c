@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/08 11:33:04 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 13:28:13 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,17 @@ void	handle_sigint(int signal)
 	}
 }
 
-void	handle_sigquit(int signal)
+void	handle_sigquit(int sig)
 {
-	if (signal == SIGQUIT)
+	if (sig == SIGQUIT)
 	{
 		if (foreground_pid)
 		{
 			write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
 			kill(foreground_pid, SIGQUIT);
 		}
+		else
+			signal(sig, SIG_IGN);
 	}
 }
 
