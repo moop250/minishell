@@ -11,16 +11,13 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <signal.h>
 
 int	execute_one(t_core *core)
 {
 	char	*execp;
-	struct termios	child_tmodes;
 
-	tcgetattr(STDIN_FILENO, &child_tmodes);
-	signal(SIGQUIT, SIG_DFL);
-	tcsetattr(STDIN_FILENO, TCSADRAIN, &child_tmodes);
+	setup_signals(SIGQUIT, handle_sigquit);
+	ft_printf_fd(1, "%l\n", foreground_pid);
 	execp = init_execp(core->pipeline, core->env->paths);
 	if (!execp)
 	{
@@ -37,6 +34,5 @@ int	execute_one(t_core *core)
 		exec_err(NULL, execp, "execve");
 		exit(EXIT_FAILURE);
 	}
-	signal(SIGQUIT, handle_sigquit);
 	return (0);
 }

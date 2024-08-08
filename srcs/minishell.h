@@ -154,6 +154,6 @@ char		*init_execp(t_pipeline *current, char **paths);
 //void		sigint_handler(int signal);
 void		handle_sigint(int signal);
 void		handle_sigquit(int signal);
-void		setup_signals(void);
+void		setup_signals(int sig, void (*handler)(int));
 
 #endif

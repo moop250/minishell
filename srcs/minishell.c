@@ -33,7 +33,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_core					*core;
 
-	setup_signals();
+	foreground_pid = 0;
+	setup_signals(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);

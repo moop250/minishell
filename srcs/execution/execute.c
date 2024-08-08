@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <signal.h>
 
 volatile pid_t	foreground_pid;
 
