@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/08 11:51:46 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 13:07:37 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 
 static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
-	struct termios	child_tmodes;
-
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
 	handle_redirections(core->pipeline);
 	return (execute_one(core));
 }
 
-static int	parent_wait(int pipe_count, int *status, pid_t *pid)
+static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 {
 	int	i;
 
