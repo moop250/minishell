@@ -72,12 +72,10 @@ int	execute(t_core *core)
 		if (pid[i] == 0)
 			child_exec(core, pipes, i);
 		foreground_pid = pid[i];
-		tcgetattr(STDIN_FILENO, &(core->shell_tmode));
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
 	}
 	parent_wait(core->pipe_count + 1, &status, pid);
-	tcsetattr(STDIN_FILENO, TCSADRAIN, &(core->shell_tmode));
 	foreground_pid = 0;
 	gfree(pid);
 	return (WEXITSTATUS(status));

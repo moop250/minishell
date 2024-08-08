@@ -109,7 +109,6 @@ typedef struct s_core
 	int				token_count;
 	t_pipeline		*pipeline;
 	int				exit_status;
-	struct termios	shell_tmode;
 }	t_core;
 
 // Global. Yes, I gave up
@@ -151,7 +150,6 @@ int			handle_infile(t_pipe_fd *p_in);
 int			handle_heredoc(t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
-//void		sigint_handler(int signal);
 void		handle_sigint(int signal);
 void		handle_sigquit(int signal);
 void		setup_signals(int sig, void (*handler)(int));

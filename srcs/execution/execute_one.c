@@ -16,8 +16,6 @@ int	execute_one(t_core *core)
 {
 	char	*execp;
 
-	setup_signals(SIGQUIT, handle_sigquit);
-	ft_printf_fd(1, "%l\n", foreground_pid);
 	execp = init_execp(core->pipeline, core->env->paths);
 	if (!execp)
 	{

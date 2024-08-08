@@ -50,7 +50,6 @@ void	init_envs(t_core *core, char **env)
 
 	i = -1;
 	core->env->hasenv = true;
-	tcgetattr(STDIN_FILENO, &(core->shell_tmode));
 	while (env[++i])
 	{
 		a = -1;
