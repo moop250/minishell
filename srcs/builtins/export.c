@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:54:21 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/30 18:00:21 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/08/08 13:10:20 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ms_export(char **in, t_core *core)
 		else
 		{
 			if (in[i][ft_strlen(in[i]) - 1] == '=')
-				modifenv(param, strdup(""));
+				modifenv(param, ft_strdup(""));
 			else if (!tmp[1])
 				modifenv(param, NULL);
 			else
