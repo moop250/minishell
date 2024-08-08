@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:12:33 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/30 15:53:23 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/08/08 11:43:26 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	init_envs(t_core *core, char **env)
 
 	i = -1;
 	core->env->hasenv = true;
+	tcgetattr(STDIN_FILENO, &(core->shell_tmode));
 	while (env[++i])
 	{
 		a = -1;

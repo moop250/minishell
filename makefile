@@ -82,7 +82,7 @@ RESET = \033[0m
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -lreadline -g
+CFLAGS = -Wall -Wextra -Werror -lreadline -ltermcap -g
 DEVFLAGS = -lreadline -g3
 RM = rm -f
 

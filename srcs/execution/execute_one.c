@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:19:03 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/30 14:31:11 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 11:39:45 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int	execute_one(t_core *core)
 {
 	char	*execp;
+	struct termios	child_tmodes;
 
+	tcgetattr(STDIN_FILENO, &child_tmodes);
+	tcsetattr(STDIN_FILENO, TCSADRAIN, &child_tmodes);
 	execp = init_execp(core->pipeline, core->env->paths);
 	if (!execp)
 	{

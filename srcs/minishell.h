@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/30 18:04:06 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 11:40:39 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,11 @@ typedef struct s_core
 	int				token_count;
 	t_pipeline		*pipeline;
 	int				exit_status;
+	struct termios	shell_tmode;
 }	t_core;
 
 // Global. Yes, I gave up
-// extern volatile sig_atomic_t	g_sigint_received;
+extern volatile pid_t foreground_pid;
 
 // functions
 void		ms_error(char *in);

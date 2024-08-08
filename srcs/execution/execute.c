@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/30 14:33:47 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 11:51:46 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,21 @@ static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 
 static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
+	struct termios	child_tmodes;
+
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
 	handle_redirections(core->pipeline);
 	return (execute_one(core));
+}
+
+static int	parent_wait(int pipe_count, int *status, pid_t *pid)
+{
+	int	i;
+
+	i = -1;
+	while (++i < pipe_count)
+		waitpid(pid[i], status, WUNTRACED);
 }
 
 int	execute(t_core *core)
@@ -62,12 +73,14 @@ int	execute(t_core *core)
 		pid[i] = fork();
 		if (pid[i] == 0)
 			child_exec(core, pipes, i);
+		foreground_pid = pid[i];
+		tcgetattr(STDIN_FILENO, &(core->shell_tmode));
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
 	}
-	i = -1;
-	while (++i < core->pipe_count + 1)
-		waitpid(pid[i], &status, 0);
+	parent_wait(core->pipe_count + 1, &status, pid);
+	tcsetattr(STDIN_FILENO, TCSADRAIN, &(core->shell_tmode));
+	foreground_pid = 0;
 	gfree(pid);
 	return (WEXITSTATUS(status));
 }
