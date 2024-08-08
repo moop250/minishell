@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/08 14:11:46 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 14:23:17 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ void	handle_sigquit(int sig)
 		{
 			write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
 			kill(foreground_pid, SIGQUIT);
-		}
-		else
-		{
 		}
 	}
 }
