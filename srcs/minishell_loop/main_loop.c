@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/08 14:26:44 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/08 14:55:53 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 
 	while (true)
 	{
-		signal(SIGQUIT, SIG_IGN);
 		core = init(ac, av, env);
 		ms_update(core);
 		core->line = ms_prompt(core);
