@@ -35,6 +35,7 @@ static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 
 static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
+	signal(SIGQUIT, handle_sigquit);
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
 	handle_redirections(core->pipeline);
@@ -69,10 +70,12 @@ int	execute(t_core *core)
 		pid[i] = fork();
 		if (pid[i] == 0)
 			child_exec(core, pipes, i);
+		foreground_pid = pid[i];
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
 	}
 	parent_wait(core->pipe_count + 1, &status, pid);
+	foreground_pid = 0;
 	gfree(pid);
 	return (WEXITSTATUS(status));
 }

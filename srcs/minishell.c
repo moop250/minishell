@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 #include "parsing/parsing.h"
+#include <termios.h>
+#include <unistd.h>
+
+volatile pid_t	foreground_pid;
 
 void	ms_freeall(t_core *core)
 {
@@ -29,12 +33,31 @@ void	ms_freeall(t_core *core)
 		unlink(".heredoc");
 }
 
+static void	disable_canonical(struct termios *term)
+{
+	tcgetattr(STDOUT_FILENO, term);
+	term->c_lflag |= FLUSHO;
+	tcsetattr(STDOUT_FILENO, TCSANOW, term);
+}
+
+static void	restore_term(struct termios *term)
+{
+	term->c_lflag &= ~FLUSHO;
+	tcsetattr(STDOUT_FILENO, TCSANOW, term);
+}
+
 int	main(int ac, char **av, char **env)
 {
-	t_core					*core;
+	t_core			*core;
+	struct termios	term;
 
+	disable_canonical(&term);
+	foreground_pid = 0;
+	setup_signals(SIGINT, handle_sigint);
+	setup_signals(SIGQUIT, SIG_IGN);
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	razegarbage();
+	restore_term(&term);
 	return (0);
 }
