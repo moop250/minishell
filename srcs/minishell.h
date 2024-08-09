@@ -112,7 +112,7 @@ typedef struct s_core
 }	t_core;
 
 // Global. Yes, I gave up
-extern volatile pid_t foreground_pid;
+//extern volatile pid_t foreground_pid;
 
 // functions
 void		ms_error(char *in);

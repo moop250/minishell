@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
 
 static void	ms_free_space(t_core *core)
 {

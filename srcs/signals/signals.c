@@ -19,18 +19,14 @@ void	handle_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
-		if (!foreground_pid)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-		}
-		else
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			kill(foreground_pid, SIGINT);
-		}
+		write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else
+	{
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }
 
@@ -39,7 +35,6 @@ void	handle_sigquit(int sig)
 	if (sig == SIGQUIT)
 	{
 		write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
-		kill(foreground_pid, SIGQUIT);
 	}
 }
 
