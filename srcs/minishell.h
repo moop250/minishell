@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/10 17:32:12 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/10 19:52:51 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_core
 	int				argc;
 	char			**argv;
 	t_env			*env;
+	int				interactive;
 	char			*current_dir;
 	char			*prompt;
 	char			*line;
@@ -147,8 +148,8 @@ int			handle_infile(t_pipe_fd *p_in);
 int			handle_heredoc(t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
-void		handle_sigint(int signal);
-void		handle_sigquit(int signal);
-void		setup_signals(int sig, void (*handler)(int));
+void		handle_sig(int signal);
+void		setup_signals(void);
+void		toggle_interactive(int mode);
 
 #endif

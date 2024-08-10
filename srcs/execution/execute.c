@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/10 17:32:55 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/10 19:54:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	execute(t_core *core)
 	int		status;
 	pid_t	*pid;
 
+	toggle_interactive(0);
 	pid = (pid_t *)galloc((core->pipe_count + 1) * sizeof(pid_t));
 	if (!core->pipe_count && is_builtin(core->pipeline->params[0]))
 		return (execute_builtins(core));
@@ -74,5 +75,6 @@ int	execute(t_core *core)
 	}
 	parent_wait(core->pipe_count + 1, &status, pid);
 	gfree(pid);
+	toggle_interactive(1);
 	return (WEXITSTATUS(status));
 }
