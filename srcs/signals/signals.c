@@ -12,21 +12,23 @@
 
 #include "../minishell.h"
 #include <readline/readline.h>
-#include <signal.h>
 
 void	handle_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
-		write(STDOUT_FILENO, "\n", 1);
 		if (!foreground_pid)
 		{
+			write(STDERR_FILENO, "^C\n", 3);
 			rl_replace_line("", 0);
 			rl_on_new_line();
 			rl_redisplay();
 		}
 		else
-			kill(foreground_pid, SIGINT);
+		{
+			write(STDERR_FILENO, "\n", 1);
+			exit(signal);
+		}
 	}
 }
 
@@ -34,7 +36,7 @@ void	handle_sigquit(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		write(STDOUT_FILENO, "Quit (Core dumped)\n", 19);
+		write(STDERR_FILENO, "Quit (Core dumped)\n", 19);
 		kill(0, sig);
 	}
 }
