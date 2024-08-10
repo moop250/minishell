@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/08 11:40:39 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/10 17:32:12 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,6 @@ typedef struct s_core
 	t_pipeline		*pipeline;
 	int				exit_status;
 }	t_core;
-
-// Global. Yes, I gave up
-extern volatile pid_t foreground_pid;
 
 // functions
 void		ms_error(char *in);

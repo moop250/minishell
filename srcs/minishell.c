@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/08 14:56:38 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/10 17:31:59 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing/parsing.h"
-
-volatile pid_t	foreground_pid;
 
 void	ms_freeall(t_core *core)
 {
@@ -35,9 +33,6 @@ int	main(int ac, char **av, char **env)
 {
 	t_core			*core;
 
-	foreground_pid = 0;
-	setup_signals(SIGINT, handle_sigint);
-	setup_signals(SIGQUIT, handle_sigquit);
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	razegarbage();

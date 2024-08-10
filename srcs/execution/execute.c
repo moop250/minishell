@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/08 14:55:41 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/10 17:32:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,10 @@ int	execute(t_core *core)
 		pid[i] = fork();
 		if (pid[i] == 0)
 			child_exec(core, pipes, i);
-		foreground_pid = pid[i];
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
 	}
 	parent_wait(core->pipe_count + 1, &status, pid);
-	foreground_pid = 0;
 	gfree(pid);
 	return (WEXITSTATUS(status));
 }
