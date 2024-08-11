@@ -33,6 +33,7 @@ int	handle_heredoc(t_pipe_fd *p_in)
 		perror(".heredoc open");
 		return (1);
 	}
+	toggle_interactive(1);
 	while (42)
 	{
 		input = readline("heredoc> ");

@@ -11,33 +11,38 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <readline/readline.h>
 
 void	handle_sig(int signal)
 {
-	if (signal == SIGINT)
+	if (isatty(STDIN_FILENO))
 	{
-		if (isatty(STDIN_FILENO) && get_core()->interactive)
+		if (signal == SIGINT)
 		{
-			write(1, "\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-			get_core()->exit_status = 130;
+			if (interactive)
+			{
+				write(1, "\n", 1);
+				rl_on_new_line();
+				rl_replace_line("", 0);
+				rl_redisplay();
+			}
+			else
+				write(1, "\n", 1);
 		}
-	}
-	else if (signal == SIGQUIT)
-	{
-		if (isatty(STDIN_FILENO) && get_core()->interactive)
+		else if (signal == SIGQUIT)
 		{
-			rl_redisplay();
+			if (interactive)
+			{
+				rl_redisplay();
+			}
+			else
+				write(1, "Quit (core dump)\n", 17);
 		}
 	}
 }
 
 void	toggle_interactive(int mode)
 {
-	get_core()->interactive = mode;
+	interactive = mode;
 	if (mode)
 		signal(SIGQUIT, SIG_IGN);
 	else

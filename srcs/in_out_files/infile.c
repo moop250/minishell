@@ -19,6 +19,7 @@ int	handle_infile(t_pipe_fd *pipeline_in)
 	if (pipeline_in->heredoc)
 		if (handle_heredoc(pipeline_in) != 0)
 			return (-1);
+	toggle_interactive(0);
 	pipeline_in->fd = open(pipeline_in->file_name, O_RDONLY);
 	if (pipeline_in->fd == -1)
 	{

@@ -112,6 +112,8 @@ typedef struct s_core
 	int				exit_status;
 }	t_core;
 
+extern volatile int	interactive;
+
 // functions
 void		ms_error(char *in);
 void		ms_printerror(int errorcode, char *in);
