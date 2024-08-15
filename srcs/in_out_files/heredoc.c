@@ -33,11 +33,12 @@ int	handle_heredoc(t_pipe_fd *p_in)
 		perror(".heredoc open");
 		return (1);
 	}
-	toggle_interactive(1);
-	while (42)
+	heredoc_signals();
+	while (interactive >= 0)
 	{
-		input = readline("heredoc> ");
-		if (!input || (ft_strlen(p_in->file_name) == ft_strlen(input) \
+		if (interactive > 0)
+			input = readline("heredoc> ");
+		if (!input || interactive < 0 || (ft_strlen(p_in->file_name) == ft_strlen(input) \
 			&& !ft_strncmp(input, p_in->file_name, ft_strlen(p_in->file_name))))
 			break ;
 		ft_putstr_fd(input, p_in->fd);
@@ -48,7 +49,11 @@ int	handle_heredoc(t_pipe_fd *p_in)
 		w_heredoc(p_in->file_name);
 	gfree(input);
 	close(p_in->fd);
-	p_in->file_name = swap_names(p_in->file_name, ".heredoc");
 	p_in->heredoc = false;
-	return (0);
+	if (interactive >= 0)
+	{
+		p_in->file_name = swap_names(p_in->file_name, ".heredoc");
+		return (0);
+	}
+	return (-1);
 }

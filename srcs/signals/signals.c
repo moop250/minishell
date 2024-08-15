@@ -54,3 +54,15 @@ void	setup_signals(void)
 	toggle_interactive(1);
 	signal(SIGINT, handle_sig);
 }
+
+void	handle_heredoc_signal(int sig)
+{
+	if (sig == SIGINT)
+		interactive = -1;
+}
+
+void	heredoc_signals(void)
+{
+	toggle_interactive(1);
+	signal(SIGINT, handle_heredoc_signal);
+}

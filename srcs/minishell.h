@@ -153,5 +153,8 @@ char		*init_execp(t_pipeline *current, char **paths);
 void		handle_sig(int signal);
 void		setup_signals(void);
 void		toggle_interactive(int mode);
+void		heredoc_signals(void);
+void		handle_heredoc_signal(int sig);
+
 
 #endif
