@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <unistd.h>
 
 void	handle_sig(int signal)
 {
@@ -20,13 +21,13 @@ void	handle_sig(int signal)
 		{
 			if (interactive)
 			{
-				write(1, "\n", 1);
+				write(STDERR_FILENO, "\n", 1);
 				rl_on_new_line();
 				rl_replace_line("", 0);
 				rl_redisplay();
 			}
 			else
-				write(1, "\n", 1);
+				write(STDERR_FILENO, "\n", 1);
 		}
 		else if (signal == SIGQUIT)
 		{
@@ -35,7 +36,7 @@ void	handle_sig(int signal)
 				rl_redisplay();
 			}
 			else
-				write(1, "Quit (core dump)\n", 17);
+				write(STDERR_FILENO, "Quit (core dump)\n", 17);
 		}
 	}
 }
@@ -58,7 +59,7 @@ void	setup_signals(void)
 void	handle_heredoc_signal(int sig)
 {
 	if (sig == SIGINT)
-		interactive = -1;
+		interactive = 0;
 }
 
 void	heredoc_signals(void)

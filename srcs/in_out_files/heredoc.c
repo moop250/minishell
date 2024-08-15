@@ -20,7 +20,7 @@ static char	*swap_names(char *old, char *new)
 
 static void	w_heredoc(char *eof)
 {
-	ft_printf_fd(1, "warning: heredoc closed by EOF instead of \"%s\"\n", eof);
+	ft_printf_fd(STDERR_FILENO, "warning: heredoc closed by EOF instead of \"%s\"\n", eof);
 }
 
 int	handle_heredoc(t_pipe_fd *p_in)
@@ -34,11 +34,11 @@ int	handle_heredoc(t_pipe_fd *p_in)
 		return (1);
 	}
 	heredoc_signals();
-	while (interactive >= 0)
+	while (interactive > 0)
 	{
 		if (interactive > 0)
 			input = readline("heredoc> ");
-		if (!input || interactive < 0 || (ft_strlen(p_in->file_name) == ft_strlen(input) \
+		if (!input || !interactive || (ft_strlen(p_in->file_name) == ft_strlen(input) \
 			&& !ft_strncmp(input, p_in->file_name, ft_strlen(p_in->file_name))))
 			break ;
 		ft_putstr_fd(input, p_in->fd);
@@ -50,7 +50,7 @@ int	handle_heredoc(t_pipe_fd *p_in)
 	gfree(input);
 	close(p_in->fd);
 	p_in->heredoc = false;
-	if (interactive >= 0)
+	if (interactive > 0)
 	{
 		p_in->file_name = swap_names(p_in->file_name, ".heredoc");
 		return (0);

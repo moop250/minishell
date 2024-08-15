@@ -35,10 +35,15 @@ static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 
 static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
+	int	status;
+
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
-	handle_redirections(core->pipeline);
-	return (execute_one(core));
+	status = handle_redirections(core->pipeline);
+	if (status != 0)
+		exit(EXIT_FAILURE);
+	else
+		exit(execute_one(core));
 }
 
 static void	parent_wait(int pipe_count, int *status, pid_t *pid)
@@ -56,6 +61,7 @@ int	execute(t_core *core)
 	int		i;
 	int		status;
 	pid_t	*pid;
+
 	toggle_interactive(0);
 	pid = (pid_t *)galloc((core->pipe_count + 1) * sizeof(pid_t));
 	if (!core->pipe_count && is_builtin(core->pipeline->params[0]))

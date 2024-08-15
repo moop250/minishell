@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 #include "../parsing/parsing.h"
+#include <unistd.h>
 
 char	*make_prompt(t_core *core)
 {
@@ -41,7 +42,7 @@ static char	*ms_prompt(t_core *core)
 	tmp = readline(prompt);
 	if (!tmp)
 	{
-		ft_printf_fd(1, "exit\n");
+		ft_printf_fd(STDERR_FILENO, "exit\n");
 		gfree(prompt);
 		return (NULL);
 	}

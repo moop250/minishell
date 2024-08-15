@@ -25,8 +25,8 @@ int	is_builtin(char *cmd)
 int	handle_redirections(t_pipeline *cmd)
 {
 	if (handle_files(cmd) < 0)
-		return (-1);
-	return (0);
+		return(-1);
+	return(0);
 }
 
 int	init_pipes(t_pipeline *cmd, int pipes[2][2], int i, int pipe_count)

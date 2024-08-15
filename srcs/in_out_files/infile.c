@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <unistd.h>
 
 int	handle_infile(t_pipe_fd *pipeline_in)
 {
@@ -18,7 +19,12 @@ int	handle_infile(t_pipe_fd *pipeline_in)
 		return (-2);
 	if (pipeline_in->heredoc)
 		if (handle_heredoc(pipeline_in) != 0)
+		{
+			interactive = 0;
+			unlink(".heredoc");
 			return (-1);
+		}
+	interactive = 0;
 	pipeline_in->fd = open(pipeline_in->file_name, O_RDONLY);
 	if (pipeline_in->fd == -1)
 	{
