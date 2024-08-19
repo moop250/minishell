@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:24:59 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/24 17:37:29 by pberset          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:33:47 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ char		*strwrk(size_t pos[3], const char *in, char	*out);
 size_t		quotewrk(const char *in, t_list **list);
 size_t		treat_dollar(const char *in, t_list **list, size_t pos);
 size_t		treat_text(const char *in, t_list **list, size_t pos[2], int mode);
+void		ms_clean(t_pipeline **pipe);
 
 #endif

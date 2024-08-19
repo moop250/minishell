@@ -6,18 +6,19 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:37 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/29 13:26:21 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/08/15 18:04:43 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include <unistd.h>
 
 static void	cmdwrk(t_pipeline **pipe, t_token *token)
 {
 	size_t	i;
 
 	i = (*pipe)->param_count;
-	(*pipe)->params[i] = parse_envvars(token->content); //leak
+	(*pipe)->params[i] = parse_envvars(token->content);
 	(*pipe)->params[i + 1] = NULL;
 	++(*pipe)->param_count;
 }
@@ -92,6 +93,7 @@ void	parser(t_core *core, t_token *token)
 			passpipes(&pipe, &token);
 			token = token->next;
 		}
+		ms_clean(&pipe);
 	}
 	ms_tokensclear(&core->token);
 }

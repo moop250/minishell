@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:24:10 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 17:03:15 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/08/15 17:38:06 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*parse_envvars(const char *in)
 {
 	t_list	*list;
 	size_t	pos[2];
+	char	*tmp;
 
 	list = NULL;
 	pos[0] = 0;
@@ -104,5 +105,6 @@ char	*parse_envvars(const char *in)
 		else
 			pos[0] = treat_text(in, &list, pos, 0);
 	}
-	return (recombine(list));
+	tmp = recombine(list);
+	return (tmp);
 }

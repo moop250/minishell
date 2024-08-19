@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:23:39 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/04 17:00:33 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/08/15 18:01:03 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static size_t	dbl_quotes(const char *in, t_list **list)
 
 	pos[0] = 1;
 	pos[1] = 1;
+	ft_lstadd_back(list, ft_lstnew(ft_strdup("\"")));
 	while (in[pos[0]] != '"' && in[pos[0]])
 	{
 		if (in[pos[0]] == '$')
@@ -66,6 +67,7 @@ static size_t	dbl_quotes(const char *in, t_list **list)
 		else
 			pos[0] = treat_text(in, list, pos, 1);
 	}
+	ft_lstadd_back(list, ft_lstnew(ft_strdup("\"")));
 	return (pos[0]);
 }
 
@@ -74,11 +76,13 @@ static size_t	sgl_quotes(const char *in, t_list **list)
 	size_t	pos;
 	char	*out;
 
+	ft_lstadd_back(list, ft_lstnew(ft_strdup("'")));
 	pos = 0;
 	while (in[++pos] != '\'')
 		;
 	out = ft_substr(in, 1, pos - 1);
 	ft_lstadd_back(list, ft_lstnew(out));
+	ft_lstadd_back(list, ft_lstnew(ft_strdup("'")));
 	return (pos);
 }
 
