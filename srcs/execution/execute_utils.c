@@ -22,9 +22,9 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	handle_redirections(t_pipeline *cmd)
+int	handle_redirections(t_core *core, t_pipeline *cmd)
 {
-	if (handle_files(cmd) < 0)
+	if (handle_files(core, cmd) < 0)
 		return (-1);
 	return (0);
 }

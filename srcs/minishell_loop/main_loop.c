@@ -60,6 +60,7 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	{
 		core = init(ac, av, env);
 		ms_update(core);
+		setup_signals();
 		core->line = ms_prompt(core);
 		if (core->line == NULL)
 			break ;

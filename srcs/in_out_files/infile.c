@@ -15,18 +15,21 @@
 
 static int	heredoc_failed(void)
 {
-	g_interactive = 0;
+	t_core	*core;
+
+	core = get_core();
+	core->interact = 0;
 	unlink(".heredoc");
 	return (-1);
 }
 
-int	handle_infile(t_pipe_fd *pipeline_in)
+int	handle_infile(t_core *core, t_pipe_fd *pipeline_in)
 {
 	if (!pipeline_in || !pipeline_in->file_name)
 		return (-2);
 	if (pipeline_in->heredoc)
 	{
-		if (handle_heredoc(pipeline_in) != 0)
+		if (handle_heredoc(core, pipeline_in) != 0)
 			return (heredoc_failed());
 	}
 	pipeline_in->fd = open(pipeline_in->file_name, O_RDONLY);
@@ -38,7 +41,7 @@ int	handle_infile(t_pipe_fd *pipeline_in)
 	if (pipeline_in->next)
 	{
 		close(pipeline_in->fd);
-		return (handle_infile(pipeline_in->next));
+		return (handle_infile(core, pipeline_in->next));
 	}
 	if (dup2(pipeline_in->fd, STDIN_FILENO) == -1)
 		perror("dup2");

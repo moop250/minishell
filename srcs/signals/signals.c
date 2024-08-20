@@ -11,40 +11,42 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <unistd.h>
 
 void	handle_sig(int sig)
 {
-	if (isatty(STDIN_FILENO))
+	t_core	*core;
+
+	core = get_core();
+	if (sig == SIGINT)
 	{
-		if (sig == SIGINT)
+		if (core->interact)
 		{
-			if (g_interactive)
-			{
-				write(STDERR_FILENO, "\n", 1);
-				rl_on_new_line();
-				rl_replace_line("", 0);
-				rl_redisplay();
-			}
-			else
-				write(STDERR_FILENO, "\n", 1);
+			write(STDERR_FILENO, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
 		}
-		else if (sig == SIGQUIT)
+		else
+			write(STDERR_FILENO, "\n", 1);
+	}
+	else if (sig == SIGQUIT)
+	{
+		if (core->interact)
+			rl_redisplay();
+		else
 		{
-			if (g_interactive)
-				rl_redisplay();
-			else
-			{
-				write(STDERR_FILENO, "Quit (core dump)\n", 17);
-				signal(sig, SIG_DFL);
-			}
+			write(STDERR_FILENO, "Quit (core dump)\n", 17);
+			signal(sig, SIG_DFL);
 		}
 	}
 }
 
 void	toggle_interactive(int mode)
 {
-	g_interactive = mode;
+	t_core	*core;
+
+	core = get_core();
+	core->interact = mode;
 	if (mode)
 		signal(SIGQUIT, SIG_IGN);
 	else
@@ -59,9 +61,12 @@ void	setup_signals(void)
 
 void	handle_heredoc_signal(int sig)
 {
+	t_core	*core;
+
+	core = get_core();
 	if (sig == SIGINT)
 	{
-		g_interactive = 0;
+		core->interact = 0;
 		signal(SIGINT, SIG_DFL);
 		close(STDIN_FILENO);
 	}
@@ -69,7 +74,10 @@ void	handle_heredoc_signal(int sig)
 
 void	heredoc_signals(void)
 {
-	g_interactive = 1;
+	t_core	*core;
+
+	core = get_core();
+	core->interact = 1;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_heredoc_signal);
 }

@@ -13,8 +13,6 @@
 #include "minishell.h"
 #include "parsing/parsing.h"
 
-volatile int	g_interactive;
-
 void	ms_freeall(t_core *core)
 {
 	ms_tokensclear(&core->token);
@@ -33,9 +31,8 @@ void	ms_freeall(t_core *core)
 
 int	main(int ac, char **av, char **env)
 {
-	t_core			*core;
+	t_core	*core;
 
-	setup_signals();
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	razegarbage();

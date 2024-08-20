@@ -103,6 +103,7 @@ typedef struct s_core
 	t_env			*env;
 	char			*current_dir;
 	char			*prompt;
+	int				interact;
 	char			*line;
 	t_token			*token;
 	int				pipe_count;
@@ -110,8 +111,6 @@ typedef struct s_core
 	t_pipeline		*pipeline;
 	int				exit_status;
 }	t_core;
-
-extern volatile int	g_interactive;
 
 // functions
 void		ms_error(char *in);
@@ -143,10 +142,10 @@ int			execute_one(t_core *core);
 int			is_builtin(char *cmd);
 int			execute_builtins(t_core *core);
 int			init_pipes(t_pipeline *cmd, int pipes[2][2], int i, int pipe_count);
-int			handle_redirections(t_pipeline *cmd);
-int			handle_files(t_pipeline *pipeline);
-int			handle_infile(t_pipe_fd *p_in);
-int			handle_heredoc(t_pipe_fd *p_in);
+int			handle_redirections(t_core *core, t_pipeline *cmd);
+int			handle_files(t_core *core, t_pipeline *pipeline);
+int			handle_infile(t_core *core, t_pipe_fd *p_in);
+int			handle_heredoc(t_core *core, t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
 void		handle_sig(int signal);

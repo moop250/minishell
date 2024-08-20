@@ -39,7 +39,9 @@ static int	child_exec(t_core *core, int pipes[2][2], int i)
 
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
-	status = handle_redirections(core->pipeline);
+	status = handle_redirections(core, core->pipeline);
+	setup_signals();
+	core->interact = 0;
 	if (status != 0)
 		exit(EXIT_FAILURE);
 	else
@@ -67,9 +69,9 @@ int	execute(t_core *core)
 	int		status;
 	pid_t	*pid;
 
-	pid = (pid_t *)galloc((core->pipe_count + 1) * sizeof(pid_t));
 	if (!core->pipe_count && is_builtin(core->pipeline->params[0]))
 		return (execute_builtins(core));
+	pid = (pid_t *)galloc((core->pipe_count + 1) * sizeof(pid_t));
 	i = -1;
 	while (++i < core->pipe_count + 1)
 	{
