@@ -148,6 +148,7 @@ int			handle_infile(t_core *core, t_pipe_fd *p_in);
 int			handle_heredoc(t_core *core, t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
+void		set_signal_handler(int sig, void (*handler)(int), int flags);
 void		parent_signals(void);
 void		child_signals(void);
 void		heredoc_signals(void);

@@ -11,17 +11,29 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <signal.h>
+
+void	set_signal_handler(int sig, void (*handler)(int), int flags)
+{
+	struct sigaction	sa;
+
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = handler;
+	sa.sa_flags = flags;
+	sigfillset(&sa.sa_mask);
+	sigaction(sig, &sa, NULL);
+}
 
 void	parent_signals(void)
 {
-	signal(SIGINT, handle_parent_sig);
-	signal(SIGQUIT, SIG_IGN);
+	set_signal_handler(SIGINT, handle_parent_sig, 0);
+	set_signal_handler(SIGQUIT, SIG_IGN, 0);
 }
 
 void	child_signals(void)
 {
-	signal(SIGINT, handle_child_sig);
-	signal(SIGQUIT, handle_child_sig);
+	set_signal_handler(SIGINT, handle_child_sig, 0);
+	set_signal_handler(SIGQUIT, handle_child_sig, 0);
 }
 
 void	heredoc_signals(void)
@@ -30,6 +42,6 @@ void	heredoc_signals(void)
 
 	core = get_core();
 	core->interact = 1;
-	signal(SIGINT, handle_heredoc_sig);
-	signal(SIGQUIT, SIG_IGN);
+	set_signal_handler(SIGINT, handle_heredoc_sig, 0);
+	set_signal_handler(SIGQUIT, SIG_IGN, 0);
 }

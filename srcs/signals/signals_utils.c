@@ -16,7 +16,7 @@ void	handle_parent_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(STDERR_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -27,11 +27,11 @@ void	handle_child_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(STDERR_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 	}
 	else if (sig == SIGQUIT)
 	{
-		write(STDERR_FILENO, "Quit (core dump)\n",17);
+		write(STDOUT_FILENO, "Quit (core dump)\n", 17);
 	}
 }
 
@@ -44,6 +44,5 @@ void	handle_heredoc_sig(int sig)
 	{
 		core->interact = 0;
 		close(STDIN_FILENO);
-		signal(SIGINT, SIG_DFL);
 	}
 }
