@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/10 19:52:51 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/20 11:05:00 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ typedef struct s_core
 	int				argc;
 	char			**argv;
 	t_env			*env;
-	int				interactive;
 	char			*current_dir;
 	char			*prompt;
 	char			*line;
@@ -112,7 +111,7 @@ typedef struct s_core
 	int				exit_status;
 }	t_core;
 
-extern volatile int	interactive;
+extern volatile int	g_interactive;
 
 // functions
 void		ms_error(char *in);
@@ -155,6 +154,5 @@ void		setup_signals(void);
 void		toggle_interactive(int mode);
 void		heredoc_signals(void);
 void		handle_heredoc_signal(int sig);
-
 
 #endif

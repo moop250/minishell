@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/10 19:54:55 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/20 11:11:32 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 		waitpid(pid[i], status, WUNTRACED);
 }
 
+static char	*last_cmd(t_pipeline *pipeline)
+{
+	return (pipeline->params[pipeline->param_count - 1]);
+}
+
 int	execute(t_core *core)
 {
 	int		pipes[2][2];
@@ -69,7 +74,7 @@ int	execute(t_core *core)
 	i = -1;
 	while (++i < core->pipe_count + 1)
 	{
-		modifenv(findenv("_"), ft_strdup(core->pipeline->params[core->pipeline->param_count - 1]));
+		modifenv(findenv("_"), ft_strdup(last_cmd(core->pipeline)));
 		if (i < core->pipe_count)
 			pipe(pipes[i % 2]);
 		pid[i] = fork();
