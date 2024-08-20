@@ -25,10 +25,7 @@ int	execute_one(t_core *core)
 		exit(127);
 	}
 	if (!ft_strcmp(execp, "builtin"))
-	{
-		free(execp);
 		exit(execute_builtins(core));
-	}
 	if (execve(execp, core->pipeline->params, core->env->envp) < 0)
 	{
 		exec_err(NULL, execp, "execve");

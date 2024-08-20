@@ -65,14 +65,11 @@ void	handle_heredoc_signal(int sig)
 		signal(SIGINT, SIG_DFL);
 		close(STDIN_FILENO);
 	}
-	else
-	{
-	}
 }
 
 void	heredoc_signals(void)
 {
 	g_interactive = 1;
-	signal(SIGINT, handle_heredoc_signal);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_heredoc_signal);
 }
