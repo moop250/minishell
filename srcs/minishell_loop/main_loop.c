@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/29 13:14:20 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/10 19:57:08 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../parsing/parsing.h"
+#include <unistd.h>
 
 char	*make_prompt(t_core *core)
 {
@@ -41,7 +42,7 @@ static char	*ms_prompt(t_core *core)
 	tmp = readline(prompt);
 	if (!tmp)
 	{
-		ft_printf_fd(1, "exit\n");
+		ft_printf_fd(STDERR_FILENO, "exit\n");
 		gfree(prompt);
 		return (NULL);
 	}
@@ -62,7 +63,8 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 		core->line = ms_prompt(core);
 		if (core->line == NULL)
 			break ;
-		add_history(core->line);
+		if (ft_strcmp(core->line, ""))
+			add_history(core->line);
 		if (tokenizer(ft_strtrim(core->line, WHITESPACE), core) < 0)
 			continue ;
 		parser(core, core->token);

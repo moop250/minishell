@@ -6,49 +6,58 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/29 13:51:01 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/20 11:11:32 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ignore_all_signals(void)
-{
-	int	sig;
-
-	sig = 1;
-	while (sig < _NSIG)
-	{
-		if (sig != SIGKILL && sig != SIGSTOP)
-			signal(sig, SIG_IGN);
-		sig++;
-	}
-}
-
 static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 {
 	if (i > 0)
+	{
 		if (close(pipes[(i - 1) % 2][0]) < 0)
 		{
 			perror("close pipes");
 			return (-1);
 		}
+	}
 	if (i < pipe_count)
+	{
 		if (close(pipes[i % 2][1]) < 0)
 		{
 			perror("close pipes");
 			return (-2);
 		}
+	}
 	return (0);
 }
 
 static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
-	ignore_all_signals();
+	int	status;
+
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
-	handle_redirections(core->pipeline);
-	return (execute_one(core));
+	status = handle_redirections(core->pipeline);
+	if (status != 0)
+		exit(EXIT_FAILURE);
+	else
+		exit(execute_one(core));
+}
+
+static void	parent_wait(int pipe_count, int *status, pid_t *pid)
+{
+	int	i;
+
+	i = -1;
+	while (++i < pipe_count)
+		waitpid(pid[i], status, WUNTRACED);
+}
+
+static char	*last_cmd(t_pipeline *pipeline)
+{
+	return (pipeline->params[pipeline->param_count - 1]);
 }
 
 int	execute(t_core *core)
@@ -56,25 +65,26 @@ int	execute(t_core *core)
 	int		pipes[2][2];
 	int		i;
 	int		status;
-	pid_t	pid;
+	pid_t	*pid;
 
+	toggle_interactive(0);
+	pid = (pid_t *)galloc((core->pipe_count + 1) * sizeof(pid_t));
 	if (!core->pipe_count && is_builtin(core->pipeline->params[0]))
 		return (execute_builtins(core));
-	i = 0;
-	while (i < core->pipe_count + 1)
+	i = -1;
+	while (++i < core->pipe_count + 1)
 	{
+		modifenv(findenv("_"), ft_strdup(last_cmd(core->pipeline)));
 		if (i < core->pipe_count)
 			pipe(pipes[i % 2]);
-		pid = fork();
-		if (pid == 0)
+		pid[i] = fork();
+		if (pid[i] == 0)
 			child_exec(core, pipes, i);
-		else
-			waitpid(pid, &status, 0);
 		close_pipes(i, core->pipe_count, pipes);
 		core->pipeline = core->pipeline->next;
-		i++;
 	}
-	while (wait(&status) > 0)
-		;
+	parent_wait(core->pipe_count + 1, &status, pid);
+	gfree(pid);
+	toggle_interactive(1);
 	return (WEXITSTATUS(status));
 }

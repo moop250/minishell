@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/07/30 18:00:34 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/08/20 11:05:00 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ typedef struct s_core
 	int				exit_status;
 }	t_core;
 
+extern volatile int	g_interactive;
+
 // functions
 void		ms_error(char *in);
 void		ms_printerror(int errorcode, char *in);
@@ -147,6 +149,10 @@ int			handle_infile(t_pipe_fd *p_in);
 int			handle_heredoc(t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
-void		signal_handler(int signal);
+void		handle_sig(int signal);
+void		setup_signals(void);
+void		toggle_interactive(int mode);
+void		heredoc_signals(void);
+void		handle_heredoc_signal(int sig);
 
 #endif
