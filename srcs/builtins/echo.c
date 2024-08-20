@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:46:13 by pberset           #+#    #+#             */
-/*   Updated: 2024/07/26 18:52:14 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/08/20 15:11:48 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ms_echo(char **in)
 	while (in[++i])
 	{
 		ft_printf_fd(STDOUT_FILENO, "%s", in[i]);
-		if (in[i + i])
+		if (in[i + 1])
 			ft_printf_fd(STDOUT_FILENO, " ");
 	}
 	if (!flag)

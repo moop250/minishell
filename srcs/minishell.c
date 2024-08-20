@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/20 11:03:12 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/20 14:54:39 by hlibine          ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_core			*core;
 
+	rl_initialize();
 	setup_signals();
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
