@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:47:31 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/20 13:02:53 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/20 20:06:35 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static char	*swap_names(t_core *core, char *old, char *new)
 
 static void	w_heredoc(char *eof)
 {
-	ft_printf_fd(STDERR_FILENO, "warning: heredoc closed by EOF instead of %s", \
-		eof);
+	ft_printf_fd(STDERR_FILENO, \
+		"warning: heredoc closed by EOF instead of %s\n", eof);
 }
 
 static void	cleanup(char *input, t_pipe_fd *p_in)
@@ -42,7 +42,8 @@ int	handle_heredoc(t_core *core, t_pipe_fd *p_in)
 	{
 		if (core->interact > 0)
 			input = readline("heredoc> ");
-		if (!input || !core->interact || (ft_strlen(p_in->file_name) == ft_strlen(input) \
+		if (!input || !core->interact \
+			|| (ft_strlen(p_in->file_name) == ft_strlen(input) \
 			&& !ft_strncmp(input, p_in->file_name, ft_strlen(p_in->file_name))))
 			break ;
 		ft_putstr_fd(input, p_in->fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/10 19:57:08 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/20 19:18:45 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	{
 		core = init(ac, av, env);
 		ms_update(core);
-		setup_signals();
 		core->line = ms_prompt(core);
 		if (core->line == NULL)
 			break ;

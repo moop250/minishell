@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/20 11:11:32 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/20 20:32:25 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
 	int	status;
 
+	child_signals();
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
 	status = handle_redirections(core, core->pipeline);
-	setup_signals();
-	core->interact = 0;
 	if (status != 0)
 		exit(EXIT_FAILURE);
 	else

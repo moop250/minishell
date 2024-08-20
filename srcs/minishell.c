@@ -6,12 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/20 15:24:03 by hlibine          ###   LAUSANNE.ch       */
+/*   Updated: 2024/08/20 20:37:00 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing/parsing.h"
+#include <sys/time.h>
 
 void	ms_freeall(t_core *core)
 {
@@ -33,6 +34,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_core	*core;
 
+	parent_signals();
 	core = minishell_loop(ac, av, env);
 	ms_freeall(core);
 	razegarbage();
