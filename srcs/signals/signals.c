@@ -24,8 +24,8 @@ void	setup_signals(struct sigaction *sa)
 
 void	child_signals(struct sigaction *sa)
 {
-	sa->sa_handler = sigint_handler;
-	sigaction(SIGINT, sa, NULL);
+	//sa->sa_handler = sigint_handler;
+	//sigaction(SIGINT, sa, NULL);
 	sa->sa_handler = sigquit_handler;
 	sigaction(SIGQUIT, sa, NULL);
 }

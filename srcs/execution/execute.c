@@ -54,7 +54,11 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 
 	i = -1;
 	while (++i < pipe_count)
+	{
 		waitpid(pid[i], status, 0);
+		printf("status %d\n", WTERMSIG(*status));
+	}
+	
 }
 
 static char	*last_cmd(t_pipeline *pipeline)
