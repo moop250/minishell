@@ -118,7 +118,7 @@ void		ms_printerror(int errorcode, char *in);
 void		exec_err(int *pipe_fd, char *execp, char *msg);
 t_core		*init(int ac, char **av, char **env);
 int			tokenizer(char *input, t_core *core);
-t_core		*minishell_loop(int ac, char **av, char **env);
+void		minishell_loop(t_core *core);
 void		addenvend(t_core *core, char *in, bool env);
 t_envparam	*findenv(const char *name);
 void		modifenv(t_envparam *env, char *str);

@@ -14,12 +14,13 @@
 
 void	handle_parent_sig(int sig)
 {
+	t_core	*core;
+
+	core = get_core();
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		write(STDOUT_FILENO, core->line, ft_strlen(core->line));
 	}
 }
 
@@ -28,6 +29,7 @@ void	handle_child_sig(int sig)
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
+		set_signal_handler(sig, SIG_DFL, 0);
 	}
 	else if (sig == SIGQUIT)
 	{

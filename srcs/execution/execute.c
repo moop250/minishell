@@ -53,7 +53,7 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 
 	i = -1;
 	while (++i < pipe_count)
-		waitpid(pid[i], status, WUNTRACED);
+		waitpid(pid[i], status, 0);
 }
 
 static char	*last_cmd(t_pipeline *pipeline)
@@ -84,6 +84,7 @@ int	execute(t_core *core)
 		core->pipeline = core->pipeline->next;
 	}
 	parent_wait(core->pipe_count + 1, &status, pid);
+	printf("exit %d\n", WTERMSIG(status));
 	gfree(pid);
 	return (WEXITSTATUS(status));
 }
