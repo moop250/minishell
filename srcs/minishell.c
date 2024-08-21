@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:45:35 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/20 20:37:00 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/21 19:37:12 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	main(int ac, char **av, char **env)
 	t_core	*core;
 
 	core = init(ac, av, env);
-	parent_signals();
+	core->interact = 1;
+	setup_signals(&core->sa);
 	minishell_loop(core);
 	ms_freeall(core);
 	razegarbage();

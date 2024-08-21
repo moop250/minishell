@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:00:53 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/20 19:18:45 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/21 19:37:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../parsing/parsing.h"
 #include <unistd.h>
 
-char	*make_prompt(t_core *core)
+static char	*make_prompt(t_core *core)
 {
 	char	*prompt;
 	char	*tmp;

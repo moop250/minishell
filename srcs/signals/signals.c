@@ -6,42 +6,26 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/20 20:36:25 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/21 19:23:46 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <signal.h>
 
-void	set_signal_handler(int sig, void (*handler)(int), int flags)
+void	setup_signals(struct sigaction *sa)
 {
-	struct sigaction	sa;
-
-	ft_memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = handler;
-	sa.sa_flags = flags;
-	sigaddset(&sa.sa_mask, sig);
-	sigaction(sig, &sa, NULL);
+	sa->sa_handler = sigint_handler;
+	sigemptyset(&sa->sa_mask);
+	sa->sa_flags = 0;
+	sigaction(SIGINT, sa, NULL);
+	sa->sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, sa, NULL);
 }
 
-void	parent_signals(void)
+void	child_signals(struct sigaction *sa)
 {
-	set_signal_handler(SIGINT, handle_parent_sig, 0);
-	set_signal_handler(SIGQUIT, SIG_IGN, 0);
-}
-
-void	child_signals(void)
-{
-	set_signal_handler(SIGINT, SIG_DFL, 0);
-	set_signal_handler(SIGQUIT, handle_child_sig, 0);
-}
-
-void	heredoc_signals(void)
-{
-	t_core	*core;
-
-	core = get_core();
-	core->interact = 1;
-	set_signal_handler(SIGINT, handle_heredoc_sig, 0);
-	set_signal_handler(SIGQUIT, SIG_IGN, 0);
+	sa->sa_handler = sigint_handler;
+	sigaction(SIGINT, sa, NULL);
+	sa->sa_handler = sigquit_handler;
+	sigaction(SIGQUIT, sa, NULL);
 }

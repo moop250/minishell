@@ -6,45 +6,38 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:15:56 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/20 20:41:49 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/21 19:44:32 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_parent_sig(int sig)
+void	sigint_handler(int sig)
 {
 	t_core	*core;
 
 	core = get_core();
 	if (sig == SIGINT)
 	{
-		write(STDOUT_FILENO, "\n", 1);
-		write(STDOUT_FILENO, core->line, ft_strlen(core->line));
+		if (core->interact)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		else
+		{
+			write(STDOUT_FILENO, "\n", 1);
+		}
 	}
 }
 
-void	handle_child_sig(int sig)
+void	sigquit_handler(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGQUIT)
 	{
-		write(STDOUT_FILENO, "\n", 1);
-		set_signal_handler(sig, SIG_DFL, 0);
-	}
-	else if (sig == SIGQUIT)
-	{
-		write(STDOUT_FILENO, "Quit (core dump)\n", 17);
-	}
-}
-
-void	handle_heredoc_sig(int sig)
-{
-	t_core	*core;
-
-	core = get_core();
-	if (sig == SIGINT)
-	{
-		core->interact = 0;
-		close(STDIN_FILENO);
+		write(STDOUT_FILENO, "Dump\n", 5);
+		abort();
 	}
 }

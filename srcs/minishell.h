@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:20 by hlibine           #+#    #+#             */
-/*   Updated: 2024/08/20 20:36:51 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/21 19:33:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,19 @@ typedef struct s_env
 
 typedef struct s_core
 {
-	int				argc;
-	char			**argv;
-	t_env			*env;
-	char			*current_dir;
-	char			*prompt;
-	int				interact;
-	char			*line;
-	t_token			*token;
-	int				pipe_count;
-	int				token_count;
-	t_pipeline		*pipeline;
-	int				exit_status;
+	int					argc;
+	char				**argv;
+	t_env				*env;
+	char				*current_dir;
+	char				*prompt;
+	int					interact;
+	char				*line;
+	t_token				*token;
+	int					pipe_count;
+	int					token_count;
+	t_pipeline			*pipeline;
+	int					exit_status;
+	struct sigaction	sa;
 }	t_core;
 
 // functions
@@ -148,9 +149,10 @@ int			handle_infile(t_core *core, t_pipe_fd *p_in);
 int			handle_heredoc(t_core *core, t_pipe_fd *p_in);
 int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
-void		set_signal_handler(int sig, void (*handler)(int), int flags);
-void		parent_signals(void);
-void		child_signals(void);
+void		setup_signals(struct sigaction *sa);
+void		child_signals(struct sigaction *sa);
+void		sigint_handler(int sig);
+void		sigquit_handler(int sig);
 void		heredoc_signals(void);
 void		handle_parent_sig(int sig);
 void		handle_child_sig(int sig);

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:47:31 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/20 20:06:35 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/21 19:20:30 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	handle_heredoc(t_core *core, t_pipe_fd *p_in)
 {
 	char	*input;
 
-	heredoc_signals();
 	p_in->fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	while (core->interact > 0)
 	{
