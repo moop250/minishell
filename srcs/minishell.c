@@ -33,10 +33,9 @@ void	ms_freeall(t_core *core)
 int	main(int ac, char **av, char **env)
 {
 	t_core	*core;
-
 	core = init(ac, av, env);
 	core->interact = 1;
-	setup_signals(&core->sa);
+	parent_signals();
 	minishell_loop(core);
 	ms_freeall(core);
 	razegarbage();

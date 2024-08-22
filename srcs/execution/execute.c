@@ -39,7 +39,7 @@ static int	child_exec(t_core *core, int pipes[2][2], int i)
 	int	status;
 
 	core->interact = 0;
-	child_signals(&core->sa);
+	child_signals();
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
 	status = handle_redirections(core, core->pipeline);
@@ -60,9 +60,15 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 		if (WIFSIGNALED(*status))
 		{
 			if (WTERMSIG(*status) == 3)
+			{
 				write(STDOUT_FILENO, "Quit (core dump)\n", 17);
+				*status = 128 + 3;
+			}
 			else
-				write(STDOUT_FILENO, "\n", 1);
+			{
+				printf("\33[2K\r");
+				*status = 128 + 2;
+			}
 		}
 	}
 }
