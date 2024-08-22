@@ -14,22 +14,12 @@
 
 void	sigint_handler(int sig)
 {
-	t_core	*core;
-
-	core = get_core();
 	if (sig == SIGINT)
 	{
-		if (core->interact)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-		else
-		{
-			write(STDOUT_FILENO, "\n", 1);
-		}
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
@@ -37,7 +27,14 @@ void	sigquit_handler(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		write(STDOUT_FILENO, "Dump\n", 5);
-		abort();
+		write(STDOUT_FILENO, "\n", 1);
+	}
+}
+
+void	heredoc_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		close(STDIN_FILENO);
 	}
 }

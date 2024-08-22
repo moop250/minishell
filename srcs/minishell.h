@@ -151,11 +151,9 @@ int			handle_outfile(t_pipe_fd *p_out);
 char		*init_execp(t_pipeline *current, char **paths);
 void		setup_signals(struct sigaction *sa);
 void		child_signals(struct sigaction *sa);
+void		heredoc_signals(struct sigaction *sa);
 void		sigint_handler(int sig);
 void		sigquit_handler(int sig);
-void		heredoc_signals(void);
-void		handle_parent_sig(int sig);
-void		handle_child_sig(int sig);
-void		handle_heredoc_sig(int sig);
+void		heredoc_handler(int sig);
 
 #endif

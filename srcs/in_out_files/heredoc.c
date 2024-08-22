@@ -36,6 +36,8 @@ int	handle_heredoc(t_core *core, t_pipe_fd *p_in)
 {
 	char	*input;
 
+	core->interact = 1;
+	heredoc_signals(&(core->sa));
 	p_in->fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	while (core->interact > 0)
 	{

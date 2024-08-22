@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <sys/wait.h>
 
 static int	close_pipes(int i, int pipe_count, int pipes[2][2])
 {
@@ -56,9 +57,14 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 	while (++i < pipe_count)
 	{
 		waitpid(pid[i], status, 0);
-		printf("status %d\n", WTERMSIG(*status));
+		if (WIFSIGNALED(*status))
+		{
+			if (WTERMSIG(*status) == 3)
+				write(STDOUT_FILENO, "Quit (core dump)\n", 17);
+			else
+				write(STDOUT_FILENO, "\n", 1);
+		}
 	}
-	
 }
 
 static char	*last_cmd(t_pipeline *pipeline)
