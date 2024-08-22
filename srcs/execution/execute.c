@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:16 by pberset           #+#    #+#             */
-/*   Updated: 2024/08/21 19:24:35 by pberset          ###   ########.fr       */
+/*   Updated: 2024/08/22 16:06:29 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 				write(STDOUT_FILENO, "Quit (core dump)\n", 17);
 				*status = 128 + 3;
 			}
-			else
-			{
-				printf("\33[2K\r");
-				*status = 128 + 2;
-			}
+		}
+		else
+		{
+			printf("\33[2K\r");
+			*status = 128 + 2;
 		}
 	}
 }
