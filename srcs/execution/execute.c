@@ -64,7 +64,10 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 				*status = 128 + 3;
 			}
 			else
+			{
+				printf("\33[2K\r");
 				*status = 128 + 2;
+			}
 		}
 	}
 }

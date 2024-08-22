@@ -20,7 +20,7 @@ void	set_signal_handler(int sig, void (*handler)(int), int flags)
 	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = handler;
 	sa.sa_flags = flags;
-	sigfillset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, sig);
 	sigaction(sig, &sa, NULL);
 }
 
