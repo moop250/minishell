@@ -37,6 +37,7 @@ static int	child_exec(t_core *core, int pipes[2][2], int i)
 {
 	int	status;
 
+	core->interact = 0;
 	child_signals();
 	if (i < core->pipe_count || i > 0)
 		init_pipes(core->pipeline, pipes, i, core->pipe_count);
@@ -53,7 +54,19 @@ static void	parent_wait(int pipe_count, int *status, pid_t *pid)
 
 	i = -1;
 	while (++i < pipe_count)
-		waitpid(pid[i], status, WUNTRACED);
+	{
+		waitpid(pid[i], status, 0);
+		if (WIFSIGNALED(*status))
+		{
+			if (WTERMSIG(*status) == 3)
+			{
+				write(STDOUT_FILENO, "Quit (core dump)\n", 17);
+				*status = 128 + 3;
+			}
+			else
+				*status = 128 + 2;
+		}
+	}
 }
 
 static char	*last_cmd(t_pipeline *pipeline)

@@ -51,14 +51,12 @@ static char	*ms_prompt(t_core *core)
 	return (tmp);
 }
 
-t_core	*minishell_loop(int ac, char **av, char **env)
+void	minishell_loop(t_core *core)
 {
-	t_core		*core;
 	t_pipeline	*start;
 
 	while (true)
 	{
-		core = init(ac, av, env);
 		ms_update(core);
 		core->line = ms_prompt(core);
 		if (core->line == NULL)
@@ -76,5 +74,4 @@ t_core	*minishell_loop(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	gfree(core->line);
-	return (core);
 }
