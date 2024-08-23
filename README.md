@@ -1,5 +1,5 @@
 # minishell
-![In Progress](https://img.shields.io/badge/In_Progress-orange)
+![](https://img.shields.io/badge/91%2F100-brightgreen)
 
 ## Description
 
